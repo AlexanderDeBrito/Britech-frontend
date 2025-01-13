@@ -5,13 +5,11 @@ import { Markdown } from 'components/markdown';
 import { ContextAlert } from 'components/context-alert';
 import { getNetlifyContext } from 'utils';
 
-const cards = [
-  // { text: 'Hello', linkText: 'someLink', href: '/' }
+const services = [
+  { title: 'Desenvolvimento de Software', description: 'Criamos soluções sob medida para as necessidades do seu negócio, com foco em inovação e escalabilidade.' },
+  { title: 'Consultoria em TI', description: 'Ajudamos empresas a otimizar seus processos através de uma consultoria especializada em tecnologia.' },
+  { title: 'Manutenção de Sistemas', description: 'Garantimos o funcionamento contínuo de sistemas críticos com monitoramento e manutenção preventiva.' }, 
 ];
-
-const contextExplainer = `
-A Britech é uma software house especializada em soluções digitais personalizadas. Nossa missão é ajudar empresas a transformarem seus negócios por meio de software de alta qualidade e serviços de consultoria especializados.
-`;
 
 const preDynamicContentExplainer = `
 Oferecemos uma gama de serviços como desenvolvimento de software sob medida, consultoria em TI, manutenção de sistemas e transformação digital. Nossos serviços são projetados para empresas que buscam inovação e eficiência através da tecnologia.
@@ -28,38 +26,26 @@ export default function Page() {
         <main className="flex flex-col gap-8 sm:gap-16">
             <section className="flex flex-col items-start gap-3 sm:gap-4">
                 <ContextAlert />
-                <h1 className="mb-0">Bem-vindo à Britech</h1>
+                <h1 className="mb-0">Nossos Serviços</h1>
                 <p className="text-lg">
-                    Transformamos empresas com soluções digitais inovadoras e personalizadas.
+                    Conheça os serviços que oferecemos para transformar sua empresa através de soluções digitais inovadoras.
                 </p>
-                <Link
-                    href="/servicos"
-                    className="btn btn-lg btn-primary sm:btn-wide"
-                >
-                    Fale com um especialista
-                </Link>
             </section>
-            {!!ctx && (
-                <section className="flex flex-col gap-4">
-                    <Markdown content={contextExplainer} />
-                    <RuntimeContextCard />
-                </section>
-            )}
             <section className="flex flex-col gap-4">
                 <Markdown content={preDynamicContentExplainer} />
+                <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-6">
+                    {services.map((service, index) => (
+                        <div key={index} className="card p-4 shadow-lg">
+                            <h3 className="text-xl font-bold">{service.title}</h3>
+                            <p>{service.description}</p>
+                        </div>
+                    ))}
+                </div>
                 <RandomQuote />
                 <Markdown content={postDynamicContentExplainer} />
             </section>
-            {/* !!cards?.length && <CardsGrid cards={cards} /> */}
         </main>
     );
 }
 
-function RuntimeContextCard() {
-    const title = `Netlify Context: running in ${ctx} mode.`;
-    if (ctx === 'dev') {
-        return <Card title={title} text="Next.js will rebuild any page you navigate to, including static pages." />;
-    } else {
-        return <Card title={title} text="This page was statically-generated at build time." />;
-    }
-}
+

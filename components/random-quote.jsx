@@ -36,7 +36,7 @@ export function RandomQuote() {
                         </p>
                         <p className="pt-2.5 mt-2.5 border-t border-dashed text-secondary border-neutral-200">
                             <span className="text-sm italic">
-                                loaded at {time}. <a href={quote.dataSource}>Original data source.</a>
+                                loaded at {time}. <a href={quote.dataSource}>Ainda tenho que pensar no que colocar aqui.</a>
                             </span>
                         </p>
                     </>
