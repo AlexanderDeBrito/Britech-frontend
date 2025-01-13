@@ -7,17 +7,21 @@ import { getNetlifyContext } from 'utils';
 
 const cards = [
   // { text: 'Hello', linkText: 'someLink', href: '/' }
+  // { text: 'Hello', linkText: 'someLink', href: '/' }
 ];
 
 const contextExplainer = `
+A Britech é uma software house especializada em soluções digitais personalizadas. Nossa missão é ajudar empresas a transformarem seus negócios por meio de software de alta qualidade e serviços de consultoria especializados.
 A Britech é uma software house especializada em soluções digitais personalizadas. Nossa missão é ajudar empresas a transformarem seus negócios por meio de software de alta qualidade e serviços de consultoria especializados.
 `;
 
 const preDynamicContentExplainer = `
 Oferecemos uma gama de serviços como desenvolvimento de software sob medida, consultoria em TI, manutenção de sistemas e transformação digital. Nossos serviços são projetados para empresas que buscam inovação e eficiência através da tecnologia.
+Oferecemos uma gama de serviços como desenvolvimento de software sob medida, consultoria em TI, manutenção de sistemas e transformação digital. Nossos serviços são projetados para empresas que buscam inovação e eficiência através da tecnologia.
 `;
 
 const postDynamicContentExplainer = `
+A Britech trabalha com as tecnologias mais recentes para entregar soluções ágeis e escaláveis. Focamos em proporcionar a melhor experiência para nossos clientes, com um atendimento personalizado e soluções que atendem às suas necessidades específicas.
 A Britech trabalha com as tecnologias mais recentes para entregar soluções ágeis e escaláveis. Focamos em proporcionar a melhor experiência para nossos clientes, com um atendimento personalizado e soluções que atendem às suas necessidades específicas.
 `;
 
@@ -32,8 +36,12 @@ export default function Page() {
                 <p className="text-lg">
                     Transformamos empresas com soluções digitais inovadoras e personalizadas.
                 </p>
+                <h1 className="mb-0">Bem-vindo à Britech</h1>
+                <p className="text-lg">
+                    Transformamos empresas com soluções digitais inovadoras e personalizadas.
+                </p>
                 <Link
-                    href="/servicos"
+                    href="/servicos"                   
                     className="btn btn-lg btn-primary sm:btn-wide"
                 >
                     Fale com um especialista
