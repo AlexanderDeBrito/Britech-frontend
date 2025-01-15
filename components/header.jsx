@@ -4,6 +4,7 @@ import netlifyLogo from 'public/logo.svg';
 import githubLogo from 'public/images/github-mark-white.svg';
 
 const navItems = [    
+    // { linkText: 'Home', href: '/home' },
     { linkText: 'Serviços', href: '/Servicos' },
     { linkText: 'Sobre Nós', href: '/SobreNos' },
     { linkText: 'Contato', href: '/Contato' }
