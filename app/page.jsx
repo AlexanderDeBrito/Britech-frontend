@@ -1,8 +1,9 @@
-import Link from 'next/link';
+
 import { Card } from 'components/card';
 import { RandomQuote } from 'components/random-quote';
 import { Markdown } from 'components/markdown';
 import { getNetlifyContext } from 'utils';
+import  Houver from 'components/hoverAnimation';
 
 
 
@@ -30,19 +31,12 @@ export default function Page() {
         <main className="flex flex-col gap-8 sm:gap-16">
             <section className="flex flex-col items-start gap-3 sm:gap-4">                
 
-                <p className="text-lg">
-                    Transformamos empresas com soluções digitais inovadoras e personalizadas.
-                </p>
                 <h1 className="mb-0">Bem-vindo à Britech</h1>
                 <p className="text-lg">
                     Transformamos empresas com soluções digitais inovadoras e personalizadas.
-                </p>
-                <Link
-                    href="/servicos"
-                    className="btn btn-lg btn-primary sm:btn-wide"
-                >
-                    Fale com um especialista
-                </Link>
+                </p>        
+                    <Houver />
+          
             </section>
             {!!ctx && (
                 <section className="flex flex-col gap-4">
@@ -52,7 +46,7 @@ export default function Page() {
             )}
             <section className="flex flex-col gap-4">
                 <Markdown content={preDynamicContentExplainer} />
-                <RandomQuote />
+                
                 <Markdown content={postDynamicContentExplainer} />
             </section>
             {/* !!cards?.length && <CardsGrid cards={cards} /> */}

@@ -34,23 +34,23 @@ export default function Page() {
                 <p className="text-lg">Transformamos empresas com soluções digitais inovadoras, criadas sob medida.</p>
             </section>
 
-            <section>
+             <section>
                 <h2 className="mb-4 text-2xl font-bold sm:text-3xl">Nossa História</h2>
                 <Markdown content={aboutUsSnippet} />
-                <div
+                {/* <div
                     className="mt-8 overflow-hidden border-2 border-white rounded-lg relative max-w-screen-lg"
                     style={{ aspectRatio: '3/2' }}
                 >
-                    <Image
+                     <Image
                         src={sampleImage}
                         priority
                         fill={true}
                         style={{ objectFit: 'cover' }}
                         sizes="(max-width: 1024px) 100vw, 1024px"
                         alt="Equipe Britech"
-                    />
-                </div>
-            </section>
+                    /> 
+                </div> */}
+            </section> 
 
             <section>
                 <h2 className="mb-4 text-2xl font-bold sm:text-3xl">Tecnologia e Inovação</h2>

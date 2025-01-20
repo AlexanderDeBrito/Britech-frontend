@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { Card } from './card';
 
-export function FeedbackForm() {
+export function ContatoForm() {
     const [status, setStatus] = useState(null);
     const [error, setError] = useState(null);
 
@@ -33,18 +33,18 @@ export function FeedbackForm() {
 
     return (
         <div className="w-full md:max-w-md">
-            <Card title="Leave Feedback">
+            <Card title="Quero Saber mais">
                 <form
                     name="feedback"
                     onSubmit={handleFormSubmit}
                     className="text-black flex flex-col gap-3 align-center"
                 >
                     <input type="hidden" name="form-name" value="feedback" />
-                    <input name="name" type="text" placeholder="Name" required className="input input-bordered" />
-                    <input name="email" type="text" placeholder="Email (optional)" className="input input-bordered" />
-                    <input name="message" type="text" placeholder="Message" required className="input input-bordered" />
+                    <input name="name" type="text" placeholder="Nome" required className="input input-bordered" />
+                    <input name="email" type="text" placeholder="E-mail" className="input input-bordered" />
+                    <input name="message" type="text" placeholder="Mensagem" required className="input input-bordered" />
                     <button className="btn btn-primary" type="submit" disabled={status === 'pending'}>
-                        Submit
+                        Enviar
                     </button>
                     {status === 'ok' && (
                         <div className="alert alert-success">
@@ -63,6 +63,8 @@ export function FeedbackForm() {
         </div>
     );
 }
+export default ContatoForm;
+
 
 function SuccessIcon() {
     return (

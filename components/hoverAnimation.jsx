@@ -2,6 +2,7 @@
 "use client";
 import React, { useEffect } from 'react';
 import { gsap } from 'gsap';
+import Link from 'next/link';
 
 const HoverAnimation = () => {
   useEffect(() => {
@@ -14,7 +15,14 @@ const HoverAnimation = () => {
     });
   }, []);
 
-  return <div className="hoverElement">Hover Me</div>;
+  return <div className="hoverElement">
+    <Link
+      href="/Contato"
+      className="btn btn-lg btn-primary sm:btn-wide"
+    >
+      Fale com um especialista
+    </Link>
+  </div>;
 };
 
 export default HoverAnimation;

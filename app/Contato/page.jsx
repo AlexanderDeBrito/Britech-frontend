@@ -1,8 +1,8 @@
-import { FeedbackForm } from 'components/feedback-form';
+import  {ContatoForm}  from 'components/contato-form';
 import { Markdown } from '../../components/markdown';
 
 export const metadata = {
-    title: 'Contato | Britech'
+    title: 'Contato'
 };
 
 const contactInfo = `
@@ -20,7 +20,7 @@ export default function Page() {
             <h1 className="text-4xl font-bold text-center">Entre em Contato</h1>
             <Markdown content={contactInfo} />
             <div className="flex w-full max-w-lg pt-8 justify-center">
-                <FeedbackForm />
+                <ContatoForm />
             </div>
         </div>
     );
