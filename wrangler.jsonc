@@ -1,0 +1,23 @@
+{
+  "name": "britech",
+  "type": "javascript",
+  "main": "dist/index.js",
+  "compatibility_date": "2025-12-23",
+  "site": {
+    "bucket": "dist/public"
+  },
+  "build": {
+    "command": "pnpm run build",
+    "cwd": "."
+  },
+  "env": {
+    "production": {
+      "routes": [
+        {
+          "pattern": "britech.com.br",
+          "zone_name": "britech.com.br"
+        }
+      ]
+    }
+  }
+}
