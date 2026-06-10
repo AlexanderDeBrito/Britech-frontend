@@ -1,9 +1,23 @@
-import { useState } from 'react';
-import { Menu, X } from 'lucide-react';
-import { Link } from 'wouter';
+import { useEffect, useState } from 'react';
+import { Menu, X, ArrowRight } from 'lucide-react';
+import { Link, useLocation } from 'wouter';
+import { Logo } from './Logo';
 
 export function Header() {
   const [isOpen, setIsOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const [location] = useLocation();
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 8);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
+  useEffect(() => {
+    setIsOpen(false);
+  }, [location]);
 
   const navItems = [
     { label: 'Serviços', href: '/servicos' },
@@ -13,62 +27,72 @@ export function Header() {
   ];
 
   return (
-    <header className="sticky top-0 z-50 bg-white border-b border-border">
+    <header
+      className={`sticky top-0 z-50 transition-all duration-300 ${
+        scrolled
+          ? 'bg-[#0B1220]/85 backdrop-blur-xl border-b border-white/10'
+          : 'bg-transparent border-b border-transparent'
+      }`}
+    >
       <nav className="container flex items-center justify-between h-20">
-        {/* Logo */}
-        <Link href="/" className="flex items-center gap-2 no-underline hover:opacity-80 transition-opacity">
-          <div className="flex items-center justify-center w-10 h-10 bg-primary rounded-lg">
-            <span className="text-lg font-bold text-white">B</span>
-          </div>
-          <span className="hidden sm:inline font-bold text-lg text-foreground">Britech</span>
+        <Link href="/" className="no-underline hover:opacity-90 transition-opacity">
+          <Logo size={38} />
         </Link>
 
-        {/* Desktop Navigation */}
         <div className="hidden md:flex items-center gap-8">
-          {navItems.map((item) => (
-            <Link key={item.href} href={item.href} className="text-foreground hover:text-primary transition-colors font-medium no-underline">
-              {item.label}
-            </Link>
-          ))}
+          {navItems.map((item) => {
+            const active = location === item.href;
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                className={`text-sm font-medium no-underline transition-colors ${
+                  active ? 'text-[color:var(--brand-cyan)]' : 'text-white/80 hover:text-white'
+                }`}
+              >
+                {item.label}
+              </Link>
+            );
+          })}
         </div>
 
-        {/* CTA Button */}
         <div className="hidden md:flex">
-          <Link href="/contato" className="px-6 py-2.5 bg-primary text-white rounded-lg font-semibold hover:bg-primary/90 transition-colors no-underline">
-            Começar
+          <Link
+            href="/contato"
+            className="btn-brand inline-flex items-center gap-2 px-5 py-2.5 rounded-full font-semibold text-sm no-underline"
+          >
+            Fale com um especialista
+            <ArrowRight size={16} />
           </Link>
         </div>
 
-        {/* Mobile Menu Button */}
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className="md:hidden p-2 hover:bg-muted rounded-lg transition-colors"
+          className="md:hidden p-2 hover:bg-white/5 rounded-lg transition-colors text-white"
           aria-label="Toggle menu"
         >
           {isOpen ? <X size={24} /> : <Menu size={24} />}
         </button>
       </nav>
 
-      {/* Mobile Navigation */}
       {isOpen && (
-          <div className="md:hidden border-t border-border bg-white">
-          <div className="container py-4 flex flex-col gap-4">
+        <div className="md:hidden border-t border-white/10 bg-[#0B1220]/95 backdrop-blur-xl">
+          <div className="container py-6 flex flex-col gap-4">
             {navItems.map((item) => (
               <Link
                 key={item.href}
                 href={item.href}
-                className="text-foreground hover:text-primary transition-colors font-medium no-underline block py-2"
-                onClick={() => setIsOpen(false)}
+                className="text-white/90 hover:text-[color:var(--brand-cyan)] transition-colors font-medium no-underline block py-2"
               >
                 {item.label}
               </Link>
             ))}
             <Link
               href="/contato"
-              className="px-6 py-2.5 bg-primary text-white rounded-lg font-semibold hover:bg-primary/90 transition-colors no-underline block text-center"
-              onClick={() => setIsOpen(false)}
+              className="btn-brand mt-2 inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full font-semibold no-underline"
             >
-              Começar
+              Fale com um especialista
+              <ArrowRight size={16} />
             </Link>
           </div>
         </div>

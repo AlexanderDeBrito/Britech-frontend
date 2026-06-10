@@ -1,64 +1,67 @@
 import { Link } from 'wouter';
-import { Mail, Linkedin } from 'lucide-react';
+import { Mail, Linkedin, Phone, MapPin } from 'lucide-react';
+import { Logo } from './Logo';
+import { WhatsAppIcon } from './WhatsAppButton';
+import { CONTACT, whatsappUrl } from '@/lib/contact';
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="bg-slate-50 border-t border-border mt-24">
+    <footer className="relative border-t border-white/10 bg-[#070D18] mt-24">
+      <div className="absolute inset-x-0 top-0 brand-lines" />
+
       <div className="container py-16">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
           {/* Brand */}
-          <div className="flex flex-col gap-4">
-            <Link href="/" className="flex items-center gap-2 no-underline hover:opacity-80 transition-opacity w-fit">
-              <div className="flex items-center justify-center w-10 h-10 bg-primary rounded-lg">
-                <span className="text-lg font-bold text-white">B</span>
-              </div>
-              <span className="font-bold text-lg text-foreground">Britech</span>
+          <div className="md:col-span-1 flex flex-col gap-4">
+            <Link href="/" className="no-underline hover:opacity-90 transition-opacity w-fit">
+              <Logo size={38} />
             </Link>
-            <p className="text-sm text-muted-foreground">
-              Transformando empresas com soluções digitais inovadoras e escaláveis.
+            <p className="text-sm text-white/60 leading-relaxed">
+              Software house brasileira. Tecnologia que ilumina soluções para empresas que
+              querem evoluir.
             </p>
           </div>
 
           {/* Serviços */}
           <div className="flex flex-col gap-4">
-            <h4 className="font-semibold text-foreground">Serviços</h4>
-            <ul className="flex flex-col gap-2">
-              <li>
-                <Link href="/servicos" className="text-sm text-muted-foreground hover:text-primary transition-colors no-underline">
-                  Desenvolvimento de Software
-                </Link>
-              </li>
-              <li>
-                <Link href="/servicos" className="text-sm text-muted-foreground hover:text-primary transition-colors no-underline">
-                  Consultoria em TI
-                </Link>
-              </li>
-              <li>
-                <Link href="/servicos" className="text-sm text-muted-foreground hover:text-primary transition-colors no-underline">
-                  Integrações
-                </Link>
-              </li>
+            <h4 className="font-semibold text-white text-sm uppercase tracking-wider">Serviços</h4>
+            <ul className="flex flex-col gap-2.5">
+              {[
+                ['Software sob medida', '/servicos'],
+                ['Automação de processos', '/servicos'],
+                ['Sites e landing pages', '/servicos'],
+                ['Integrações e APIs', '/servicos'],
+              ].map(([label, href]) => (
+                <li key={label}>
+                  <Link
+                    href={href}
+                    className="text-sm text-white/60 hover:text-[color:var(--brand-cyan)] transition-colors no-underline"
+                  >
+                    {label}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
 
           {/* Empresa */}
           <div className="flex flex-col gap-4">
-            <h4 className="font-semibold text-foreground">Empresa</h4>
-            <ul className="flex flex-col gap-2">
+            <h4 className="font-semibold text-white text-sm uppercase tracking-wider">Empresa</h4>
+            <ul className="flex flex-col gap-2.5">
               <li>
-                <Link href="/sobre" className="text-sm text-muted-foreground hover:text-primary transition-colors no-underline">
-                  Sobre Nós
+                <Link href="/sobre" className="text-sm text-white/60 hover:text-[color:var(--brand-cyan)] transition-colors no-underline">
+                  Sobre nós
                 </Link>
               </li>
               <li>
-                <Link href="/cases" className="text-sm text-muted-foreground hover:text-primary transition-colors no-underline">
+                <Link href="/cases" className="text-sm text-white/60 hover:text-[color:var(--brand-cyan)] transition-colors no-underline">
                   Cases
                 </Link>
               </li>
               <li>
-                <Link href="/contato" className="text-sm text-muted-foreground hover:text-primary transition-colors no-underline">
+                <Link href="/contato" className="text-sm text-white/60 hover:text-[color:var(--brand-cyan)] transition-colors no-underline">
                   Contato
                 </Link>
               </li>
@@ -67,48 +70,59 @@ export function Footer() {
 
           {/* Contato */}
           <div className="flex flex-col gap-4">
-            <h4 className="font-semibold text-foreground">Contato</h4>
+            <h4 className="font-semibold text-white text-sm uppercase tracking-wider">Contato</h4>
             <div className="flex flex-col gap-3">
               <a
-                href="mailto:contato@britech.com.br"
-                className="flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors no-underline"
+                href={`mailto:${CONTACT.email}`}
+                className="flex items-center gap-2 text-sm text-white/60 hover:text-[color:var(--brand-cyan)] transition-colors no-underline"
               >
-                <Mail size={16} />
-                contato@britech.com.br
+                <Mail size={15} />
+                {CONTACT.email}
               </a>
               <a
-                href="tel:+5547999338663"
-                className="flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors no-underline"
-              >
-                <span className="text-base">📞</span>
-                (47) 9 99338663
-              </a>
-              <a
-                href="https://www.linkedin.com/company/britech-solucoes"
+                href={whatsappUrl()}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors"
+                className="flex items-center gap-2 text-sm text-white/60 hover:text-[#25D366] transition-colors no-underline"
               >
-                <Linkedin size={16} />
+                <span className="text-[#25D366]"><WhatsAppIcon size={15} /></span>
+                {CONTACT.phoneDisplay} (WhatsApp)
+              </a>
+              <a
+                href={`tel:${CONTACT.phoneE164}`}
+                className="flex items-center gap-2 text-sm text-white/60 hover:text-[color:var(--brand-cyan)] transition-colors no-underline"
+              >
+                <Phone size={15} />
+                {CONTACT.phoneDisplay}
+              </a>
+              <div className="flex items-center gap-2 text-sm text-white/60">
+                <MapPin size={15} />
+                {CONTACT.location}
+              </div>
+              <a
+                href={CONTACT.linkedin}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 text-sm text-white/60 hover:text-[color:var(--brand-cyan)] transition-colors"
+              >
+                <Linkedin size={15} />
                 LinkedIn
               </a>
             </div>
           </div>
         </div>
 
-        {/* Divider */}
-        <div className="border-t border-border mb-8" />
+        <div className="border-t border-white/10 mb-6" />
 
-        {/* Bottom */}
         <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-          <p className="text-sm text-muted-foreground">
-            © {currentYear} Britech Soluções. Todos os direitos reservados.
+          <p className="text-sm text-white/40">
+            © {currentYear} Britech. Todos os direitos reservados.
           </p>
           <div className="flex items-center gap-6">
-            <a href="#" className="text-sm text-muted-foreground hover:text-primary transition-colors no-underline">
+            <a href="#" className="text-sm text-white/40 hover:text-white transition-colors no-underline">
               Política de Privacidade
             </a>
-            <a href="#" className="text-sm text-muted-foreground hover:text-primary transition-colors no-underline">
+            <a href="#" className="text-sm text-white/40 hover:text-white transition-colors no-underline">
               Termos de Serviço
             </a>
           </div>

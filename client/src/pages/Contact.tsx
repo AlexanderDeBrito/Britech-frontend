@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { HeroSection } from '@/components/HeroSection';
-import { Mail, Phone, MapPin, Loader2 } from 'lucide-react';
+import { Mail, Phone, MapPin, Loader2, CheckCircle2, ArrowRight } from 'lucide-react';
+import { WhatsAppIcon } from '@/components/WhatsAppButton';
+import { CONTACT, whatsappUrl } from '@/lib/contact';
 
 export default function Contact() {
   const [formData, setFormData] = useState({
@@ -18,104 +20,115 @@ export default function Contact() {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
+  // Sem backend: o formulário monta a mensagem e abre direto no WhatsApp.
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
 
-    // Simulate form submission
-    setTimeout(() => {
-      setLoading(false);
-      setSubmitted(true);
-      setFormData({ name: '', email: '', phone: '', company: '', message: '' });
+    const lines = [
+      `Olá! Me chamo *${formData.name}*.`,
+      formData.company && `Empresa: ${formData.company}`,
+      formData.email && `E-mail: ${formData.email}`,
+      formData.phone && `Telefone: ${formData.phone}`,
+      '',
+      formData.message,
+    ].filter((l) => l !== undefined && l !== null);
 
-      // Reset success message after 5 seconds
-      setTimeout(() => setSubmitted(false), 5000);
-    }, 1500);
+    window.open(whatsappUrl(lines.join('\n')), '_blank', 'noopener,noreferrer');
+
+    setLoading(false);
+    setSubmitted(true);
+    setFormData({ name: '', email: '', phone: '', company: '', message: '' });
+    setTimeout(() => setSubmitted(false), 6000);
   };
 
+  const contactInfo = [
+    {
+      icon: Mail,
+      title: 'E-mail',
+      value: CONTACT.email,
+      href: `mailto:${CONTACT.email}`,
+    },
+    {
+      icon: Phone,
+      title: 'Telefone / WhatsApp',
+      value: CONTACT.phoneDisplay,
+      href: whatsappUrl(),
+    },
+    {
+      icon: MapPin,
+      title: 'Localização',
+      value: CONTACT.location,
+      href: null,
+    },
+  ];
+
+  const inputClass =
+    'w-full px-4 py-3 rounded-xl border border-white/10 bg-white/5 text-white placeholder:text-white/30 focus:outline-none focus:border-[color:var(--brand-blue)]/60 focus:bg-white/10 focus:ring-2 focus:ring-[color:var(--brand-blue)]/20 transition-all';
+
   return (
-    <div className="min-h-screen flex flex-col">
-      {/* Hero Section */}
+    <div className="flex flex-col">
       <HeroSection
-        title="Entre em Contato"
-        subtitle="Vamos Conversar"
-        description="Estamos prontos para ouvir sobre seu projeto e ajudar a transformar sua visão em realidade."
+        title="Vamos conversar"
+        highlightWord="conversar"
+        subtitle="Contato"
+        description="Conte o que você precisa. Respondemos em até 24h com um direcionamento gratuito, sem compromisso."
+        showSecondary={false}
       />
 
-      {/* Contact Section */}
-      <section className="py-24 md:py-32 bg-white">
+      <section className="py-20 md:py-28">
         <div className="container">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-16">
-            {/* Contact Info */}
-            <div>
-              <div className="flex items-start gap-4">
-                <div className="flex-shrink-0">
-                  <div className="flex items-center justify-center w-12 h-12 bg-primary/10 rounded-lg">
-                    <Mail size={24} className="text-primary" />
+          {/* Cards de contato */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
+            {contactInfo.map((info) => {
+              const Icon = info.icon;
+              const content = (
+                <div className="p-6 rounded-2xl glass-card hover:border-[color:var(--brand-blue)]/40 transition-colors h-full">
+                  <div className="mb-4 inline-flex items-center justify-center w-12 h-12 rounded-xl bg-gradient-to-br from-[#0A84FF]/20 to-[#00D4FF]/10 border border-[color:var(--brand-blue)]/30">
+                    <Icon size={22} className="text-[color:var(--brand-cyan)]" />
                   </div>
+                  <h3 className="font-semibold text-white mb-1 text-sm uppercase tracking-wider">
+                    {info.title}
+                  </h3>
+                  <p className="text-white/80">{info.value}</p>
                 </div>
-                <div>
-                  <h3 className="font-semibold text-foreground mb-1">E-mail</h3>
-                  <a
-                    href="mailto:contato@britech.com.br"
-                    className="text-muted-foreground hover:text-primary transition-colors no-underline"
-                  >
-                    contato@britech.com.br
-                  </a>
-                </div>
-              </div>
-            </div>
+              );
 
-            <div>
-              <div className="flex items-start gap-4">
-                <div className="flex-shrink-0">
-                  <div className="flex items-center justify-center w-12 h-12 bg-primary/10 rounded-lg">
-                    <Phone size={24} className="text-primary" />
-                  </div>
-                </div>
-                <div>
-                  <h3 className="font-semibold text-foreground mb-1">Telefone</h3>
-                  <a
-                    href="tel:+5547999338663"
-                    className="text-muted-foreground hover:text-primary transition-colors no-underline"
-                  >
-                    (47) 99933-8663
-                  </a>
-                </div>
-              </div>
-            </div>
-
-            <div>
-              <div className="flex items-start gap-4">
-                <div className="flex-shrink-0">
-                  <div className="flex items-center justify-center w-12 h-12 bg-primary/10 rounded-lg">
-                    <MapPin size={24} className="text-primary" />
-                  </div>
-                </div>
-                <div>
-                  <h3 className="font-semibold text-foreground mb-1">Localização</h3>
-                  <p className="text-muted-foreground">Blumenau, Santa Catarina, Brasil</p>
-                </div>
-              </div>
-            </div>
+              return info.href ? (
+                <a key={info.title} href={info.href} className="no-underline">
+                  {content}
+                </a>
+              ) : (
+                <div key={info.title}>{content}</div>
+              );
+            })}
           </div>
 
-          {/* Form */}
-          <div className="max-w-2xl">
-            <h2 className="mb-8 text-foreground">Envie sua Mensagem</h2>
+          {/* Formulário */}
+          <div className="max-w-3xl mx-auto p-8 md:p-12 rounded-3xl glass-card">
+            <span className="inline-block text-xs font-bold text-[color:var(--brand-cyan)] uppercase tracking-[0.2em] mb-3">
+              Formulário
+            </span>
+            <h2 className="mb-8 text-white">Envie sua mensagem</h2>
+
+            <p className="text-white/60 mb-8 -mt-4">
+              Preencha os campos e a conversa abre direto no nosso WhatsApp — sem espera, sem
+              formulário perdido na caixa de entrada.
+            </p>
 
             {submitted && (
-              <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg">
-                <p className="text-green-800 font-medium">
-                  Mensagem enviada com sucesso! Entraremos em contato em breve.
+              <div className="mb-6 p-4 rounded-xl bg-[#25D366]/10 border border-[#25D366]/30 flex gap-3 items-center">
+                <CheckCircle2 size={20} className="text-[#25D366] flex-shrink-0" />
+                <p className="text-white font-medium">
+                  Sua conversa foi aberta no WhatsApp! É só enviar a mensagem por lá.
                 </p>
               </div>
             )}
 
-            <form onSubmit={handleSubmit} className="space-y-6">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <form onSubmit={handleSubmit} className="space-y-5">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                 <div>
-                  <label htmlFor="name" className="block text-sm font-medium text-foreground mb-2">
+                  <label htmlFor="name" className="block text-sm font-medium text-white/80 mb-2">
                     Nome *
                   </label>
                   <input
@@ -125,12 +138,12 @@ export default function Contact() {
                     value={formData.name}
                     onChange={handleChange}
                     required
-                    className="w-full px-4 py-3 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 bg-white"
+                    className={inputClass}
                     placeholder="Seu nome"
                   />
                 </div>
                 <div>
-                  <label htmlFor="email" className="block text-sm font-medium text-foreground mb-2">
+                  <label htmlFor="email" className="block text-sm font-medium text-white/80 mb-2">
                     E-mail *
                   </label>
                   <input
@@ -140,15 +153,15 @@ export default function Contact() {
                     value={formData.email}
                     onChange={handleChange}
                     required
-                    className="w-full px-4 py-3 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 bg-white"
+                    className={inputClass}
                     placeholder="seu@email.com"
                   />
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                 <div>
-                  <label htmlFor="phone" className="block text-sm font-medium text-foreground mb-2">
+                  <label htmlFor="phone" className="block text-sm font-medium text-white/80 mb-2">
                     Telefone
                   </label>
                   <input
@@ -157,12 +170,12 @@ export default function Contact() {
                     name="phone"
                     value={formData.phone}
                     onChange={handleChange}
-                    className="w-full px-4 py-3 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 bg-white"
+                    className={inputClass}
                     placeholder="(47) 99999-9999"
                   />
                 </div>
                 <div>
-                  <label htmlFor="company" className="block text-sm font-medium text-foreground mb-2">
+                  <label htmlFor="company" className="block text-sm font-medium text-white/80 mb-2">
                     Empresa
                   </label>
                   <input
@@ -171,14 +184,14 @@ export default function Contact() {
                     name="company"
                     value={formData.company}
                     onChange={handleChange}
-                    className="w-full px-4 py-3 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 bg-white"
+                    className={inputClass}
                     placeholder="Nome da empresa"
                   />
                 </div>
               </div>
 
               <div>
-                <label htmlFor="message" className="block text-sm font-medium text-foreground mb-2">
+                <label htmlFor="message" className="block text-sm font-medium text-white/80 mb-2">
                   Mensagem *
                 </label>
                 <textarea
@@ -188,25 +201,36 @@ export default function Contact() {
                   onChange={handleChange}
                   required
                   rows={6}
-                  className="w-full px-4 py-3 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 bg-white resize-none"
-                  placeholder="Conte-nos sobre seu projeto..."
+                  className={`${inputClass} resize-none`}
+                  placeholder="Conte sobre seu projeto ou desafio..."
                 />
               </div>
 
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full px-8 py-3.5 bg-primary text-white rounded-lg font-semibold hover:bg-primary/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                className="w-full px-8 py-4 rounded-full font-semibold disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-2 bg-[#25D366] text-white shadow-[0_8px_30px_-6px_rgba(37,211,102,0.5)] hover:bg-[#1FBF5B] hover:-translate-y-0.5 transition-all"
               >
                 {loading ? (
                   <>
                     <Loader2 size={20} className="animate-spin" />
-                    Enviando...
+                    Abrindo WhatsApp...
                   </>
                 ) : (
-                  'Enviar Mensagem'
+                  <>
+                    <WhatsAppIcon size={20} />
+                    Enviar pelo WhatsApp
+                    <ArrowRight size={18} />
+                  </>
                 )}
               </button>
+
+              <p className="text-center text-sm text-white/40">
+                Prefere e-mail? Escreva para{' '}
+                <a href={`mailto:${CONTACT.email}`} className="text-white/70 hover:text-[color:var(--brand-cyan)]">
+                  {CONTACT.email}
+                </a>
+              </p>
             </form>
           </div>
         </div>
