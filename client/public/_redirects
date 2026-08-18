@@ -1,0 +1,2 @@
+# Um domínio canônico só: evita conteúdo duplicado entre www e apex.
+https://www.britechsolucoes.com/*  https://britechsolucoes.com/:splat  301!

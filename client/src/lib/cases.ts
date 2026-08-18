@@ -11,7 +11,7 @@ export interface CaseItem {
 // Clientes reais que já consumiram serviços da Britech.
 export const CASES: CaseItem[] = [
   {
-    image: '/images/services-pattern.png',
+    image: '/images/services-pattern.webp',
     title: 'CRM personalizado',
     client: 'Renke Studio',
     category: 'CRM sob medida',
@@ -21,7 +21,7 @@ export const CASES: CaseItem[] = [
     link: 'https://renkestudio.com.br/',
   },
   {
-    image: '/images/cta-accent.png',
+    image: '/images/cta-accent.webp',
     title: 'Webpage + controle de vendas',
     client: 'Troca Fácil',
     category: 'Web app',
@@ -31,7 +31,7 @@ export const CASES: CaseItem[] = [
     link: 'https://troca-facil-production.up.railway.app/',
   },
   {
-    image: '/images/team-abstract.png',
+    image: '/images/team-abstract.webp',
     title: 'Previva — gestão de saúde',
     client: 'Datainfo',
     category: 'Health tech',

@@ -82,16 +82,19 @@ export default function Services() {
   return (
     <div className="flex flex-col">
       <HeroSection
-        title="Serviços que entregam resultado"
-        highlightWord="resultado"
-        subtitle="Soluções completas"
-        description="Uma gama completa de serviços para transformar sua visão em sistema funcionando — do briefing à manutenção contínua."
+        title="Serviços de desenvolvimento de software sob medida"
+        highlightWord="sob medida"
+        subtitle="Soluções completas · Blumenau, SC"
+        description="Sistemas, automação de processos, criação de sites, integrações e APIs, apps mobile e consultoria técnica — do briefing à manutenção contínua."
         showSecondary={false}
       />
 
       {/* Principais */}
-      <section className="py-20 md:py-28">
+      <section aria-labelledby="principais-titulo" className="py-20 md:py-28">
         <div className="container">
+          <h2 id="principais-titulo" className="sr-only">
+            Principais serviços da Britech
+          </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {mainServices.map((s) => (
               <ServiceCard key={s.title} {...s} />

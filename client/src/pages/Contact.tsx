@@ -69,9 +69,9 @@ export default function Contact() {
   return (
     <div className="flex flex-col">
       <HeroSection
-        title="Vamos conversar"
+        title="Vamos conversar sobre o seu projeto"
         highlightWord="conversar"
-        subtitle="Contato"
+        subtitle="Contato · Blumenau, SC"
         description="Conte o que você precisa. Respondemos em até 24h com um direcionamento gratuito, sem compromisso."
         showSecondary={false}
       />

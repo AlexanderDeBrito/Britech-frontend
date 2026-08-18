@@ -16,6 +16,8 @@ import { HeroSection } from '@/components/HeroSection';
 import { ServiceCard } from '@/components/ServiceCard';
 import { CaseCard } from '@/components/CaseCard';
 import { CASES } from '@/lib/cases';
+import { LocalSection } from '@/components/LocalSection';
+import { FaqSection } from '@/components/FaqSection';
 
 export default function Home() {
   const services = [
@@ -91,14 +93,14 @@ export default function Home() {
   return (
     <div className="flex flex-col">
       <HeroSection
-        title="Tecnologia que ilumina soluções"
+        title="Software sob medida que ilumina a sua operação"
         highlightWord="ilumina"
-        subtitle="Software house brasileira"
-        description="Otimizamos, automatizamos e digitalizamos processos. Sistemas sob medida, integrações e sites profissionais para empresas que querem evoluir."
+        subtitle="Software house em Blumenau · SC"
+        description="Desenvolvemos sistemas sob medida, automação de processos, integrações e sites profissionais para empresas que querem evoluir. Diagnóstico gratuito em até 24h."
       />
 
       {/* Diferenciais — referência aos ícones do manual */}
-      <section className="relative py-20 border-y border-white/5 bg-[#070D18]/40">
+      <section aria-label="Diferenciais da Britech" className="relative py-20 border-y border-white/5 bg-[#070D18]/40">
         <div className="container">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             {[
@@ -119,14 +121,15 @@ export default function Home() {
       </section>
 
       {/* Serviços */}
-      <section id="services" className="py-24 md:py-32 relative">
+      <section id="services" aria-labelledby="servicos-titulo" className="py-24 md:py-32 relative">
         <div className="container">
           <div className="max-w-3xl mb-16">
             <span className="inline-block text-xs font-bold text-[color:var(--brand-cyan)] uppercase tracking-[0.2em] mb-4">
               O que fazemos
             </span>
-            <h2 className="mb-5 text-white">
-              Soluções que transformam <span className="text-gradient-brand">operações em resultado</span>
+            <h2 id="servicos-titulo" className="mb-5 text-white">
+              Desenvolvimento de software que transforma{' '}
+              <span className="text-gradient-brand">operação em resultado</span>
             </h2>
             <p className="text-lg text-white/70">
               Da automação de uma planilha crítica até o sistema interno completo da sua empresa —
@@ -143,14 +146,16 @@ export default function Home() {
       </section>
 
       {/* Processo */}
-      <section className="py-24 md:py-32 bg-[#070D18]/60 border-y border-white/5 relative overflow-hidden">
+      <section aria-labelledby="processo-titulo" className="py-24 md:py-32 bg-[#070D18]/60 border-y border-white/5 relative overflow-hidden">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] rounded-full bg-[#0A84FF]/10 blur-[140px] pointer-events-none" />
         <div className="container relative">
           <div className="max-w-3xl mb-16">
             <span className="inline-block text-xs font-bold text-[color:var(--brand-cyan)] uppercase tracking-[0.2em] mb-4">
               Como trabalhamos
             </span>
-            <h2 className="mb-5 text-white">Um processo claro, do primeiro contato ao lançamento</h2>
+            <h2 id="processo-titulo" className="mb-5 text-white">
+              Um processo claro, do primeiro contato ao lançamento
+            </h2>
             <p className="text-lg text-white/70">
               Sem caixa preta. Você sabe exatamente em que ponto seu projeto está e para onde ele vai.
             </p>
@@ -180,14 +185,14 @@ export default function Home() {
       </section>
 
       {/* Cases */}
-      <section className="py-24 md:py-32">
+      <section aria-labelledby="cases-titulo" className="py-24 md:py-32">
         <div className="container">
           <div className="flex flex-col md:flex-row md:items-end md:justify-between mb-12 gap-6">
             <div className="max-w-2xl">
               <span className="inline-block text-xs font-bold text-[color:var(--brand-cyan)] uppercase tracking-[0.2em] mb-4">
                 Quem já confia na Britech
               </span>
-              <h2 className="text-white">Projetos reais, clientes reais</h2>
+              <h2 id="cases-titulo" className="text-white">Projetos reais, clientes reais</h2>
             </div>
             <Link
               href="/cases"
@@ -205,6 +210,10 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      <LocalSection />
+
+      <FaqSection />
 
       {/* CTA final */}
       <section className="py-24 md:py-32 relative overflow-hidden">

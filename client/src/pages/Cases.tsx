@@ -26,16 +26,19 @@ export default function Cases() {
   return (
     <div className="flex flex-col">
       <HeroSection
-        title="Clientes que já confiam na Britech"
-        highlightWord="confiam"
-        subtitle="Portfolio"
-        description="Projetos reais entregues para empresas reais — de CRM sob medida a produto de gestão de saúde."
+        title="Cases reais de software sob medida"
+        highlightWord="sob medida"
+        subtitle="Portfólio de projetos"
+        description="Projetos entregues para empresas reais — de CRM sob medida a produto de gestão de saúde. Clientes de Santa Catarina e de todo o Brasil."
         showSecondary={false}
       />
 
       {/* Cases reais */}
-      <section className="py-20 md:py-28">
+      <section aria-labelledby="portfolio-titulo" className="py-20 md:py-28">
         <div className="container">
+          <h2 id="portfolio-titulo" className="sr-only">
+            Projetos entregues pela Britech
+          </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {CASES.map((c) => (
               <CaseCard key={c.title} {...c} />

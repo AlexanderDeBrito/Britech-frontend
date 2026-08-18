@@ -34,8 +34,15 @@ export function Header() {
           : 'bg-transparent border-b border-transparent'
       }`}
     >
-      <nav className="container flex items-center justify-between h-20">
-        <Link href="/" className="no-underline hover:opacity-90 transition-opacity">
+      <nav
+        aria-label="Navegação principal"
+        className="container flex items-center justify-between h-20"
+      >
+        <Link
+          href="/"
+          aria-label="Britech — página inicial"
+          className="no-underline hover:opacity-90 transition-opacity"
+        >
           <Logo size={38} />
         </Link>
 
@@ -46,6 +53,7 @@ export function Header() {
               <Link
                 key={item.href}
                 href={item.href}
+                aria-current={active ? 'page' : undefined}
                 className={`text-sm font-medium no-underline transition-colors ${
                   active ? 'text-[color:var(--brand-cyan)]' : 'text-white/80 hover:text-white'
                 }`}
@@ -69,14 +77,19 @@ export function Header() {
         <button
           onClick={() => setIsOpen(!isOpen)}
           className="md:hidden p-2 hover:bg-white/5 rounded-lg transition-colors text-white"
-          aria-label="Toggle menu"
+          aria-label={isOpen ? 'Fechar menu' : 'Abrir menu'}
+          aria-expanded={isOpen}
+          aria-controls="menu-mobile"
         >
-          {isOpen ? <X size={24} /> : <Menu size={24} />}
+          {isOpen ? <X size={24} aria-hidden="true" /> : <Menu size={24} aria-hidden="true" />}
         </button>
       </nav>
 
       {isOpen && (
-        <div className="md:hidden border-t border-white/10 bg-[#0B1220]/95 backdrop-blur-xl">
+        <div
+          id="menu-mobile"
+          className="md:hidden border-t border-white/10 bg-[#0B1220]/95 backdrop-blur-xl"
+        >
           <div className="container py-6 flex flex-col gap-4">
             {navItems.map((item) => (
               <Link

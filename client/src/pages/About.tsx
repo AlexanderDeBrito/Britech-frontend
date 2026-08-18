@@ -33,9 +33,10 @@ export default function About() {
   return (
     <div className="flex flex-col">
       <HeroSection
-        title="Sobre a Britech"
+        title="Sobre a Britech, software house em Blumenau"
+        highlightWord="Blumenau"
         subtitle="Conheça nossa história"
-        description="Software house brasileira dedicada a transformar negócios com tecnologia de qualidade — sob medida, sem caixa preta."
+        description="Software house brasileira sediada em Blumenau (SC), dedicada a transformar negócios com tecnologia de qualidade — sob medida, sem caixa preta."
         showSecondary={false}
       />
 
@@ -70,8 +71,12 @@ export default function About() {
               <div className="absolute -inset-6 bg-gradient-to-br from-[#0A84FF]/30 to-[#00D4FF]/20 rounded-3xl blur-2xl" />
               <div className="relative aspect-square rounded-3xl glass-card overflow-hidden flex items-center justify-center p-12">
                 <img
-                  src="/images/team-abstract.png"
-                  alt="Britech"
+                  src="/images/team-abstract.webp"
+                  alt="Equipe de desenvolvimento da Britech, software house em Blumenau, Santa Catarina"
+                  width={1100}
+                  height={733}
+                  loading="lazy"
+                  decoding="async"
                   className="w-full h-full object-cover rounded-2xl opacity-80"
                 />
               </div>

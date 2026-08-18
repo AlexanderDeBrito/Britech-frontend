@@ -19,14 +19,14 @@ export function Footer() {
               <Logo size={38} />
             </Link>
             <p className="text-sm text-white/60 leading-relaxed">
-              Software house brasileira. Tecnologia que ilumina soluções para empresas que
-              querem evoluir.
+              Software house em Blumenau, Santa Catarina. Desenvolvimento de sistemas sob medida,
+              automação de processos e integrações para empresas de todo o Brasil.
             </p>
           </div>
 
           {/* Serviços */}
           <div className="flex flex-col gap-4">
-            <h4 className="font-semibold text-white text-sm uppercase tracking-wider">Serviços</h4>
+            <h2 className="font-semibold text-white text-sm uppercase tracking-wider">Serviços</h2>
             <ul className="flex flex-col gap-2.5">
               {[
                 ['Software sob medida', '/servicos'],
@@ -48,7 +48,7 @@ export function Footer() {
 
           {/* Empresa */}
           <div className="flex flex-col gap-4">
-            <h4 className="font-semibold text-white text-sm uppercase tracking-wider">Empresa</h4>
+            <h2 className="font-semibold text-white text-sm uppercase tracking-wider">Empresa</h2>
             <ul className="flex flex-col gap-2.5">
               <li>
                 <Link href="/sobre" className="text-sm text-white/60 hover:text-[color:var(--brand-cyan)] transition-colors no-underline">
@@ -70,7 +70,7 @@ export function Footer() {
 
           {/* Contato */}
           <div className="flex flex-col gap-4">
-            <h4 className="font-semibold text-white text-sm uppercase tracking-wider">Contato</h4>
+            <h2 className="font-semibold text-white text-sm uppercase tracking-wider">Contato</h2>
             <div className="flex flex-col gap-3">
               <a
                 href={`mailto:${CONTACT.email}`}
@@ -95,10 +95,14 @@ export function Footer() {
                 <Phone size={15} />
                 {CONTACT.phoneDisplay}
               </a>
-              <div className="flex items-center gap-2 text-sm text-white/60">
-                <MapPin size={15} />
-                {CONTACT.location}
-              </div>
+              <address className="flex items-start gap-2 text-sm text-white/60 not-italic">
+                <MapPin size={15} aria-hidden="true" className="mt-0.5 flex-shrink-0" />
+                <span>
+                  Britech
+                  <br />
+                  Blumenau — Santa Catarina, Brasil
+                </span>
+              </address>
               <a
                 href={CONTACT.linkedin}
                 target="_blank"
@@ -118,14 +122,9 @@ export function Footer() {
           <p className="text-sm text-white/40">
             © {currentYear} Britech. Todos os direitos reservados.
           </p>
-          <div className="flex items-center gap-6">
-            <a href="#" className="text-sm text-white/40 hover:text-white transition-colors no-underline">
-              Política de Privacidade
-            </a>
-            <a href="#" className="text-sm text-white/40 hover:text-white transition-colors no-underline">
-              Termos de Serviço
-            </a>
-          </div>
+          <p className="text-sm text-white/40">
+            Software house em Blumenau, SC — atendemos todo o Brasil
+          </p>
         </div>
       </div>
     </footer>
