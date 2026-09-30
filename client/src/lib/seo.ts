@@ -238,7 +238,7 @@ function softwareNode(): Record<string, unknown> {
     inLanguage: SITE.lang,
     audience: {
       '@type': 'BusinessAudience',
-      audienceType: 'Escritórios de contabilidade pequenos',
+      audienceType: 'Escritórios contábeis de pequeno e médio porte, com até 30 pessoas',
     },
     creator: { '@id': ORGANIZATION_ID },
     publisher: { '@id': ORGANIZATION_ID },

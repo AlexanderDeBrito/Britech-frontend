@@ -260,7 +260,7 @@ export default function Home() {
                   Software que a Britech <span className="text-gradient-brand">constrói e leva ao mercado</span>
                 </>
               }
-              lead="A mesma engenharia da consultoria, aplicada a tarefas repetitivas de negócios menores. Validamos com clientes reais antes de lançar."
+              lead="A mesma engenharia da consultoria, aplicada a tarefas repetitivas de pequenas e médias empresas. Validamos com clientes reais antes de lançar."
             />
             <Link href={ROUTES.produtos} className={`${linkArrow} mb-14 flex-shrink-0`}>
               Conhecer os produtos

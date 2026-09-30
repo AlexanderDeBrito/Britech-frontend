@@ -218,12 +218,12 @@ export default function ProdutoLancamentos() {
                 Para quem é
               </h2>
               <p className="text-white/80 leading-relaxed mb-4">
-                Escritórios de contabilidade pequenos, de até cerca de 10 pessoas, e o analista que faz
-                o fechamento mensal dos clientes.
+                Escritórios contábeis de pequeno e médio porte, com até 30 pessoas, e os analistas que
+                fazem o fechamento mensal dos clientes.
               </p>
               <p className="text-white/80 leading-relaxed">
-                Feito para quem decide e usa no mesmo dia a dia: sem departamento de TI, sem projeto
-                de implantação.
+                Feito para funcionar sem departamento de TI e sem projeto de implantação, do escritório
+                com poucos analistas ao que já tem uma equipe inteira de fechamento.
               </p>
             </div>
             <div className="p-8 md:p-10 rounded-3xl glass-card">

@@ -26,7 +26,7 @@ export const PRODUCTS: Product[] = [
     name: 'Assistente de Lançamentos',
     provisionalName: true,
     tagline: 'Pare de digitar extrato.',
-    audience: 'Escritórios de contabilidade pequenos',
+    audience: 'Escritórios contábeis de pequeno e médio porte (até 30 pessoas)',
     status: 'Em validação · piloto com os primeiros escritórios',
     summary:
       'O analista sobe o extrato bancário do cliente e recebe os lançamentos já classificados no plano de contas daquele cliente, com o nível de confiança de cada um, prontos para revisar e importar no sistema contábil.',
