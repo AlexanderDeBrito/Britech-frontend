@@ -1,9 +1,7 @@
-import { jsxLocPlugin } from "@builder.io/vite-plugin-jsx-loc";
 import tailwindcss from "@tailwindcss/vite";
 import react from "@vitejs/plugin-react";
 import path from "path";
 import { defineConfig, type Plugin } from "vite";
-import { vitePluginManusRuntime } from "vite-plugin-manus-runtime";
 
 /**
  * Injeta o script do Umami somente quando endpoint e id estão configurados.
@@ -28,21 +26,12 @@ function analyticsPlugin(env: Record<string, string | undefined>): Plugin {
   };
 }
 
-export default defineConfig(({ command, mode }) => {
-  const isProd = command === "build" && mode !== "development";
-
-  // Ferramentas de autoria da plataforma Manus: úteis no editor, puro peso em
-  // produção (o runtime sozinho injeta ~366 kB de script inline em cada página
-  // e o jsx-loc marca todo elemento JSX com atributos `data-loc`).
-  const authoringPlugins = isProd ? [] : [jsxLocPlugin(), vitePluginManusRuntime()];
-
+export default defineConfig(() => {
   return {
-    plugins: [react(), tailwindcss(), ...authoringPlugins, analyticsPlugin(process.env)],
+    plugins: [react(), tailwindcss(), analyticsPlugin(process.env)],
     resolve: {
       alias: {
         "@": path.resolve(import.meta.dirname, "client", "src"),
-        "@shared": path.resolve(import.meta.dirname, "shared"),
-        "@assets": path.resolve(import.meta.dirname, "attached_assets"),
       },
     },
     envDir: path.resolve(import.meta.dirname),
@@ -54,17 +43,8 @@ export default defineConfig(({ command, mode }) => {
     },
     server: {
       port: 3000,
-      strictPort: false, // Will find next available port if 3000 is busy
+      strictPort: false,
       host: true,
-      allowedHosts: [
-        ".manuspre.computer",
-        ".manus.computer",
-        ".manus-asia.computer",
-        ".manuscomputer.ai",
-        ".manusvm.computer",
-        "localhost",
-        "127.0.0.1",
-      ],
       fs: {
         strict: true,
         deny: ["**/.*"],
