@@ -1,263 +1,302 @@
 import {
-  Code2,
-  Zap,
-  Workflow,
-  Globe2,
-  Cpu,
-  Database,
   ArrowRight,
-  CheckCircle2,
-  MessageSquare,
-  Lightbulb,
-  Rocket,
+  AlertTriangle,
+  GitPullRequest,
+  Wallet,
+  Layers,
+  Plug,
+  Cloud,
+  Search,
+  ClipboardList,
+  FlaskConical,
+  TrendingUp,
+  Check,
+  X,
 } from 'lucide-react';
 import { Link } from 'wouter';
 import { HeroSection } from '@/components/HeroSection';
-import { ServiceCard } from '@/components/ServiceCard';
-import { CaseCard } from '@/components/CaseCard';
-import { CASES } from '@/lib/cases';
-import { LocalSection } from '@/components/LocalSection';
 import { FaqSection } from '@/components/FaqSection';
+import { DagFlow } from '@/components/DagFlow';
+import { MetricGrid } from '@/components/Metrics';
+import { CtaSection, SectionHeader } from '@/components/Section';
+import { ROUTES } from '@/lib/contact';
+import { RENKE_FOOTNOTE, RENKE_MAIN, RENKE_OTHER } from '@/lib/dag';
 
 export default function Home() {
-  const services = [
+  const pains = [
     {
-      icon: Code2,
-      title: 'Software sob medida',
+      icon: AlertTriangle,
+      title: 'Débito técnico acelerado',
       description:
-        'Sistemas web e desktop construídos exatamente para o seu processo. Nada de soluções genéricas — apenas o que sua operação precisa.',
+        'Agente sem gate produz código rápido — e dívida técnica na mesma velocidade. A arquitetura se desfaz em semanas.',
     },
     {
-      icon: Workflow,
-      title: 'Automação de processos',
+      icon: GitPullRequest,
+      title: 'Revisão vira gargalo',
       description:
-        'Eliminamos tarefas repetitivas conectando seus sistemas, planilhas e ferramentas. Sua equipe foca no que gera valor.',
+        'Quando o volume de PRs multiplica, as pessoas que revisam linha a linha passam a ser o limite do time.',
     },
     {
-      icon: Globe2,
-      title: 'Sites e landing pages',
+      icon: Wallet,
+      title: 'Custo fora de controle',
       description:
-        'Presença digital profissional, rápida e otimizada para conversão. Do institucional ao e-commerce, com identidade própria.',
-    },
-    {
-      icon: Cpu,
-      title: 'Aplicações específicas',
-      description:
-        'Ferramentas internas, dashboards e portais sob demanda — feitos para resolver o problema certo do jeito certo.',
-    },
-    {
-      icon: Database,
-      title: 'Integrações e APIs',
-      description:
-        'Conectamos seu ERP, CRM e serviços externos com APIs robustas. Dados fluindo onde precisam estar, em tempo real.',
-    },
-    {
-      icon: Zap,
-      title: 'Digitalização de operações',
-      description:
-        'Transformamos processos em papel ou planilhas em fluxos digitais auditáveis, escaláveis e acessíveis de qualquer lugar.',
+        'Decisões técnicas tomadas no automático aparecem depois na conta da nuvem, no retrabalho e no prazo.',
     },
   ];
 
-  const process = [
+  const services = [
     {
-      icon: MessageSquare,
-      step: '01',
-      title: 'Entendemos o problema',
+      icon: Layers,
+      title: 'Arquitetura de SaaS e B2B',
       description:
-        'Conversamos a fundo para mapear a operação, dores e oportunidades. Nada de proposta pronta.',
+        'Modelo de dados, isolamento entre clientes, autenticação e permissões pensados para crescer sem reescrever.',
     },
     {
-      icon: Lightbulb,
-      step: '02',
-      title: 'Projetamos a solução',
+      icon: Plug,
+      title: 'Integrações e pagamentos',
       description:
-        'Desenhamos a arquitetura, fluxos e protótipos validando cada decisão antes de uma linha de código.',
+        'WhatsApp (API oficial), meios de pagamento, sistemas regulados e APIs de parceiros com rastreabilidade.',
     },
     {
-      icon: Code2,
-      step: '03',
-      title: 'Desenvolvemos com você',
+      icon: Cloud,
+      title: 'Nuvem e custos',
       description:
-        'Entregas semanais, código limpo, testes automatizados e feedback constante. Você acompanha tudo.',
+        'Revisão de arquitetura, observabilidade e FinOps: a conta da nuvem acompanhando a receita.',
     },
-    {
-      icon: Rocket,
-      step: '04',
-      title: 'Lançamos e evoluímos',
-      description:
-        'Deploy, monitoramento e suporte contínuo. A solução cresce junto com o seu negócio.',
-    },
+  ];
+
+  const steps = [
+    { icon: Search, title: 'Diagnóstico gratuito (30 min)', description: 'Mapeamos o fluxo atual e onde o DAG se aplica.' },
+    { icon: ClipboardList, title: 'Diagnóstico (1 semana)', description: 'Linha de base de métricas, gates e plano de implantação.' },
+    { icon: FlaskConical, title: 'Implantação (2–3 semanas)', description: 'DAG configurado no seu stack, num fluxo piloto.' },
+    { icon: TrendingUp, title: 'Piloto medido (30 dias)', description: 'Antes e depois com os dados do seu próprio tracker.' },
   ];
 
   return (
     <div className="flex flex-col">
       <HeroSection
-        title="Software sob medida que ilumina a sua operação"
-        highlightWord="ilumina"
-        subtitle="Software house em Blumenau · SC"
-        description="Desenvolvemos sistemas sob medida, automação de processos, integrações e sites profissionais para empresas que querem evoluir. Diagnóstico gratuito em até 24h."
+        title="Não são os agentes, são os gates."
+        highlightWord="são os gates."
+        subtitle="Arquitetura e desenvolvimento acelerado por IA para SaaS e B2B"
+        description="Implantamos o DAG (Desenvolvimento Autônomo Governado) no seu time: agentes de IA executam a tarefa inteira — especificação, código, 4 revisões independentes, deploy e testes — e as pessoas decidem nos gates. Mais entrega, sem perder o controle da arquitetura."
+        ctaText="Agendar diagnóstico gratuito (30 min)"
+        secondary={{ text: 'Ver como funciona o DAG', href: ROUTES.dag }}
       />
 
-      {/* Diferenciais — referência aos ícones do manual */}
-      <section aria-label="Diferenciais da Britech" className="relative py-20 border-y border-white/5 bg-[#070D18]/40">
+      {/* Faixa de prova */}
+      <section aria-label="Resultados do DAG em produção" className="relative py-14 border-y border-white/5 bg-[#070D18]/40">
         <div className="container">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-8">
             {[
-              ['Sob medida', 'Cada projeto único, do briefing à entrega'],
-              ['Rápidos', 'Sprints curtos, valor entregue toda semana'],
-              ['Seguros', 'Boas práticas, testes e código auditável'],
-              ['Próximos', 'Comunicação direta com quem desenvolve'],
-            ].map(([title, desc]) => (
-              <div key={title} className="text-center md:text-left">
-                <div className="text-2xl md:text-3xl font-bold text-gradient-brand mb-2">
-                  {title}
-                </div>
-                <p className="text-sm text-white/60">{desc}</p>
+              ['16h → 194h', 'horas estimadas entregues por mês'],
+              ['22 → 12 dias', 'de ciclo mediano por tarefa'],
+              ['Em produção', 'num CRM SaaS B2B — case CRM Renke'],
+            ].map(([num, desc]) => (
+              <div key={desc} className="text-center sm:text-left">
+                <div className="text-2xl md:text-3xl font-bold text-gradient-brand mb-2">{num}</div>
+                <p className="text-sm text-white/75">{desc}</p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Serviços */}
-      <section id="services" aria-labelledby="servicos-titulo" className="py-24 md:py-32 relative">
+      {/* O problema */}
+      <section aria-labelledby="problema-titulo" className="py-24 md:py-32">
         <div className="container">
-          <div className="max-w-3xl mb-16">
-            <span className="inline-block text-xs font-bold text-[color:var(--brand-cyan)] uppercase tracking-[0.2em] mb-4">
-              O que fazemos
-            </span>
-            <h2 id="servicos-titulo" className="mb-5 text-white">
-              Desenvolvimento de software que transforma{' '}
-              <span className="text-gradient-brand">operação em resultado</span>
-            </h2>
-            <p className="text-lg text-white/70">
-              Da automação de uma planilha crítica até o sistema interno completo da sua empresa —
-              entregamos tecnologia que resolve o problema certo, sem inflar escopo.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {services.map((service) => (
-              <ServiceCard key={service.title} {...service} />
+          <SectionHeader
+            id="problema-titulo"
+            eyebrow="O problema"
+            title={
+              <>
+                IA gerando código é fácil. Difícil é manter{' '}
+                <span className="text-gradient-brand">arquitetura e previsibilidade</span> quando o
+                volume multiplica.
+              </>
+            }
+          />
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {pains.map(({ icon: Icon, title, description }) => (
+              <div key={title} className="p-8 rounded-2xl glass-card">
+                <div className="mb-5 inline-flex items-center justify-center w-12 h-12 rounded-xl bg-[color:var(--brand-blue)]/15">
+                  <Icon size={22} aria-hidden="true" className="text-[color:var(--brand-cyan)]" />
+                </div>
+                <h3 className="mb-3 text-xl font-semibold text-white">{title}</h3>
+                <p className="text-white/75 leading-relaxed">{description}</p>
+              </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Processo */}
-      <section aria-labelledby="processo-titulo" className="py-24 md:py-32 bg-[#070D18]/60 border-y border-white/5 relative overflow-hidden">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] rounded-full bg-[#0A84FF]/10 blur-[140px] pointer-events-none" />
-        <div className="container relative">
-          <div className="max-w-3xl mb-16">
-            <span className="inline-block text-xs font-bold text-[color:var(--brand-cyan)] uppercase tracking-[0.2em] mb-4">
-              Como trabalhamos
-            </span>
-            <h2 id="processo-titulo" className="mb-5 text-white">
-              Um processo claro, do primeiro contato ao lançamento
-            </h2>
-            <p className="text-lg text-white/70">
-              Sem caixa preta. Você sabe exatamente em que ponto seu projeto está e para onde ele vai.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {process.map((p) => {
-              const Icon = p.icon;
-              return (
-                <div
-                  key={p.step}
-                  className="relative p-6 rounded-2xl glass-card hover:border-[color:var(--brand-blue)]/40 transition-colors"
-                >
-                  <div className="absolute -top-3 -right-3 w-12 h-12 rounded-xl bg-[#0B1220] border border-[color:var(--brand-blue)]/40 flex items-center justify-center text-[color:var(--brand-cyan)] font-bold">
-                    {p.step}
-                  </div>
-                  <div className="mb-4 inline-flex items-center justify-center w-12 h-12 rounded-lg bg-[color:var(--brand-blue)]/15">
-                    <Icon size={22} className="text-[color:var(--brand-cyan)]" />
-                  </div>
-                  <h3 className="text-lg font-semibold text-white mb-2">{p.title}</h3>
-                  <p className="text-sm text-white/60 leading-relaxed">{p.description}</p>
-                </div>
-              );
-            })}
+      {/* Tese */}
+      <section aria-labelledby="tese-titulo" className="py-24 md:py-28 bg-[#070D18]/60 border-y border-white/5">
+        <div className="container">
+          <div className="max-w-4xl">
+            <SectionHeader eyebrow="Nossa tese" id="tese-titulo" title={<>Arquitetura como <span className="text-gradient-brand">decisão de negócio</span></>} />
+            <div className="-mt-6 space-y-4 text-lg text-white/80 leading-relaxed">
+              <p>
+                Cada escolha técnica — como os dados de clientes ficam separados, como as integrações
+                falham, onde a infraestrutura roda — aparece depois na margem, no prazo e no risco.
+                Tratamos essas escolhas como decisões de negócio, com critério explícito e dono
+                definido.
+              </p>
+              <p>
+                O DAG aplica a mesma ideia ao próprio desenvolvimento: a IA faz o trabalho, e as
+                decisões que importam ficam com pessoas, em pontos de controle claros.
+              </p>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Cases */}
-      <section aria-labelledby="cases-titulo" className="py-24 md:py-32">
+      {/* Como o DAG funciona */}
+      <section aria-labelledby="dag-titulo" className="py-24 md:py-32">
         <div className="container">
-          <div className="flex flex-col md:flex-row md:items-end md:justify-between mb-12 gap-6">
-            <div className="max-w-2xl">
-              <span className="inline-block text-xs font-bold text-[color:var(--brand-cyan)] uppercase tracking-[0.2em] mb-4">
-                Quem já confia na Britech
-              </span>
-              <h2 id="cases-titulo" className="text-white">Projetos reais, clientes reais</h2>
-            </div>
-            <Link
-              href="/cases"
-              className="inline-flex items-center gap-2 text-[color:var(--brand-cyan)] font-semibold hover:gap-3 transition-all no-underline"
-            >
-              Ver todos os cases
-              <ArrowRight size={18} />
+          <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
+            <SectionHeader
+              id="dag-titulo"
+              eyebrow="Como o DAG funciona"
+              title="Da tarefa priorizada à entrega homologada"
+              lead="Uma tarefa atravessa o fluxo inteiro sem ninguém conduzir cada passo. As pessoas entram onde a decisão é delas."
+            />
+            <Link href={ROUTES.dag} className="mb-14 inline-flex items-center gap-2 text-[color:var(--brand-cyan)] font-semibold hover:gap-3 transition-all no-underline flex-shrink-0">
+              Conhecer o DAG
+              <ArrowRight size={18} aria-hidden="true" />
+            </Link>
+          </div>
+          <DagFlow compact />
+        </div>
+      </section>
+
+      {/* Resultados */}
+      <section aria-labelledby="resultados-titulo" className="py-24 md:py-32 bg-[#070D18]/60 border-y border-white/5">
+        <div className="container">
+          <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
+            <SectionHeader
+              id="resultados-titulo"
+              eyebrow="Resultados · case CRM Renke"
+              title="O DAG em produção, medido pelo tracker do cliente"
+            />
+            <Link href={ROUTES.caseRenke} className="mb-14 inline-flex items-center gap-2 text-[color:var(--brand-cyan)] font-semibold hover:gap-3 transition-all no-underline flex-shrink-0">
+              Ler o case
+              <ArrowRight size={18} aria-hidden="true" />
             </Link>
           </div>
 
+          <h3 className="text-lg font-semibold text-white mb-5">Frente principal do CRM</h3>
+          <MetricGrid metrics={RENKE_MAIN} />
+
+          <h3 className="text-lg font-semibold text-white mt-12 mb-5">
+            Desenvolvedor de outra vertical, após ~10 dias de DAG
+          </h3>
+          <MetricGrid metrics={RENKE_OTHER} />
+
+          <p className="mt-8 text-sm text-white/70 leading-relaxed max-w-4xl">{RENKE_FOOTNOTE}</p>
+        </div>
+      </section>
+
+      {/* Outros serviços */}
+      <section aria-labelledby="servicos-titulo" className="py-24 md:py-32">
+        <div className="container">
+          <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
+            <SectionHeader
+              id="servicos-titulo"
+              eyebrow="Além do DAG"
+              title="Arquitetura para quem constrói SaaS e B2B"
+            />
+            <Link href={ROUTES.servicos} className="mb-14 inline-flex items-center gap-2 text-[color:var(--brand-cyan)] font-semibold hover:gap-3 transition-all no-underline flex-shrink-0">
+              Ver serviços
+              <ArrowRight size={18} aria-hidden="true" />
+            </Link>
+          </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {CASES.map((c) => (
-              <CaseCard key={c.title} {...c} />
+            {services.map(({ icon: Icon, title, description }) => (
+              <div key={title} className="p-8 rounded-2xl glass-card">
+                <div className="mb-5 inline-flex items-center justify-center w-12 h-12 rounded-xl bg-[color:var(--brand-blue)]/15">
+                  <Icon size={22} aria-hidden="true" className="text-[color:var(--brand-cyan)]" />
+                </div>
+                <h3 className="mb-3 text-xl font-semibold text-white">{title}</h3>
+                <p className="text-white/75 leading-relaxed">{description}</p>
+              </div>
             ))}
           </div>
         </div>
       </section>
 
-      <LocalSection />
-
-      <FaqSection />
-
-      {/* CTA final */}
-      <section className="py-24 md:py-32 relative overflow-hidden">
-        <div className="absolute inset-0 -z-0">
-          <div className="absolute inset-0 bg-gradient-to-br from-[#0A84FF]/15 via-transparent to-[#00D4FF]/10" />
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] rounded-full bg-[#0A84FF]/20 blur-[120px]" />
-        </div>
-
-        <div className="container relative z-10">
-          <div className="max-w-4xl mx-auto text-center p-10 md:p-16 rounded-3xl glass-card brand-glow">
-            <h2 className="mb-6 text-white">
-              Pronto para <span className="text-gradient-brand">iluminar</span> o seu próximo projeto?
-            </h2>
-            <p className="text-lg text-white/70 mb-10 max-w-2xl mx-auto">
-              Conte o que você precisa. Em até 24h respondemos com um direcionamento — gratuito, sem
-              compromisso e direto ao ponto.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link
-                href="/contato"
-                className="btn-brand inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full font-semibold no-underline"
-              >
-                Fale com um especialista
-                <ArrowRight size={18} />
-              </Link>
-              <Link
-                href="/servicos"
-                className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full font-semibold border border-white/15 bg-white/5 text-white hover:bg-white/10 hover:border-white/30 transition-all no-underline"
-              >
-                Ver todos os serviços
-              </Link>
-            </div>
-
-            <div className="mt-10 pt-8 border-t border-white/10 flex flex-wrap items-center justify-center gap-x-8 gap-y-3 text-sm text-white/60">
-              {['Resposta em até 24h', 'Orçamento gratuito', 'Sem compromisso'].map((t) => (
-                <div key={t} className="flex items-center gap-2">
-                  <CheckCircle2 size={16} className="text-[color:var(--brand-cyan)]" />
-                  {t}
+      {/* Como começamos */}
+      <section aria-labelledby="comeco-titulo" className="py-24 md:py-32 bg-[#070D18]/60 border-y border-white/5">
+        <div className="container">
+          <SectionHeader
+            id="comeco-titulo"
+            eyebrow="Como começamos"
+            title="Do primeiro papo ao piloto medido"
+            lead="Sem proposta genérica: cada etapa termina com uma decisão sua sobre seguir ou não."
+          />
+          <ol className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {steps.map(({ icon: Icon, title, description }, i) => (
+              <li key={title} className="relative p-6 rounded-2xl glass-card">
+                <div className="absolute -top-3 -right-3 w-12 h-12 rounded-xl bg-[#0B1220] border border-[color:var(--brand-blue)]/40 flex items-center justify-center text-[color:var(--brand-cyan)] font-bold">
+                  {String(i + 1).padStart(2, '0')}
                 </div>
-              ))}
+                <div className="mb-4 inline-flex items-center justify-center w-12 h-12 rounded-lg bg-[color:var(--brand-blue)]/15">
+                  <Icon size={22} aria-hidden="true" className="text-[color:var(--brand-cyan)]" />
+                </div>
+                <h3 className="text-lg font-semibold text-white mb-2">{title}</h3>
+                <p className="text-sm text-white/75 leading-relaxed">{description}</p>
+              </li>
+            ))}
+          </ol>
+          <Link href={ROUTES.diagnostico} className="mt-10 inline-flex items-center gap-2 text-[color:var(--brand-cyan)] font-semibold hover:gap-3 transition-all no-underline">
+            Ver detalhes do diagnóstico
+            <ArrowRight size={18} aria-hidden="true" />
+          </Link>
+        </div>
+      </section>
+
+      {/* Para quem é */}
+      <section aria-labelledby="fit-titulo" className="py-24 md:py-32">
+        <div className="container">
+          <SectionHeader id="fit-titulo" eyebrow="Encaixe" title="Para quem é — e para quem não é" />
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="p-8 rounded-2xl glass-card">
+              <h3 className="text-xl font-semibold text-white mb-5">É para você se…</h3>
+              <ul className="space-y-3">
+                {[
+                  'sua empresa constrói um SaaS ou produto B2B que já está em produção;',
+                  'existe um time de desenvolvimento próprio (ou em formação);',
+                  'você quer entregar mais sem abrir mão de qualidade e de arquitetura;',
+                  'prefere decidir com números a decidir com opinião.',
+                ].map((t) => (
+                  <li key={t} className="flex gap-3 text-white/80">
+                    <Check size={20} aria-hidden="true" className="text-[color:var(--brand-cyan)] flex-shrink-0 mt-0.5" />
+                    {t}
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div className="p-8 rounded-2xl glass-card">
+              <h3 className="text-xl font-semibold text-white mb-5">Não é para você se…</h3>
+              <ul className="space-y-3">
+                {[
+                  'você procura um site institucional ou uma landing page;',
+                  'quer uma fábrica de software cobrando por hora;',
+                  'espera que a IA substitua o time sem ninguém decidir nada.',
+                ].map((t) => (
+                  <li key={t} className="flex gap-3 text-white/80">
+                    <X size={20} aria-hidden="true" className="text-white/70 flex-shrink-0 mt-0.5" />
+                    {t}
+                  </li>
+                ))}
+              </ul>
             </div>
           </div>
         </div>
       </section>
+
+      <FaqSection />
+
+      <CtaSection />
     </div>
   );
 }

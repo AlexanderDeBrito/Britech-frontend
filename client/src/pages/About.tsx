@@ -1,165 +1,167 @@
+import { Link } from 'wouter';
+import { ArrowRight, Linkedin, ShieldCheck, KeyRound, BarChart3, MapPin } from 'lucide-react';
 import { HeroSection } from '@/components/HeroSection';
-import { Users, Target, Zap, Code2 } from 'lucide-react';
+import { CtaSection, SectionHeader } from '@/components/Section';
+import { CONTACT, ROUTES } from '@/lib/contact';
 
 export default function About() {
-  const values = [
+  const principles = [
     {
-      icon: Target,
-      title: 'Foco em resultado',
+      icon: ShieldCheck,
+      title: 'Gates acima de automação cega',
       description:
-        'Cada projeto é desenvolvido para gerar valor real. Tecnologia é meio, não fim.',
+        'Automatizar é o fácil. O valor está nos pontos de controle que decidem o que avança — e em quem decide.',
     },
     {
-      icon: Zap,
-      title: 'Inovação contínua',
+      icon: KeyRound,
+      title: 'Código e dados são do cliente',
       description:
-        'Stack moderna, melhores práticas e curiosidade técnica que renova nossas entregas.',
+        'Tudo roda no seu ambiente, versionado e documentado. Nada de caixa preta nem dependência obrigatória da Britech.',
     },
     {
-      icon: Users,
-      title: 'Parceria genuína',
+      icon: BarChart3,
+      title: 'Métricas antes de opinião',
       description:
-        'Tratamos clientes como parceiros — entendemos a operação antes de propor solução.',
+        'Começamos por uma linha de base e medimos o antes e o depois com os dados do seu próprio tracker.',
     },
   ];
 
-  const stack = [
-    'React', 'Next.js', 'TypeScript', 'Node.js',
-    'Python', 'PostgreSQL', 'MongoDB', 'Redis',
-    'AWS', 'Cloudflare', 'Docker', 'Kubernetes',
-    'GraphQL', 'REST APIs', 'React Native', 'Tailwind',
+  const facts = [
+    ['8+ anos', 'em engenharia de software (desde 2018)'],
+    ['8 empresas', 'na trajetória de quem conduz, incluindo pagamentos e SaaS de saúde'],
+    ['2023', 'fundação da Britech, em Blumenau (SC)'],
+    ['DAG', 'harness próprio, em produção num SaaS B2B'],
   ];
 
   return (
     <div className="flex flex-col">
       <HeroSection
-        title="Sobre a Britech, software house em Blumenau"
-        highlightWord="Blumenau"
-        subtitle="Conheça nossa história"
-        description="Software house brasileira sediada em Blumenau (SC), dedicada a transformar negócios com tecnologia de qualidade — sob medida, sem caixa preta."
-        showSecondary={false}
+        title="Uma consultoria enxuta, conduzida por quem desenha a arquitetura"
+        highlightWord="quem desenha a arquitetura"
+        subtitle="Sobre a Britech"
+        description="A Britech é uma consultoria de arquitetura e desenvolvimento acelerado por IA para empresas que constroem SaaS e produtos B2B. Fundada em 2023, em Blumenau (SC), atende empresas de todo o Brasil."
+        secondary={{ text: 'Conhecer o DAG', href: ROUTES.dag }}
       />
 
-      {/* História */}
-      <section className="py-20 md:py-28">
+      {/* Quem conduz */}
+      <section aria-labelledby="quem-titulo" className="py-20 md:py-28 overflow-hidden">
         <div className="container">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-20 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,360px)_minmax(0,1fr)] gap-12 lg:gap-16 items-start">
+            <div className="p-8 rounded-3xl glass-card brand-glow flex flex-col items-center text-center gap-5">
+              <div
+                aria-hidden="true"
+                className="w-32 h-32 rounded-full bg-gradient-to-br from-[#0A84FF] to-[#00D4FF] flex items-center justify-center text-4xl font-extrabold text-[#0B1220]"
+              >
+                AB
+              </div>
+              <div>
+                <p className="text-2xl font-bold text-white">Alexander Brito</p>
+                <p className="text-white/80">Fundador · Arquiteto de software</p>
+              </div>
+              <p className="flex items-center gap-2 text-sm text-white/75">
+                <MapPin size={15} aria-hidden="true" />
+                Blumenau, SC
+              </p>
+              <a
+                href={CONTACT.linkedin}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 text-sm font-semibold text-[color:var(--brand-cyan)] no-underline"
+              >
+                <Linkedin size={16} aria-hidden="true" />
+                Britech no LinkedIn
+              </a>
+            </div>
+
             <div>
               <span className="inline-block text-xs font-bold text-[color:var(--brand-cyan)] uppercase tracking-[0.2em] mb-4">
-                Nossa história
+                Quem conduz
               </span>
-              <h2 className="mb-8 text-white">
-                Tecnologia que <span className="text-gradient-brand">ilumina</span> soluções
+              <h2 id="quem-titulo" className="mb-8 text-white">
+                Você fala com quem <span className="text-gradient-brand">desenha a arquitetura</span>
               </h2>
-              <div className="space-y-4 text-white/70 text-lg leading-relaxed">
+              <div className="space-y-4 text-white/80 text-lg leading-relaxed">
                 <p>
-                  A Britech nasceu da convicção de que software bem feito muda operações inteiras.
-                  Reunimos profissionais apaixonados por tecnologia e com experiência real em
-                  ambientes de produção.
+                  Alexander Brito trabalha com engenharia de software desde 2018. Nesses mais de 8
+                  anos passou por 8 empresas e construiu sistemas regulados pelo Banco Central,
+                  plataformas de pagamento e SaaS de saúde — ambientes em que uma decisão de
+                  arquitetura errada custa caro.
                 </p>
                 <p>
-                  Trabalhamos para empresas que querem mais que um sistema genérico — querem uma
-                  solução que reflete exatamente como elas operam e que cresce junto com elas.
+                  Em 2023 fundou a Britech para levar essa experiência a empresas que constroem SaaS e
+                  produtos B2B. É dele o DAG (Desenvolvimento Autônomo Governado), o harness em que
+                  agentes de IA executam a tarefa inteira e as pessoas decidem nos gates — hoje em
+                  produção no CRM da Renke Studio, cliente da Britech.
                 </p>
                 <p>
-                  Excelência técnica, comunicação clara e proximidade real com o cliente. É assim
-                  que construímos parcerias duradouras.
+                  O modelo é enxuto de propósito: sem camadas de gerente de conta entre você e a
+                  decisão técnica. Quem faz o diagnóstico é quem desenha e acompanha a implantação.
                 </p>
               </div>
-            </div>
-            <div className="relative">
-              <div className="absolute -inset-6 bg-gradient-to-br from-[#0A84FF]/30 to-[#00D4FF]/20 rounded-3xl blur-2xl" />
-              <div className="relative aspect-square rounded-3xl glass-card overflow-hidden flex items-center justify-center p-12">
-                <img
-                  src="/images/team-abstract.webp"
-                  alt="Equipe de desenvolvimento da Britech, software house em Blumenau, Santa Catarina"
-                  width={1100}
-                  height={733}
-                  loading="lazy"
-                  decoding="async"
-                  className="w-full h-full object-cover rounded-2xl opacity-80"
-                />
-              </div>
+              <Link
+                href={ROUTES.caseRenke}
+                className="mt-8 inline-flex items-center gap-2 text-[color:var(--brand-cyan)] font-semibold hover:gap-3 transition-all no-underline"
+              >
+                Ver o case CRM Renke
+                <ArrowRight size={18} aria-hidden="true" />
+              </Link>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Valores */}
-      <section className="py-20 md:py-28 bg-[#070D18]/60 border-y border-white/5">
+      {/* Fatos */}
+      <section aria-label="A Britech em números" className="py-16 md:py-20 border-y border-white/5 bg-[#070D18]/40">
         <div className="container">
-          <div className="max-w-3xl mb-14">
-            <span className="inline-block text-xs font-bold text-[color:var(--brand-cyan)] uppercase tracking-[0.2em] mb-4">
-              Nossos valores
-            </span>
-            <h2 className="mb-4 text-white">O que nos guia no dia a dia</h2>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {values.map((v) => {
-              const Icon = v.icon;
-              return (
-                <div key={v.title} className="p-8 rounded-2xl glass-card">
-                  <div className="mb-5 inline-flex items-center justify-center w-14 h-14 rounded-xl bg-gradient-to-br from-[#0A84FF]/20 to-[#00D4FF]/10 border border-[color:var(--brand-blue)]/30">
-                    <Icon size={26} className="text-[color:var(--brand-cyan)]" />
-                  </div>
-                  <h3 className="mb-3 text-xl font-semibold text-white">{v.title}</h3>
-                  <p className="text-white/65 leading-relaxed">{v.description}</p>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
-      {/* Métricas */}
-      <section className="py-20 md:py-28">
-        <div className="container">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center md:text-left">
-            {[
-              ['50+', 'Projetos entregues'],
-              ['30+', 'Clientes atendidos'],
-              ['8+', 'Anos de experiência'],
-              ['100%', 'Dedicação a cada cliente'],
-            ].map(([num, label]) => (
-              <div key={label}>
-                <div className="text-4xl md:text-5xl font-extrabold text-gradient-brand mb-2">
-                  {num}
-                </div>
-                <p className="text-white/60">{label}</p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+            {facts.map(([num, label]) => (
+              <div key={num}>
+                <div className="text-4xl md:text-5xl font-extrabold text-gradient-brand mb-2">{num}</div>
+                <p className="text-white/80">{label}</p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Stack */}
-      <section className="py-20 md:py-28 bg-[#070D18]/60 border-y border-white/5">
+      {/* Princípios */}
+      <section aria-labelledby="principios-titulo" className="py-20 md:py-28">
         <div className="container">
-          <div className="max-w-3xl mb-14">
-            <span className="inline-block text-xs font-bold text-[color:var(--brand-cyan)] uppercase tracking-[0.2em] mb-4">
-              Stack
-            </span>
-            <h2 className="mb-4 text-white">Tecnologias que usamos</h2>
-            <p className="text-lg text-white/70">
-              Ferramentas modernas, maduras e bem estabelecidas — escolhidas pelo encaixe com o problema,
-              não pela moda.
+          <SectionHeader
+            id="principios-titulo"
+            eyebrow="Princípios"
+            title="Arquitetura como decisão de negócio"
+            lead="Cada escolha técnica afeta margem, prazo e risco. Por isso trabalhamos com três princípios fixos."
+          />
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {principles.map(({ icon: Icon, title, description }) => (
+              <div key={title} className="p-8 rounded-2xl glass-card">
+                <div className="mb-5 inline-flex items-center justify-center w-14 h-14 rounded-xl bg-gradient-to-br from-[#0A84FF]/20 to-[#00D4FF]/10 border border-[color:var(--brand-blue)]/30">
+                  <Icon size={26} aria-hidden="true" className="text-[color:var(--brand-cyan)]" />
+                </div>
+                <h3 className="mb-3 text-xl font-semibold text-white">{title}</h3>
+                <p className="text-white/75 leading-relaxed">{description}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Onde estamos */}
+      <section aria-labelledby="onde-titulo" className="py-20 md:py-24 bg-[#070D18]/60 border-y border-white/5">
+        <div className="container">
+          <div className="max-w-3xl">
+            <SectionHeader eyebrow="Onde estamos" id="onde-titulo" title="Base em Blumenau, atuação em todo o Brasil" />
+            <p className="-mt-6 text-lg text-white/80 leading-relaxed">
+              A Britech tem base em Blumenau, Santa Catarina, e trabalha de forma remota com empresas
+              de todo o país: diagnóstico e acompanhamento por vídeo, implantação no ambiente do
+              cliente e comunicação direta com quem conduz o projeto.
             </p>
           </div>
-
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
-            {stack.map((tech) => (
-              <div
-                key={tech}
-                className="px-4 py-4 rounded-xl glass-card text-center font-medium text-white/85 hover:border-[color:var(--brand-blue)]/40 hover:text-[color:var(--brand-cyan)] transition-colors flex items-center justify-center gap-2"
-              >
-                <Code2 size={16} className="text-[color:var(--brand-cyan)]/70" />
-                {tech}
-              </div>
-            ))}
-          </div>
         </div>
       </section>
+
+      <CtaSection />
     </div>
   );
 }

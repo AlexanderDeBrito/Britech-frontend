@@ -55,7 +55,7 @@ async function main() {
   await buildSsrBundle();
 
   const entry = pathToFileURL(path.join(ssrOut, 'entry-server.js')).href;
-  const { render, INDEXABLE_PATHS, PAGES, SITE, getPageSeo, headTagsForPath, renderHeadTags } =
+  const { render, INDEXABLE_PATHS, absoluteUrl, getPageSeo, headTagsForPath, renderHeadTags } =
     await import(entry);
 
   const template = await fs.readFile(path.join(clientOut, 'index.html'), 'utf8');
@@ -65,7 +65,8 @@ async function main() {
   const routes = [...INDEXABLE_PATHS, '/404'];
 
   for (const routePath of routes) {
-    const appHtml = render(routePath);
+    // Renderiza na URL final (com barra), a mesma que o navegador hidrata.
+    const appHtml = render(routePath === '/' || routePath === '/404' ? routePath : `${routePath}/`);
     const headHtml = renderHeadTags(headTagsForPath(routePath));
 
     let html = injectHead(template, headHtml);
@@ -76,7 +77,7 @@ async function main() {
     await fs.writeFile(file, html, 'utf8');
 
     const kb = (Buffer.byteLength(html) / 1024).toFixed(1);
-    log(`${routePath.padEnd(12)} → ${path.relative(root, file)} (${kb} kB)`);
+    log(`${routePath.padEnd(18)} → ${path.relative(root, file)} (${kb} kB)`);
   }
 
   // Sitemap sempre em sincronia com as rotas realmente geradas.
@@ -88,7 +89,7 @@ async function main() {
       const page = getPageSeo(p);
       return [
         '  <url>',
-        `    <loc>${SITE.url}${p === '/' ? '/' : p}</loc>`,
+        `    <loc>${absoluteUrl(p)}</loc>`,
         `    <lastmod>${lastmod}</lastmod>`,
         `    <changefreq>${page.changefreq}</changefreq>`,
         `    <priority>${page.priority.toFixed(1)}</priority>`,

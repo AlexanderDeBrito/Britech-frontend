@@ -1,4 +1,5 @@
-import { ArrowUpRight } from 'lucide-react';
+import { ArrowRight, ArrowUpRight } from 'lucide-react';
+import { Link } from 'wouter';
 
 interface CaseCardProps {
   image: string;
@@ -8,6 +9,7 @@ interface CaseCardProps {
   description: string;
   technologies: string[];
   link?: string;
+  href?: string;
 }
 
 export function CaseCard({
@@ -18,6 +20,7 @@ export function CaseCard({
   description,
   technologies,
   link,
+  href,
 }: CaseCardProps) {
   const card = (
     <div className="group h-full flex flex-col overflow-hidden rounded-2xl glass-card hover:border-[color:var(--brand-blue)]/50 transition-all duration-300 hover:-translate-y-1">
@@ -43,7 +46,7 @@ export function CaseCard({
       {/* Content */}
       <div className="p-6 flex flex-col flex-1">
         {client && (
-          <span className="text-xs font-semibold text-white/50 uppercase tracking-wider mb-1">
+          <span className="text-xs font-semibold text-white/70 uppercase tracking-wider mb-1">
             {client}
           </span>
         )}
@@ -51,7 +54,7 @@ export function CaseCard({
           {title}
         </h3>
 
-        <p className="mb-4 text-white/65 text-sm leading-relaxed flex-1">{description}</p>
+        <p className="mb-4 text-white/75 text-sm leading-relaxed flex-1">{description}</p>
 
         <div className="flex flex-wrap gap-2 mb-4">
           {technologies.map((tech) => (
@@ -64,15 +67,30 @@ export function CaseCard({
           ))}
         </div>
 
-        {link && (
+        {href ? (
           <div className="flex items-center gap-2 text-[color:var(--brand-cyan)] font-semibold text-sm group-hover:gap-3 transition-all">
-            Visitar projeto
-            <ArrowUpRight size={16} />
+            Ler o case
+            <ArrowRight size={16} aria-hidden="true" />
           </div>
+        ) : (
+          link && (
+            <div className="flex items-center gap-2 text-[color:var(--brand-cyan)] font-semibold text-sm group-hover:gap-3 transition-all">
+              Conhecer o produto
+              <ArrowUpRight size={16} aria-hidden="true" />
+            </div>
+          )
         )}
       </div>
     </div>
   );
+
+  if (href) {
+    return (
+      <Link href={href} className="no-underline block h-full">
+        {card}
+      </Link>
+    );
+  }
 
   if (link) {
     return (

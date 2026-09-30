@@ -1,181 +1,137 @@
-import { Code2, Zap, Workflow, Database, Cloud, Smartphone, Globe2, Cpu, ArrowRight, Check } from 'lucide-react';
 import { Link } from 'wouter';
+import { ArrowRight, Bot, Layers, Plug, Cloud, AlertCircle, Check } from 'lucide-react';
 import { HeroSection } from '@/components/HeroSection';
-import { ServiceCard } from '@/components/ServiceCard';
+import { CtaSection, SectionHeader } from '@/components/Section';
+import { ROUTES } from '@/lib/contact';
+
+interface Service {
+  icon: typeof Bot;
+  title: string;
+  description: string;
+  items: string[];
+  signal: string;
+  result: string;
+  href?: string;
+}
 
 export default function Services() {
-  const mainServices = [
-    {
-      icon: Code2,
-      title: 'Software sob medida',
-      description:
-        'Sistemas web e desktop exclusivos para o seu processo. Arquitetura escalável, código limpo e foco em manutenibilidade.',
-    },
-    {
-      icon: Workflow,
-      title: 'Automação de processos',
-      description:
-        'Conectamos sistemas, eliminamos retrabalho e digitalizamos fluxos manuais. Mais produtividade com menos erros.',
-    },
-    {
-      icon: Globe2,
-      title: 'Sites e landing pages',
-      description:
-        'Sites profissionais, performáticos e otimizados para SEO e conversão. Identidade visual alinhada à sua marca.',
-    },
-  ];
+  const flagship: Service = {
+    icon: Bot,
+    title: 'Implantação do DAG',
+    description:
+      'O DAG (Desenvolvimento Autônomo Governado) instalado no seu time: agentes de IA executam a tarefa inteira — especificação, código, 4 revisões independentes (uma por um modelo de outro fornecedor), deploy e testes Playwright com revert automático — e as pessoas decidem nos gates.',
+    items: [
+      'Diagnóstico de 1 semana com linha de base de métricas',
+      'Implantação de 2–3 semanas no seu repositório, tracker e pipeline',
+      'Piloto medido de 30 dias com relatório antes e depois',
+    ],
+    signal: 'O time já usa IA para programar, mas a revisão virou gargalo e a qualidade oscila.',
+    result: 'Mais entrega por pessoa, com critério de aceite e revisão garantidos por gates.',
+    href: ROUTES.dag,
+  };
 
-  const additionalServices = [
+  const services: Service[] = [
     {
-      icon: Cpu,
-      title: 'Aplicações específicas',
-      description: 'Ferramentas internas, dashboards e portais customizados para resolver um problema preciso.',
+      icon: Layers,
+      title: 'Arquitetura de SaaS e B2B',
+      description:
+        'Revisão e desenho da arquitetura do produto: modelo de dados, isolamento entre clientes, autenticação e permissões, filas e escalabilidade.',
+      items: ['Revisão de arquitetura com relatório de riscos', 'Decisões registradas com critério e dono', 'Plano de evolução sem reescrever do zero'],
+      signal: 'Cada cliente novo exige ajuste manual, ou o sistema fica mais lento a cada mês.',
+      result: 'Crescer em clientes sem crescer na mesma proporção em custo e retrabalho.',
     },
     {
-      icon: Database,
-      title: 'Integrações e APIs',
-      description: 'Integração com ERPs, CRMs, gateways de pagamento e qualquer serviço externo com API.',
+      icon: Plug,
+      title: 'Integrações e pagamentos',
+      description:
+        'Integrações que não podem falhar: WhatsApp (API oficial), meios de pagamento, sistemas regulados e APIs de parceiros.',
+      items: ['Idempotência, reprocessamento e conciliação', 'Observabilidade de ponta a ponta', 'Experiência com sistemas regulados pelo Banco Central'],
+      signal: 'Parte da operação ainda é conferência manual de pagamentos ou mensagens perdidas.',
+      result: 'Menos operação manual e integrações que se recuperam sozinhas.',
     },
     {
       icon: Cloud,
-      title: 'Infraestrutura em nuvem',
-      description: 'Deploy, monitoramento e gestão em AWS, Google Cloud, Azure ou Cloudflare.',
-    },
-    {
-      icon: Smartphone,
-      title: 'Aplicativos mobile',
-      description: 'Apps multiplataforma com React Native — iOS e Android com uma única base de código.',
-    },
-    {
-      icon: Zap,
-      title: 'Otimização e refatoração',
-      description: 'Damos uma sobrevida ao sistema legado — performance, segurança e manutenibilidade.',
-    },
-    {
-      icon: Code2,
-      title: 'Consultoria técnica',
-      description: 'Avaliação de arquitetura, code review e direcionamento técnico para o seu time.',
+      title: 'Nuvem e custos',
+      description:
+        'Revisão da infraestrutura, observabilidade e FinOps para que a conta da nuvem acompanhe a receita.',
+      items: ['Mapa de custo por componente', 'Ajustes de arquitetura com impacto medido', 'Alertas e painéis do que importa'],
+      signal: 'A fatura da nuvem cresce mais rápido que a base de clientes.',
+      result: 'Custo de infraestrutura proporcional ao uso e previsível.',
     },
   ];
 
-  const differentials = [
-    {
-      title: 'Expertise técnica',
-      items: [
-        'Stack moderna e escalável',
-        'Arquitetura limpa e bem documentada',
-        'Testes automatizados como padrão',
-        'Boas práticas de segurança',
-      ],
-    },
-    {
-      title: 'Parceria de verdade',
-      items: [
-        'Comunicação direta com quem desenvolve',
-        'Entregas semanais, sempre',
-        'Suporte e evolução após o lançamento',
-        'Transparência total de prazos e custos',
-      ],
-    },
-  ];
+  const Card = ({ s, big = false }: { s: Service; big?: boolean }) => {
+    const Icon = s.icon;
+    return (
+      <div className={`p-8 md:p-10 rounded-3xl glass-card flex flex-col ${big ? 'brand-glow' : ''}`}>
+        <div className="mb-6 inline-flex items-center justify-center w-14 h-14 rounded-xl bg-gradient-to-br from-[#0A84FF]/20 to-[#00D4FF]/10 border border-[color:var(--brand-blue)]/30">
+          <Icon size={26} aria-hidden="true" className="text-[color:var(--brand-cyan)]" />
+        </div>
+        <h3 className={`mb-4 font-semibold text-white ${big ? 'text-3xl' : 'text-2xl'}`}>{s.title}</h3>
+        <p className="text-white/80 leading-relaxed mb-6">{s.description}</p>
+        <ul className="space-y-2.5 mb-6">
+          {s.items.map((it) => (
+            <li key={it} className="flex gap-3 text-white/80">
+              <Check size={18} aria-hidden="true" className="text-[color:var(--brand-cyan)] flex-shrink-0 mt-1" />
+              {it}
+            </li>
+          ))}
+        </ul>
+        <div className="mt-auto space-y-3 pt-5 border-t border-white/10 text-sm">
+          <p className="flex gap-2 text-white/80">
+            <AlertCircle size={16} aria-hidden="true" className="text-[color:var(--brand-cyan)] flex-shrink-0 mt-0.5" />
+            <span>
+              <strong className="text-white">Sinal de que você precisa:</strong> {s.signal}
+            </span>
+          </p>
+          <p className="text-white/80">
+            <strong className="text-white">Resultado:</strong> {s.result}
+          </p>
+        </div>
+        {s.href && (
+          <Link href={s.href} className="mt-6 inline-flex items-center gap-2 text-[color:var(--brand-cyan)] font-semibold hover:gap-3 transition-all no-underline">
+            Como o DAG funciona
+            <ArrowRight size={18} aria-hidden="true" />
+          </Link>
+        )}
+      </div>
+    );
+  };
 
   return (
     <div className="flex flex-col">
       <HeroSection
-        title="Serviços de desenvolvimento de software sob medida"
-        highlightWord="sob medida"
-        subtitle="Soluções completas · Blumenau, SC"
-        description="Sistemas, automação de processos, criação de sites, integrações e APIs, apps mobile e consultoria técnica — do briefing à manutenção contínua."
-        showSecondary={false}
+        title="Serviços: DAG e arquitetura para SaaS e B2B"
+        highlightWord="DAG"
+        subtitle="Arquitetura como decisão de negócio"
+        description="A oferta principal é a implantação do DAG. Em volta dela, o que um produto B2B precisa para crescer sem reescrever: arquitetura, integrações e nuvem sob controle."
+        secondary={{ text: 'Conhecer o DAG', href: ROUTES.dag }}
       />
 
-      {/* Principais */}
-      <section aria-labelledby="principais-titulo" className="py-20 md:py-28">
+      <section aria-labelledby="principal-titulo" className="py-20 md:py-28">
         <div className="container">
-          <h2 id="principais-titulo" className="sr-only">
-            Principais serviços da Britech
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {mainServices.map((s) => (
-              <ServiceCard key={s.title} {...s} />
+          <SectionHeader id="principal-titulo" eyebrow="Oferta principal" title="Desenvolvimento acelerado por IA, com governança" />
+          <Card s={flagship} big />
+        </div>
+      </section>
+
+      <section aria-labelledby="outros-titulo" className="py-20 md:py-28 bg-[#070D18]/60 border-y border-white/5">
+        <div className="container">
+          <SectionHeader
+            id="outros-titulo"
+            eyebrow="Arquitetura"
+            title="Para quem constrói SaaS e produtos B2B"
+            lead="Serviços contratados sozinhos ou como parte da implantação do DAG — sempre começando pelo diagnóstico gratuito."
+          />
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            {services.map((s) => (
+              <Card key={s.title} s={s} />
             ))}
           </div>
         </div>
       </section>
 
-      {/* Diferenciais */}
-      <section className="py-20 md:py-28 bg-[#070D18]/60 border-y border-white/5">
-        <div className="container">
-          <div className="max-w-3xl mb-14">
-            <span className="inline-block text-xs font-bold text-[color:var(--brand-cyan)] uppercase tracking-[0.2em] mb-4">
-              Por que Britech
-            </span>
-            <h2 className="mb-4 text-white">O que nos torna diferentes</h2>
-            <p className="text-lg text-white/70">
-              Expertise técnica é o mínimo. O que muda o jogo é como aplicamos isso na realidade de cada cliente.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {differentials.map((d) => (
-              <div key={d.title} className="p-8 rounded-2xl glass-card">
-                <h3 className="mb-5 text-2xl font-semibold text-white">{d.title}</h3>
-                <ul className="space-y-3">
-                  {d.items.map((item) => (
-                    <li key={item} className="flex gap-3 items-start">
-                      <div className="w-6 h-6 rounded-full bg-[color:var(--brand-blue)]/15 border border-[color:var(--brand-blue)]/40 flex items-center justify-center flex-shrink-0 mt-0.5">
-                        <Check size={14} className="text-[color:var(--brand-cyan)]" />
-                      </div>
-                      <span className="text-white/80">{item}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Adicionais */}
-      <section className="py-20 md:py-28">
-        <div className="container">
-          <div className="max-w-3xl mb-14">
-            <span className="inline-block text-xs font-bold text-[color:var(--brand-cyan)] uppercase tracking-[0.2em] mb-4">
-              Mais serviços
-            </span>
-            <h2 className="mb-4 text-white">Especializações complementares</h2>
-            <p className="text-lg text-white/70">
-              Para projetos com requisitos específicos, ampliamos nosso escopo com serviços especializados.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {additionalServices.map((s) => (
-              <ServiceCard key={s.title} {...s} />
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* CTA */}
-      <section className="py-20 md:py-28 relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-[#0A84FF]/15 via-transparent to-[#00D4FF]/10 -z-0" />
-        <div className="container relative z-10 text-center max-w-3xl mx-auto">
-          <h2 className="mb-6 text-white">
-            Vamos <span className="text-gradient-brand">trabalhar juntos</span>?
-          </h2>
-          <p className="text-lg text-white/70 mb-10">
-            Conte sobre seu desafio. Em até 24h respondemos com um direcionamento.
-          </p>
-          <Link
-            href="/contato"
-            className="btn-brand inline-flex items-center gap-2 px-8 py-4 rounded-full font-semibold no-underline"
-          >
-            Iniciar conversa
-            <ArrowRight size={18} />
-          </Link>
-        </div>
-      </section>
+      <CtaSection />
     </div>
   );
 }

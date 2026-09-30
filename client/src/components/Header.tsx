@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Menu, X, ArrowRight } from 'lucide-react';
 import { Link, useLocation } from 'wouter';
 import { Logo } from './Logo';
+import { ROUTES } from '@/lib/contact';
 
 export function Header() {
   const [isOpen, setIsOpen] = useState(false);
@@ -20,11 +21,19 @@ export function Header() {
   }, [location]);
 
   const navItems = [
-    { label: 'Serviços', href: '/servicos' },
-    { label: 'Sobre', href: '/sobre' },
-    { label: 'Cases', href: '/cases' },
-    { label: 'Contato', href: '/contato' },
+    { label: 'DAG', href: ROUTES.dag },
+    { label: 'Serviços', href: ROUTES.servicos },
+    { label: 'Cases', href: ROUTES.cases },
+    { label: 'Sobre', href: ROUTES.sobre },
   ];
+
+  // Compara sem a barra final; /cases/crm-renke também marca "Cases".
+  const norm = (p: string) => p.replace(/\/+$/, '') || '/';
+  const isActive = (href: string) => {
+    const here = norm(location);
+    const target = norm(href);
+    return here === target || here.startsWith(`${target}/`);
+  };
 
   return (
     <header
@@ -39,7 +48,7 @@ export function Header() {
         className="container flex items-center justify-between h-20"
       >
         <Link
-          href="/"
+          href={ROUTES.home}
           aria-label="Britech — página inicial"
           className="no-underline hover:opacity-90 transition-opacity"
         >
@@ -48,7 +57,7 @@ export function Header() {
 
         <div className="hidden md:flex items-center gap-8">
           {navItems.map((item) => {
-            const active = location === item.href;
+            const active = isActive(item.href);
             return (
               <Link
                 key={item.href}
@@ -66,10 +75,10 @@ export function Header() {
 
         <div className="hidden md:flex">
           <Link
-            href="/contato"
+            href={ROUTES.diagnostico}
             className="btn-brand inline-flex items-center gap-2 px-5 py-2.5 rounded-full font-semibold text-sm no-underline"
           >
-            Fale com um especialista
+            Agendar diagnóstico
             <ArrowRight size={16} />
           </Link>
         </div>
@@ -101,10 +110,10 @@ export function Header() {
               </Link>
             ))}
             <Link
-              href="/contato"
+              href={ROUTES.diagnostico}
               className="btn-brand mt-2 inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full font-semibold no-underline"
             >
-              Fale com um especialista
+              Agendar diagnóstico
               <ArrowRight size={16} />
             </Link>
           </div>

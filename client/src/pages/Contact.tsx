@@ -1,8 +1,9 @@
 import { useState } from 'react';
+import { Link } from 'wouter';
 import { HeroSection } from '@/components/HeroSection';
 import { Mail, Phone, MapPin, Loader2, CheckCircle2, ArrowRight } from 'lucide-react';
 import { WhatsAppIcon } from '@/components/WhatsAppButton';
-import { CONTACT, whatsappUrl } from '@/lib/contact';
+import { CONTACT, ROUTES, whatsappUrl } from '@/lib/contact';
 
 export default function Contact() {
   const [formData, setFormData] = useState({
@@ -64,16 +65,17 @@ export default function Contact() {
   ];
 
   const inputClass =
-    'w-full px-4 py-3 rounded-xl border border-white/10 bg-white/5 text-white placeholder:text-white/30 focus:outline-none focus:border-[color:var(--brand-blue)]/60 focus:bg-white/10 focus:ring-2 focus:ring-[color:var(--brand-blue)]/20 transition-all';
+    'w-full px-4 py-3 rounded-xl border border-white/10 bg-white/5 text-white placeholder:text-white/50 focus:outline-none focus:border-[color:var(--brand-blue)]/60 focus:bg-white/10 focus:ring-2 focus:ring-[color:var(--brand-blue)]/20 transition-all';
 
   return (
     <div className="flex flex-col">
       <HeroSection
-        title="Vamos conversar sobre o seu projeto"
+        title="Vamos conversar sobre o seu time"
         highlightWord="conversar"
-        subtitle="Contato · Blumenau, SC"
-        description="Conte o que você precisa. Respondemos em até 24h com um direcionamento gratuito, sem compromisso."
-        showSecondary={false}
+        subtitle="Contato"
+        description="Conte como o seu time desenvolve hoje e o que quer destravar. O primeiro passo é o diagnóstico gratuito de 30 minutos, sem compromisso."
+        ctaText="Ver como é o diagnóstico"
+        secondary={{ text: 'Conhecer o DAG', href: ROUTES.dag }}
       />
 
       <section className="py-20 md:py-28">
@@ -111,7 +113,7 @@ export default function Contact() {
             </span>
             <h2 className="mb-8 text-white">Envie sua mensagem</h2>
 
-            <p className="text-white/60 mb-8 -mt-4">
+            <p className="text-white/75 mb-8 -mt-4">
               Preencha os campos e a conversa abre direto no nosso WhatsApp — sem espera, sem
               formulário perdido na caixa de entrada.
             </p>
@@ -128,7 +130,7 @@ export default function Contact() {
             <form onSubmit={handleSubmit} className="space-y-5">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                 <div>
-                  <label htmlFor="name" className="block text-sm font-medium text-white/80 mb-2">
+                  <label htmlFor="name" className="block text-sm font-medium text-white/85 mb-2">
                     Nome *
                   </label>
                   <input
@@ -143,7 +145,7 @@ export default function Contact() {
                   />
                 </div>
                 <div>
-                  <label htmlFor="email" className="block text-sm font-medium text-white/80 mb-2">
+                  <label htmlFor="email" className="block text-sm font-medium text-white/85 mb-2">
                     E-mail *
                   </label>
                   <input
@@ -161,7 +163,7 @@ export default function Contact() {
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                 <div>
-                  <label htmlFor="phone" className="block text-sm font-medium text-white/80 mb-2">
+                  <label htmlFor="phone" className="block text-sm font-medium text-white/85 mb-2">
                     Telefone
                   </label>
                   <input
@@ -175,7 +177,7 @@ export default function Contact() {
                   />
                 </div>
                 <div>
-                  <label htmlFor="company" className="block text-sm font-medium text-white/80 mb-2">
+                  <label htmlFor="company" className="block text-sm font-medium text-white/85 mb-2">
                     Empresa
                   </label>
                   <input
@@ -191,7 +193,7 @@ export default function Contact() {
               </div>
 
               <div>
-                <label htmlFor="message" className="block text-sm font-medium text-white/80 mb-2">
+                <label htmlFor="message" className="block text-sm font-medium text-white/85 mb-2">
                   Mensagem *
                 </label>
                 <textarea
@@ -202,14 +204,14 @@ export default function Contact() {
                   required
                   rows={6}
                   className={`${inputClass} resize-none`}
-                  placeholder="Conte sobre seu projeto ou desafio..."
+                  placeholder="Como o seu time desenvolve hoje e o que você quer destravar?"
                 />
               </div>
 
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full px-8 py-4 rounded-full font-semibold disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-2 bg-[#25D366] text-white shadow-[0_8px_30px_-6px_rgba(37,211,102,0.5)] hover:bg-[#1FBF5B] hover:-translate-y-0.5 transition-all"
+                className="w-full px-8 py-4 rounded-full font-semibold disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-2 bg-[#25D366] text-[#062A14] shadow-[0_8px_30px_-6px_rgba(37,211,102,0.5)] hover:bg-[#1FBF5B] hover:-translate-y-0.5 transition-all"
               >
                 {loading ? (
                   <>
@@ -225,9 +227,19 @@ export default function Contact() {
                 )}
               </button>
 
-              <p className="text-center text-sm text-white/40">
+              <p className="text-sm text-white/75 leading-relaxed">
+                Ao enviar, a mensagem com os dados acima é aberta no WhatsApp e só chega até nós
+                quando você a envia por lá. Usamos esses dados apenas para responder ao seu contato,
+                conforme a nossa{' '}
+                <Link href={ROUTES.privacidade} className="text-[color:var(--brand-cyan)] underline">
+                  Política de Privacidade
+                </Link>
+                .
+              </p>
+
+              <p className="text-center text-sm text-white/75">
                 Prefere e-mail? Escreva para{' '}
-                <a href={`mailto:${CONTACT.email}`} className="text-white/70 hover:text-[color:var(--brand-cyan)]">
+                <a href={`mailto:${CONTACT.email}`} className="text-[color:var(--brand-cyan)]">
                   {CONTACT.email}
                 </a>
               </p>

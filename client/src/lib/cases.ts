@@ -1,3 +1,5 @@
+import { ROUTES } from './contact';
+
 export interface CaseItem {
   image: string;
   title: string;
@@ -5,39 +7,32 @@ export interface CaseItem {
   category: string;
   description: string;
   technologies: string[];
+  /** Link externo (abre em nova aba). */
   link?: string;
+  /** Página interna do case. */
+  href?: string;
 }
 
 // Clientes reais que já consumiram serviços da Britech.
 export const CASES: CaseItem[] = [
   {
     image: '/images/services-pattern.webp',
-    title: 'CRM personalizado',
+    title: 'CRM Renke: DAG em produção',
     client: 'Renke Studio',
-    category: 'CRM sob medida',
+    category: 'DAG · SaaS B2B',
     description:
-      'CRM construído do zero para a operação da Renke Studio: gestão de clientes, pipeline e rotinas do estúdio em um só lugar, do jeito que o time trabalha.',
-    technologies: ['React', 'Node.js', 'PostgreSQL'],
-    link: 'https://renkestudio.com.br/',
-  },
-  {
-    image: '/images/cta-accent.webp',
-    title: 'Webpage + controle de vendas',
-    client: 'Troca Fácil',
-    category: 'Web app',
-    description:
-      'Presença digital e aplicação interna de controle de vendas: cadastro, acompanhamento e visão consolidada da operação comercial em tempo real.',
-    technologies: ['React', 'Node.js', 'Railway'],
-    link: 'https://troca-facil-production.up.railway.app/',
+      'Implantação do DAG num CRM SaaS em produção: 16h → 194h estimadas entregues por mês e ciclo mediano de 22 → 12 dias, com as pessoas decidindo só nos gates.',
+    technologies: ['DAG', 'Arquitetura SaaS', 'Revisão multi-modelo'],
+    href: ROUTES.caseRenke,
   },
   {
     image: '/images/team-abstract.webp',
     title: 'Previva — gestão de saúde',
     client: 'Datainfo',
-    category: 'Health tech',
+    category: 'SaaS de saúde',
     description:
       'Atuação como braço de desenvolvimento no Previva, produto de gestão de saúde da Datainfo — evolução de funcionalidades com qualidade de produto.',
     technologies: ['Desenvolvimento de produto', 'Squad dedicada'],
-    link: 'https://www.datainfo.inf.br/produto/previva/',
+    link: 'https://institucional.datainfo.inf.br/produto/previva/',
   },
 ];

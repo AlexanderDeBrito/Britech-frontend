@@ -2,7 +2,10 @@ import { Link } from 'wouter';
 import { Mail, Linkedin, Phone, MapPin } from 'lucide-react';
 import { Logo } from './Logo';
 import { WhatsAppIcon } from './WhatsAppButton';
-import { CONTACT, whatsappUrl } from '@/lib/contact';
+import { CONTACT, ROUTES, whatsappUrl } from '@/lib/contact';
+
+const linkClass =
+  'text-sm text-white/75 hover:text-[color:var(--brand-cyan)] transition-colors no-underline';
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
@@ -13,32 +16,33 @@ export function Footer() {
 
       <div className="container py-16">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
-          {/* Brand */}
+          {/* Marca */}
           <div className="md:col-span-1 flex flex-col gap-4">
-            <Link href="/" className="no-underline hover:opacity-90 transition-opacity w-fit">
+            <Link href={ROUTES.home} className="no-underline hover:opacity-90 transition-opacity w-fit">
               <Logo size={38} />
             </Link>
-            <p className="text-sm text-white/60 leading-relaxed">
-              Software house em Blumenau, Santa Catarina. Desenvolvimento de sistemas sob medida,
-              automação de processos e integrações para empresas de todo o Brasil.
+            <p className="text-sm text-white/75 leading-relaxed">
+              Consultoria enxuta de arquitetura e desenvolvimento acelerado por IA para empresas que
+              constroem SaaS e produtos B2B.
+            </p>
+            <p className="text-sm font-semibold text-[color:var(--brand-cyan)]">
+              Não são os agentes, são os gates.
             </p>
           </div>
 
-          {/* Serviços */}
+          {/* Oferta */}
           <div className="flex flex-col gap-4">
-            <h2 className="font-semibold text-white text-sm uppercase tracking-wider">Serviços</h2>
+            <h2 className="font-semibold text-white text-sm uppercase tracking-wider">Oferta</h2>
             <ul className="flex flex-col gap-2.5">
               {[
-                ['Software sob medida', '/servicos'],
-                ['Automação de processos', '/servicos'],
-                ['Sites e landing pages', '/servicos'],
-                ['Integrações e APIs', '/servicos'],
+                ['DAG — Desenvolvimento Autônomo Governado', ROUTES.dag],
+                ['Diagnóstico gratuito', ROUTES.diagnostico],
+                ['Arquitetura de SaaS e B2B', ROUTES.servicos],
+                ['Integrações e pagamentos', ROUTES.servicos],
+                ['Nuvem e custos', ROUTES.servicos],
               ].map(([label, href]) => (
                 <li key={label}>
-                  <Link
-                    href={href}
-                    className="text-sm text-white/60 hover:text-[color:var(--brand-cyan)] transition-colors no-underline"
-                  >
+                  <Link href={href} className={linkClass}>
                     {label}
                   </Link>
                 </li>
@@ -50,21 +54,19 @@ export function Footer() {
           <div className="flex flex-col gap-4">
             <h2 className="font-semibold text-white text-sm uppercase tracking-wider">Empresa</h2>
             <ul className="flex flex-col gap-2.5">
-              <li>
-                <Link href="/sobre" className="text-sm text-white/60 hover:text-[color:var(--brand-cyan)] transition-colors no-underline">
-                  Sobre nós
-                </Link>
-              </li>
-              <li>
-                <Link href="/cases" className="text-sm text-white/60 hover:text-[color:var(--brand-cyan)] transition-colors no-underline">
-                  Cases
-                </Link>
-              </li>
-              <li>
-                <Link href="/contato" className="text-sm text-white/60 hover:text-[color:var(--brand-cyan)] transition-colors no-underline">
-                  Contato
-                </Link>
-              </li>
+              {[
+                ['Sobre', ROUTES.sobre],
+                ['Cases', ROUTES.cases],
+                ['Case CRM Renke', ROUTES.caseRenke],
+                ['Contato', ROUTES.contato],
+                ['Política de Privacidade', ROUTES.privacidade],
+              ].map(([label, href]) => (
+                <li key={label}>
+                  <Link href={href} className={linkClass}>
+                    {label}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
 
@@ -72,33 +74,27 @@ export function Footer() {
           <div className="flex flex-col gap-4">
             <h2 className="font-semibold text-white text-sm uppercase tracking-wider">Contato</h2>
             <div className="flex flex-col gap-3">
-              <a
-                href={`mailto:${CONTACT.email}`}
-                className="flex items-center gap-2 text-sm text-white/60 hover:text-[color:var(--brand-cyan)] transition-colors no-underline"
-              >
-                <Mail size={15} />
+              <a href={`mailto:${CONTACT.email}`} className={`flex items-center gap-2 break-all ${linkClass}`}>
+                <Mail size={15} aria-hidden="true" className="flex-shrink-0" />
                 {CONTACT.email}
               </a>
               <a
                 href={whatsappUrl()}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-2 text-sm text-white/60 hover:text-[#25D366] transition-colors no-underline"
+                className="flex items-center gap-2 text-sm text-white/75 hover:text-[#25D366] transition-colors no-underline"
               >
                 <span className="text-[#25D366]"><WhatsAppIcon size={15} /></span>
                 {CONTACT.phoneDisplay} (WhatsApp)
               </a>
-              <a
-                href={`tel:${CONTACT.phoneE164}`}
-                className="flex items-center gap-2 text-sm text-white/60 hover:text-[color:var(--brand-cyan)] transition-colors no-underline"
-              >
-                <Phone size={15} />
+              <a href={`tel:${CONTACT.phoneE164}`} className={`flex items-center gap-2 ${linkClass}`}>
+                <Phone size={15} aria-hidden="true" />
                 {CONTACT.phoneDisplay}
               </a>
-              <address className="flex items-start gap-2 text-sm text-white/60 not-italic">
+              <address className="flex items-start gap-2 text-sm text-white/75 not-italic">
                 <MapPin size={15} aria-hidden="true" className="mt-0.5 flex-shrink-0" />
                 <span>
-                  Britech
+                  Britech Soluções
                   <br />
                   Blumenau — Santa Catarina, Brasil
                 </span>
@@ -107,9 +103,9 @@ export function Footer() {
                 href={CONTACT.linkedin}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-2 text-sm text-white/60 hover:text-[color:var(--brand-cyan)] transition-colors"
+                className={`flex items-center gap-2 ${linkClass}`}
               >
-                <Linkedin size={15} />
+                <Linkedin size={15} aria-hidden="true" />
                 LinkedIn
               </a>
             </div>
@@ -118,12 +114,15 @@ export function Footer() {
 
         <div className="border-t border-white/10 mb-6" />
 
-        <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-          <p className="text-sm text-white/40">
-            © {currentYear} Britech. Todos os direitos reservados.
+        <div className="flex flex-col md:flex-row items-center justify-between gap-4 text-center md:text-left">
+          <p className="text-sm text-white/70">
+            © {currentYear} Britech Soluções. Todos os direitos reservados.{' '}
+            <Link href={ROUTES.privacidade} className="text-white/80 hover:text-[color:var(--brand-cyan)]">
+              Política de Privacidade
+            </Link>
           </p>
-          <p className="text-sm text-white/40">
-            Software house em Blumenau, SC — atendemos todo o Brasil
+          <p className="text-sm text-white/70">
+            Blumenau, SC · atendimento remoto em todo o Brasil
           </p>
         </div>
       </div>

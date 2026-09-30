@@ -12,6 +12,10 @@ import Services from "./pages/Services";
 import About from "./pages/About";
 import Cases from "./pages/Cases";
 import Contact from "./pages/Contact";
+import Dag from "./pages/Dag";
+import CaseRenke from "./pages/CaseRenke";
+import Diagnostico from "./pages/Diagnostico";
+import Privacidade from "./pages/Privacidade";
 
 /** Navegação client-side não reposiciona o scroll sozinha. */
 function ScrollToTop() {
@@ -34,10 +38,14 @@ function Router() {
       <main id="conteudo">
         <Switch>
           <Route path="/" component={Home} />
+          <Route path="/dag" component={Dag} />
           <Route path="/servicos" component={Services} />
           <Route path="/sobre" component={About} />
           <Route path="/cases" component={Cases} />
+          <Route path="/cases/crm-renke" component={CaseRenke} />
+          <Route path="/diagnostico" component={Diagnostico} />
           <Route path="/contato" component={Contact} />
+          <Route path="/privacidade" component={Privacidade} />
           <Route path="/404" component={NotFound} />
           {/* Final fallback route */}
           <Route component={NotFound} />

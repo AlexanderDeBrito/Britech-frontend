@@ -15,5 +15,5 @@ export function render(url: string): string {
   );
 }
 
-export { INDEXABLE_PATHS, PAGES, SITE, getPageSeo } from './lib/seo';
+export { INDEXABLE_PATHS, PAGES, SITE, absoluteUrl, getPageSeo } from './lib/seo';
 export { headTagsForPath, renderHeadTags } from './lib/seo-head';

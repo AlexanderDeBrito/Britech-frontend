@@ -22,9 +22,8 @@ export function FaqSection() {
           <h2 id="faq-titulo" className="mb-5 text-white">
             Perguntas que sempre nos fazem
           </h2>
-          <p className="text-lg text-white/70">
-            Se a sua dúvida não estiver aqui, fale com a gente pelo WhatsApp — respondemos em até
-            24 horas.
+          <p className="text-lg text-white/75">
+            Se a sua dúvida não estiver aqui, traga para o diagnóstico gratuito de 30 minutos.
           </p>
         </div>
 
@@ -44,7 +43,7 @@ export function FaqSection() {
                 />
               </summary>
               <div className="px-6 pb-6 -mt-1">
-                <p className="text-white/70 leading-relaxed">{item.answer}</p>
+                <p className="text-white/80 leading-relaxed">{item.answer}</p>
               </div>
             </details>
           ))}
