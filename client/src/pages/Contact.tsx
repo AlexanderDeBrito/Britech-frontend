@@ -1,9 +1,17 @@
-import { useState } from 'react';
-import { Link } from 'wouter';
+import { useEffect, useState } from 'react';
+import { Link, useSearch } from 'wouter';
 import { HeroSection } from '@/components/HeroSection';
 import { Mail, Phone, MapPin, Loader2, CheckCircle2, ArrowRight } from 'lucide-react';
 import { WhatsAppIcon } from '@/components/WhatsAppButton';
 import { CONTACT, ROUTES, whatsappUrl } from '@/lib/contact';
+
+const PRESETS: Record<string, string> = {
+  'pre-venda-lancamentos':
+    'Tenho um escritório de contabilidade e quero entrar na pré-venda do Assistente de Lançamentos. Posso enviar 1 extrato para teste, com os dados sensíveis cobertos. Sistema contábil que usamos: ',
+  'teste-lancamentos':
+    'Tenho um escritório de contabilidade e quero testar o Assistente de Lançamentos com 1 extrato (com os dados sensíveis cobertos). Sistema contábil que usamos: ',
+  diagnostico: 'Quero agendar o diagnóstico gratuito de 30 minutos. Hoje o nosso time desenvolve assim: ',
+};
 
 export default function Contact() {
   const [formData, setFormData] = useState({
@@ -14,6 +22,16 @@ export default function Contact() {
     message: '',
   });
   const [loading, setLoading] = useState(false);
+  const search = useSearch();
+
+  // Links como /contato/?assunto=pre-venda-lancamentos chegam com a mensagem
+  // pronta. Roda só no cliente, depois da hidratação, para não divergir do HTML
+  // pré-renderizado.
+  useEffect(() => {
+    const assunto = new URLSearchParams(search).get('assunto');
+    const preset = assunto ? PRESETS[assunto] : undefined;
+    if (preset) setFormData((prev) => (prev.message ? prev : { ...prev, message: preset }));
+  }, [search]);
   const [submitted, setSubmitted] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -70,12 +88,12 @@ export default function Contact() {
   return (
     <div className="flex flex-col">
       <HeroSection
-        title="Vamos conversar sobre o seu time"
+        title="Vamos conversar"
         highlightWord="conversar"
         subtitle="Contato"
-        description="Conte como o seu time desenvolve hoje e o que quer destravar. O primeiro passo é o diagnóstico gratuito de 30 minutos, sem compromisso."
+        description="Quer destravar o desenvolvimento do seu time ou conhecer os nossos produtos? Conte o que você precisa: na consultoria, o primeiro passo é o diagnóstico gratuito de 30 minutos; nos produtos, um teste sem compromisso."
         ctaText="Ver como é o diagnóstico"
-        secondary={{ text: 'Conhecer o DAG', href: ROUTES.dag }}
+        secondary={{ text: 'Conhecer os produtos', href: ROUTES.produtos }}
       />
 
       <section className="py-20 md:py-28">
@@ -204,7 +222,7 @@ export default function Contact() {
                   required
                   rows={6}
                   className={`${inputClass} resize-none`}
-                  placeholder="Como o seu time desenvolve hoje e o que você quer destravar?"
+                  placeholder="Conte o que você precisa: consultoria para o seu time ou um dos nossos produtos."
                 />
               </div>
 

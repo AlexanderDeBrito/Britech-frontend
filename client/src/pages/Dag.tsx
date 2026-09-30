@@ -11,6 +11,7 @@ import {
 } from 'lucide-react';
 import { HeroSection } from '@/components/HeroSection';
 import { DagFlow } from '@/components/DagFlow';
+import { DagVideo } from '@/components/DagVideo';
 import { MetricGrid } from '@/components/Metrics';
 import { CtaSection, SectionHeader } from '@/components/Section';
 import { ROUTES } from '@/lib/contact';
@@ -70,7 +71,7 @@ export default function Dag() {
       <HeroSection
         title="DAG: Desenvolvimento Autônomo Governado"
         highlightWord="Autônomo Governado"
-        subtitle="Não são os agentes, são os gates."
+        subtitle="Consultoria Britech · Não são os agentes, são os gates."
         description="No uso comum de IA, o desenvolvedor conduz cada passo e a IA sugere. No DAG é o contrário: o agente faz a tarefa inteira — da especificação ao código revisado, publicado e testado — e as pessoas decidem nos gates."
         secondary={{ text: 'Ver resultados', href: ROUTES.caseRenke }}
         trust={['Spec, código e deploy por agentes', '4 revisões independentes', 'Revert automático']}
@@ -94,6 +95,9 @@ export default function Dag() {
           </div>
         </div>
       </section>
+
+      {/* Vídeo explicativo (configurado em DAG_VIDEO, lib/dag.ts) */}
+      <DagVideo />
 
       {/* Como funciona */}
       <section aria-labelledby="fluxo-titulo" className="py-24 md:py-32">

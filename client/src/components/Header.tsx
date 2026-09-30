@@ -20,19 +20,22 @@ export function Header() {
     setIsOpen(false);
   }, [location]);
 
+  // "Consultoria" aponta para /servicos/ e também fica ativa em /dag/ e /diagnostico/.
   const navItems = [
-    { label: 'DAG', href: ROUTES.dag },
-    { label: 'Serviços', href: ROUTES.servicos },
-    { label: 'Cases', href: ROUTES.cases },
-    { label: 'Sobre', href: ROUTES.sobre },
+    { label: 'Consultoria', href: ROUTES.servicos, also: [ROUTES.dag, ROUTES.diagnostico] },
+    { label: 'Produtos', href: ROUTES.produtos, also: [] as string[] },
+    { label: 'Cases', href: ROUTES.cases, also: [] as string[] },
+    { label: 'Sobre', href: ROUTES.sobre, also: [] as string[] },
   ];
 
   // Compara sem a barra final; /cases/crm-renke também marca "Cases".
   const norm = (p: string) => p.replace(/\/+$/, '') || '/';
-  const isActive = (href: string) => {
+  const isActive = (href: string, also: string[] = []) => {
     const here = norm(location);
-    const target = norm(href);
-    return here === target || here.startsWith(`${target}/`);
+    return [href, ...also].some((h) => {
+      const target = norm(h);
+      return here === target || here.startsWith(`${target}/`);
+    });
   };
 
   return (
@@ -57,7 +60,7 @@ export function Header() {
 
         <div className="hidden md:flex items-center gap-8">
           {navItems.map((item) => {
-            const active = isActive(item.href);
+            const active = isActive(item.href, item.also);
             return (
               <Link
                 key={item.href}
@@ -75,10 +78,10 @@ export function Header() {
 
         <div className="hidden md:flex">
           <Link
-            href={ROUTES.diagnostico}
+            href={ROUTES.contato}
             className="btn-brand inline-flex items-center gap-2 px-5 py-2.5 rounded-full font-semibold text-sm no-underline"
           >
-            Agendar diagnóstico
+            Fale conosco
             <ArrowRight size={16} />
           </Link>
         </div>
@@ -104,16 +107,17 @@ export function Header() {
               <Link
                 key={item.href}
                 href={item.href}
+                aria-current={isActive(item.href, item.also) ? 'page' : undefined}
                 className="text-white/90 hover:text-[color:var(--brand-cyan)] transition-colors font-medium no-underline block py-2"
               >
                 {item.label}
               </Link>
             ))}
             <Link
-              href={ROUTES.diagnostico}
+              href={ROUTES.contato}
               className="btn-brand mt-2 inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full font-semibold no-underline"
             >
-              Agendar diagnóstico
+              Fale conosco
               <ArrowRight size={16} />
             </Link>
           </div>

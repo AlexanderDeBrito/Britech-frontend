@@ -77,13 +77,13 @@ const ogImageSvg = `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height=
 
   <text x="184" y="150" font-family="${FONT}" font-size="72" font-weight="800" fill="${BRAND.white}" letter-spacing="-2">Britech</text>
 
-  <text x="80" y="300" font-family="${FONT}" font-size="66" font-weight="800" fill="${BRAND.white}" letter-spacing="-1.5">Não são os agentes,</text>
-  <text x="80" y="378" font-family="${FONT}" font-size="66" font-weight="800" fill="url(#text)" letter-spacing="-1.5">são os gates.</text>
+  <text x="80" y="300" font-family="${FONT}" font-size="64" font-weight="800" fill="${BRAND.white}" letter-spacing="-1.5">Construímos software</text>
+  <text x="80" y="378" font-family="${FONT}" font-size="64" font-weight="800" fill="url(#text)" letter-spacing="-1.5">para a sua empresa e o mercado.</text>
 
-  <text x="80" y="452" font-family="${FONT}" font-size="28" font-weight="500" fill="#A9B4C4">DAG · Arquitetura e desenvolvimento acelerado por IA para SaaS e B2B</text>
+  <text x="80" y="452" font-family="${FONT}" font-size="28" font-weight="500" fill="#A9B4C4">Consultoria para SaaS e B2B · Produtos próprios</text>
 
   <rect x="80" y="510" width="120" height="5" rx="2.5" fill="url(#mark)"/>
-  <text x="80" y="568" font-family="${FONT}" font-size="27" font-weight="700" fill="${BRAND.cyan}">Diagnóstico gratuito de 30 min · britechsolucoes.com</text>
+  <text x="80" y="568" font-family="${FONT}" font-size="27" font-weight="700" fill="${BRAND.cyan}">Blumenau (SC) · britechsolucoes.com</text>
 </svg>
 `;
 
@@ -139,7 +139,8 @@ async function main() {
     buildIco([16, 32, 48].map((size) => ({ size, data: rendered[size] }))),
   );
 
-  const og = await sharp(Buffer.from(ogImageSvg)).png({ quality: 90 }).toBuffer();
+  // PNG em cor cheia: o modo paleta (quality) gera artefato de dithering no brilho.
+  const og = await sharp(Buffer.from(ogImageSvg)).png({ compressionLevel: 9 }).toBuffer();
   await write(path.join(publicDir, 'og-image.png'), og);
 
   console.log('\nImagens de conteúdo → WebP');

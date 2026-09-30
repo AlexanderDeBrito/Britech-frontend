@@ -16,6 +16,8 @@ import Dag from "./pages/Dag";
 import CaseRenke from "./pages/CaseRenke";
 import Diagnostico from "./pages/Diagnostico";
 import Privacidade from "./pages/Privacidade";
+import Produtos from "./pages/Produtos";
+import ProdutoLancamentos from "./pages/ProdutoLancamentos";
 
 /** Navegação client-side não reposiciona o scroll sozinha. */
 function ScrollToTop() {
@@ -40,6 +42,8 @@ function Router() {
           <Route path="/" component={Home} />
           <Route path="/dag" component={Dag} />
           <Route path="/servicos" component={Services} />
+          <Route path="/produtos" component={Produtos} />
+          <Route path="/produtos/assistente-de-lancamentos" component={ProdutoLancamentos} />
           <Route path="/sobre" component={About} />
           <Route path="/cases" component={Cases} />
           <Route path="/cases/crm-renke" component={CaseRenke} />

@@ -105,3 +105,33 @@ export const RENKE_MONTHLY_HOURS: { month: string; dag: number; manual: number }
   { month: 'ago', dag: 132.9, manual: 81 },
   { month: 'set', dag: 126.7, manual: 48 },
 ];
+
+/**
+ * Vídeo explicativo do DAG (arquivos em `client/public/videos/`). Alimenta o
+ * player de /dag, a versão compacta na home e o VideoObject do JSON-LD.
+ * Com `null`, as seções de vídeo somem da página.
+ */
+export const DAG_VIDEO: {
+  src: string;
+  poster: string;
+  thumbnail: string;
+  width: number;
+  height: number;
+  title: string;
+  description: string;
+  caption: string;
+  duration: string;
+  uploadDate: string;
+} | null = {
+  src: '/videos/dag-explainer-web.mp4',
+  poster: '/videos/dag-explainer-poster.webp',
+  thumbnail: '/videos/dag-explainer-poster.jpg',
+  width: 1920,
+  height: 1080,
+  title: 'O DAG em 1 minuto e meio',
+  description:
+    'Como funciona o DAG (Desenvolvimento Autônomo Governado): agentes de IA executam especificação, código, 4 revisões independentes, deploy e testes, e as pessoas decidem nos gates.',
+  caption: 'Vídeo com narração · 1min34s',
+  duration: 'PT1M34S',
+  uploadDate: '2026-09-30',
+};

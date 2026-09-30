@@ -1,7 +1,28 @@
 import { Link } from 'wouter';
-import { ArrowRight, Bot, Layers, Plug, Cloud, AlertCircle, Check } from 'lucide-react';
+import {
+  ArrowRight,
+  Bot,
+  Layers,
+  Plug,
+  Cloud,
+  AlertCircle,
+  Check,
+  X,
+  AlertTriangle,
+  GitPullRequest,
+  Wallet,
+  Search,
+  ClipboardList,
+  FlaskConical,
+  TrendingUp,
+} from 'lucide-react';
 import { HeroSection } from '@/components/HeroSection';
 import { CtaSection, SectionHeader } from '@/components/Section';
+import { DagFlow } from '@/components/DagFlow';
+import { FaqSection } from '@/components/FaqSection';
+import { MetricGrid } from '@/components/Metrics';
+import { FAQ } from '@/lib/faq';
+import { RENKE_MAIN } from '@/lib/dag';
 import { ROUTES } from '@/lib/contact';
 
 interface Service {
@@ -14,7 +35,38 @@ interface Service {
   href?: string;
 }
 
+const linkArrow =
+  'inline-flex items-center gap-2 text-[color:var(--brand-cyan)] font-semibold hover:gap-3 transition-all no-underline';
+
 export default function Services() {
+  const pains = [
+    {
+      icon: AlertTriangle,
+      title: 'Débito técnico acelerado',
+      description:
+        'Agente sem gate produz código rápido — e dívida técnica na mesma velocidade. A arquitetura se desfaz em semanas.',
+    },
+    {
+      icon: GitPullRequest,
+      title: 'Revisão vira gargalo',
+      description:
+        'Quando o volume de PRs multiplica, as pessoas que revisam linha a linha passam a ser o limite do time.',
+    },
+    {
+      icon: Wallet,
+      title: 'Custo fora de controle',
+      description:
+        'Decisões técnicas tomadas no automático aparecem depois na conta da nuvem, no retrabalho e no prazo.',
+    },
+  ];
+
+  const steps = [
+    { icon: Search, title: 'Diagnóstico gratuito (30 min)', description: 'Mapeamos o fluxo atual e onde o DAG se aplica.' },
+    { icon: ClipboardList, title: 'Diagnóstico (1 semana)', description: 'Linha de base de métricas, gates e plano de implantação.' },
+    { icon: FlaskConical, title: 'Implantação (2–3 semanas)', description: 'DAG configurado no seu stack, num fluxo piloto.' },
+    { icon: TrendingUp, title: 'Piloto medido (30 dias)', description: 'Antes e depois com os dados do seu próprio tracker.' },
+  ];
+
   const flagship: Service = {
     icon: Bot,
     title: 'Implantação do DAG',
@@ -101,20 +153,107 @@ export default function Services() {
   return (
     <div className="flex flex-col">
       <HeroSection
-        title="Serviços: DAG e arquitetura para SaaS e B2B"
-        highlightWord="DAG"
-        subtitle="Arquitetura como decisão de negócio"
-        description="A oferta principal é a implantação do DAG. Em volta dela, o que um produto B2B precisa para crescer sem reescrever: arquitetura, integrações e nuvem sob controle."
+        title="Consultoria: mais entrega com IA, sem perder a arquitetura"
+        highlightWord="sem perder a arquitetura"
+        subtitle="Consultoria Britech · Não são os agentes, são os gates."
+        description="Para empresas que constroem SaaS e produtos B2B. Implantamos o DAG, o nosso método de desenvolvimento acelerado por IA, e cuidamos do que o produto precisa para crescer sem reescrever: arquitetura, integrações e nuvem."
+        ctaText="Agendar diagnóstico gratuito (30 min)"
         secondary={{ text: 'Conhecer o DAG', href: ROUTES.dag }}
       />
 
-      <section aria-labelledby="principal-titulo" className="py-20 md:py-28">
+      {/* O problema */}
+      <section aria-labelledby="problema-titulo" className="py-20 md:py-28 border-y border-white/5 bg-[#070D18]/40">
         <div className="container">
-          <SectionHeader id="principal-titulo" eyebrow="Oferta principal" title="Desenvolvimento acelerado por IA, com governança" />
-          <Card s={flagship} big />
+          <SectionHeader
+            id="problema-titulo"
+            eyebrow="O problema"
+            title={
+              <>
+                IA gerando código é fácil. Difícil é manter{' '}
+                <span className="text-gradient-brand">arquitetura e previsibilidade</span> quando o
+                volume multiplica.
+              </>
+            }
+          />
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {pains.map(({ icon: Icon, title, description }) => (
+              <div key={title} className="p-8 rounded-2xl glass-card">
+                <div className="mb-5 inline-flex items-center justify-center w-12 h-12 rounded-xl bg-[color:var(--brand-blue)]/15">
+                  <Icon size={22} aria-hidden="true" className="text-[color:var(--brand-cyan)]" />
+                </div>
+                <h3 className="mb-3 text-xl font-semibold text-white">{title}</h3>
+                <p className="text-white/75 leading-relaxed">{description}</p>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
+      {/* Método */}
+      <section aria-labelledby="principal-titulo" className="py-20 md:py-28">
+        <div className="container">
+          <SectionHeader
+            id="principal-titulo"
+            eyebrow="O método: DAG"
+            title="Desenvolvimento acelerado por IA, com governança"
+            lead="O DAG (Desenvolvimento Autônomo Governado) é o método que a Britech implanta no seu time. Os agentes executam a tarefa inteira; as pessoas decidem nos gates."
+          />
+          <Card s={flagship} big />
+          <div className="mt-12">
+            <DagFlow compact />
+          </div>
+        </div>
+      </section>
+
+      {/* Como começamos */}
+      <section aria-labelledby="comeco-titulo" className="py-20 md:py-28 bg-[#070D18]/60 border-y border-white/5">
+        <div className="container">
+          <SectionHeader
+            id="comeco-titulo"
+            eyebrow="Como começamos"
+            title="Do primeiro papo ao piloto medido"
+            lead="Sem proposta genérica: cada etapa termina com uma decisão sua sobre seguir ou não."
+          />
+          <ol className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {steps.map(({ icon: Icon, title, description }, i) => (
+              <li key={title} className="relative p-6 rounded-2xl glass-card">
+                <div className="absolute -top-3 -right-3 w-12 h-12 rounded-xl bg-[#0B1220] border border-[color:var(--brand-blue)]/40 flex items-center justify-center text-[color:var(--brand-cyan)] font-bold">
+                  {String(i + 1).padStart(2, '0')}
+                </div>
+                <div className="mb-4 inline-flex items-center justify-center w-12 h-12 rounded-lg bg-[color:var(--brand-blue)]/15">
+                  <Icon size={22} aria-hidden="true" className="text-[color:var(--brand-cyan)]" />
+                </div>
+                <h3 className="text-lg font-semibold text-white mb-2">{title}</h3>
+                <p className="text-sm text-white/75 leading-relaxed">{description}</p>
+              </li>
+            ))}
+          </ol>
+          <Link href={ROUTES.diagnostico} className={`${linkArrow} mt-10`}>
+            Ver detalhes do diagnóstico
+            <ArrowRight size={18} aria-hidden="true" />
+          </Link>
+        </div>
+      </section>
+
+      {/* Resultados */}
+      <section aria-labelledby="resultados-titulo" className="py-20 md:py-28">
+        <div className="container">
+          <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
+            <SectionHeader
+              id="resultados-titulo"
+              eyebrow="Resultados · case CRM Renke"
+              title="O DAG em produção, medido pelo tracker do cliente"
+            />
+            <Link href={ROUTES.caseRenke} className={`${linkArrow} mb-14 flex-shrink-0`}>
+              Ler o case
+              <ArrowRight size={18} aria-hidden="true" />
+            </Link>
+          </div>
+          <MetricGrid metrics={RENKE_MAIN} />
+        </div>
+      </section>
+
+      {/* Outros serviços */}
       <section aria-labelledby="outros-titulo" className="py-20 md:py-28 bg-[#070D18]/60 border-y border-white/5">
         <div className="container">
           <SectionHeader
@@ -130,6 +269,52 @@ export default function Services() {
           </div>
         </div>
       </section>
+
+      {/* Para quem é */}
+      <section aria-labelledby="fit-titulo" className="py-20 md:py-28">
+        <div className="container">
+          <SectionHeader id="fit-titulo" eyebrow="Encaixe" title="Para quem é — e para quem não é" />
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="p-8 rounded-2xl glass-card">
+              <h3 className="text-xl font-semibold text-white mb-5">É para você se…</h3>
+              <ul className="space-y-3">
+                {[
+                  'sua empresa constrói um SaaS ou produto B2B que já está em produção;',
+                  'existe um time de desenvolvimento próprio (ou em formação);',
+                  'você quer entregar mais sem abrir mão de qualidade e de arquitetura;',
+                  'prefere decidir com números a decidir com opinião.',
+                ].map((t) => (
+                  <li key={t} className="flex gap-3 text-white/80">
+                    <Check size={20} aria-hidden="true" className="text-[color:var(--brand-cyan)] flex-shrink-0 mt-0.5" />
+                    {t}
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div className="p-8 rounded-2xl glass-card">
+              <h3 className="text-xl font-semibold text-white mb-5">Não é para você se…</h3>
+              <ul className="space-y-3">
+                {[
+                  'você procura um site institucional ou uma landing page;',
+                  'quer uma fábrica de software cobrando por hora;',
+                  'espera que a IA substitua o time sem ninguém decidir nada.',
+                ].map((t) => (
+                  <li key={t} className="flex gap-3 text-white/80">
+                    <X size={20} aria-hidden="true" className="text-white/70 flex-shrink-0 mt-0.5" />
+                    {t}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <FaqSection
+        items={FAQ}
+        title="Dúvidas sobre a consultoria e o DAG"
+        lead="Se a sua dúvida não estiver aqui, traga para o diagnóstico gratuito de 30 minutos."
+      />
 
       <CtaSection />
     </div>

@@ -5,6 +5,42 @@ export interface FaqItem {
 
 // Ficam visíveis na página E viram FAQPage no JSON-LD — o Google exige que a
 // resposta esteja no HTML para considerar o rich result.
+
+/** Dúvidas gerais, exibidas na home. */
+export const HOME_FAQ: FaqItem[] = [
+  {
+    question: 'O que a Britech faz?',
+    answer:
+      'A Britech é uma empresa de desenvolvimento de software de Blumenau (SC). Trabalhamos em duas frentes: consultoria de arquitetura e desenvolvimento acelerado por IA para empresas que constroem SaaS e produtos B2B, e produtos próprios, que desenvolvemos e levamos ao mercado.',
+  },
+  {
+    question: 'Como começa um trabalho de consultoria?',
+    answer:
+      'Com um diagnóstico gratuito de 30 minutos. Se fizer sentido seguir, vêm o diagnóstico de 1 semana, a implantação de 2 a 3 semanas e um piloto medido de 30 dias, cada etapa terminando com uma decisão sua sobre continuar ou não.',
+  },
+  {
+    question: 'O que é o DAG?',
+    answer:
+      'DAG é o Desenvolvimento Autônomo Governado, o método que usamos na consultoria: agentes de IA executam a tarefa inteira — especificação, código, quatro revisões independentes, deploy e testes com revert automático — e as pessoas decidem nos gates.',
+  },
+  {
+    question: 'Quais produtos a Britech tem?',
+    answer:
+      'O primeiro é o Assistente de Lançamentos (nome provisório), para escritórios de contabilidade pequenos: classifica o extrato bancário no plano de contas de cada cliente e mostra a confiança de cada lançamento. Ele está em validação, com piloto nos primeiros escritórios.',
+  },
+  {
+    question: 'O código continua sendo meu?',
+    answer:
+      'Na consultoria, sim. O código, os repositórios, a infraestrutura e os dados são da sua empresa, e tudo roda no seu ambiente, sem dependência obrigatória da Britech para continuar.',
+  },
+  {
+    question: 'Quanto custa?',
+    answer:
+      'Na consultoria, depende do escopo: tamanho do time, número de fluxos e maturidade do pipeline atual. Não publicamos tabela de preço; o investimento é definido depois do diagnóstico gratuito. Nos produtos, o preço de lançamento ainda está em definição.',
+  },
+];
+
+/** Dúvidas da consultoria / DAG, exibidas em /servicos. */
 export const FAQ: FaqItem[] = [
   {
     question: 'O que é o DAG?',

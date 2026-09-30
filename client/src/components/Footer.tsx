@@ -2,7 +2,7 @@ import { Link } from 'wouter';
 import { Mail, Linkedin, Phone, MapPin } from 'lucide-react';
 import { Logo } from './Logo';
 import { WhatsAppIcon } from './WhatsAppButton';
-import { CONTACT, ROUTES, whatsappUrl } from '@/lib/contact';
+import { CONTACT, ROUTES, WHATSAPP_MESSAGES, whatsappUrl } from '@/lib/contact';
 
 const linkClass =
   'text-sm text-white/75 hover:text-[color:var(--brand-cyan)] transition-colors no-underline';
@@ -15,31 +15,44 @@ export function Footer() {
       <div className="absolute inset-x-0 top-0 brand-lines" />
 
       <div className="container py-16">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-12 mb-12">
           {/* Marca */}
-          <div className="md:col-span-1 flex flex-col gap-4">
+          <div className="sm:col-span-2 lg:col-span-1 flex flex-col gap-4">
             <Link href={ROUTES.home} className="no-underline hover:opacity-90 transition-opacity w-fit">
               <Logo size={38} />
             </Link>
             <p className="text-sm text-white/75 leading-relaxed">
-              Consultoria enxuta de arquitetura e desenvolvimento acelerado por IA para empresas que
-              constroem SaaS e produtos B2B.
-            </p>
-            <p className="text-sm font-semibold text-[color:var(--brand-cyan)]">
-              Não são os agentes, são os gates.
+              Empresa de desenvolvimento de software. Construímos para quem desenvolve SaaS e
+              produtos B2B, e construímos os nossos próprios produtos.
             </p>
           </div>
 
-          {/* Oferta */}
+          {/* Consultoria */}
           <div className="flex flex-col gap-4">
-            <h2 className="font-semibold text-white text-sm uppercase tracking-wider">Oferta</h2>
+            <h2 className="font-semibold text-white text-sm uppercase tracking-wider">Consultoria</h2>
             <ul className="flex flex-col gap-2.5">
               {[
+                ['Visão geral', ROUTES.servicos],
                 ['DAG — Desenvolvimento Autônomo Governado', ROUTES.dag],
                 ['Diagnóstico gratuito', ROUTES.diagnostico],
-                ['Arquitetura de SaaS e B2B', ROUTES.servicos],
-                ['Integrações e pagamentos', ROUTES.servicos],
-                ['Nuvem e custos', ROUTES.servicos],
+                ['Case CRM Renke', ROUTES.caseRenke],
+              ].map(([label, href]) => (
+                <li key={label}>
+                  <Link href={href} className={linkClass}>
+                    {label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Produtos */}
+          <div className="flex flex-col gap-4">
+            <h2 className="font-semibold text-white text-sm uppercase tracking-wider">Produtos</h2>
+            <ul className="flex flex-col gap-2.5">
+              {[
+                ['Todos os produtos', ROUTES.produtos],
+                ['Assistente de Lançamentos', ROUTES.produtoLancamentos],
               ].map(([label, href]) => (
                 <li key={label}>
                   <Link href={href} className={linkClass}>
@@ -57,7 +70,6 @@ export function Footer() {
               {[
                 ['Sobre', ROUTES.sobre],
                 ['Cases', ROUTES.cases],
-                ['Case CRM Renke', ROUTES.caseRenke],
                 ['Contato', ROUTES.contato],
                 ['Política de Privacidade', ROUTES.privacidade],
               ].map(([label, href]) => (
@@ -79,7 +91,7 @@ export function Footer() {
                 {CONTACT.email}
               </a>
               <a
-                href={whatsappUrl()}
+                href={whatsappUrl(WHATSAPP_MESSAGES.geral)}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-2 text-sm text-white/75 hover:text-[#25D366] transition-colors no-underline"

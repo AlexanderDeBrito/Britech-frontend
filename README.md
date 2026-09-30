@@ -21,7 +21,9 @@ corretos e o JSON-LD da página — sem depender de o crawler executar JavaScrip
 dist/public/
 ├── index.html                    → /
 ├── dag/index.html                → /dag/
-├── servicos/index.html           → /servicos/
+├── servicos/index.html           → /servicos/   (Consultoria)
+├── produtos/index.html           → /produtos/
+├── produtos/assistente-de-lancamentos/index.html → /produtos/assistente-de-lancamentos/
 ├── cases/index.html              → /cases/
 ├── cases/crm-renke/index.html    → /cases/crm-renke/
 ├── sobre/index.html              → /sobre/
@@ -38,7 +40,9 @@ dist/public/
 | --- | --- |
 | Título, descrição, palavras-chave ou JSON-LD de uma página | `client/src/lib/seo.ts` (`PAGES`) |
 | Endereço, telefone, redes sociais, coordenadas | `client/src/lib/contact.ts` e `SITE` em `seo.ts` |
-| Perguntas do FAQ (aparecem na home e viram `FAQPage`) | `client/src/lib/faq.ts` |
+| Perguntas do FAQ (home e consultoria; viram `FAQPage`) | `client/src/lib/faq.ts` |
+| Produtos (lista, textos e FAQ do Assistente de Lançamentos) | `client/src/lib/products.ts` |
+| Vídeo explicativo do DAG (seção só aparece quando preenchido) | `DAG_VIDEO` em `client/src/lib/dag.ts` |
 | Fluxo, gates e números do DAG / case CRM Renke | `client/src/lib/dag.ts` |
 | Cards de cases | `client/src/lib/cases.ts` |
 | Tags de `<head>` geradas para todas as páginas | `client/src/lib/seo-head.ts` |

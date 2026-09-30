@@ -43,9 +43,19 @@ export function CtaSection({
     </>
   ),
   text = 'Uma conversa objetiva sobre o seu fluxo de desenvolvimento atual, onde os gates fazem diferença e qual seria o primeiro piloto. Gratuita e sem compromisso.',
+  primary = { text: 'Agendar diagnóstico gratuito (30 min)', href: ROUTES.diagnostico },
+  secondary,
+  whatsappMessage,
+  whatsappText = 'Chamar no WhatsApp',
 }: {
   title?: ReactNode;
   text?: string;
+  /** Botão principal (link interno). */
+  primary?: { text: string; href: string };
+  /** Segundo link interno; quando existe, o WhatsApp vira o terceiro botão. */
+  secondary?: { text: string; href: string };
+  whatsappMessage?: string;
+  whatsappText?: string;
 }) {
   return (
     <section className="py-24 md:py-32 relative overflow-hidden">
@@ -57,22 +67,31 @@ export function CtaSection({
         <div className="max-w-4xl mx-auto text-center p-8 md:p-16 rounded-3xl glass-card brand-glow">
           <h2 className="mb-6 text-white">{title}</h2>
           <p className="text-lg text-white/75 mb-10 max-w-2xl mx-auto">{text}</p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <div className="flex flex-col sm:flex-row sm:flex-wrap gap-4 justify-center">
             <Link
-              href={ROUTES.diagnostico}
+              href={primary.href}
               className="btn-brand inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full font-semibold no-underline"
             >
-              Agendar diagnóstico gratuito (30 min)
+              {primary.text}
               <ArrowRight size={18} aria-hidden="true" />
             </Link>
+            {secondary && (
+              <Link
+                href={secondary.href}
+                className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full font-semibold border border-white/15 bg-white/5 text-white hover:bg-white/10 hover:border-white/30 transition-all no-underline"
+              >
+                {secondary.text}
+                <ArrowRight size={18} aria-hidden="true" />
+              </Link>
+            )}
             <a
-              href={whatsappUrl()}
+              href={whatsappUrl(whatsappMessage)}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full font-semibold border border-white/15 bg-white/5 text-white hover:bg-white/10 hover:border-white/30 transition-all no-underline"
             >
               <WhatsAppIcon size={18} />
-              Chamar no WhatsApp
+              {whatsappText}
             </a>
           </div>
         </div>

@@ -1,5 +1,6 @@
 import { ChevronDown } from 'lucide-react';
-import { FAQ } from '@/lib/faq';
+import type { ReactNode } from 'react';
+import { HOME_FAQ, type FaqItem } from '@/lib/faq';
 
 /**
  * Usa <details>/<summary> em vez de um accordion controlado por estado: o texto
@@ -7,7 +8,15 @@ import { FAQ } from '@/lib/faq';
  * validar o FAQPage do JSON-LD — um accordion que desmonta o conteúdo fechado
  * deixaria a marcação sem respaldo na página.
  */
-export function FaqSection() {
+export function FaqSection({
+  items = HOME_FAQ,
+  title = 'Perguntas que sempre nos fazem',
+  lead = 'Se a sua dúvida não estiver aqui, fale com a gente pelo WhatsApp ou pelo formulário de contato.',
+}: {
+  items?: FaqItem[];
+  title?: ReactNode;
+  lead?: ReactNode;
+} = {}) {
   return (
     <section
       id="faq"
@@ -20,15 +29,13 @@ export function FaqSection() {
             Dúvidas frequentes
           </span>
           <h2 id="faq-titulo" className="mb-5 text-white">
-            Perguntas que sempre nos fazem
+            {title}
           </h2>
-          <p className="text-lg text-white/75">
-            Se a sua dúvida não estiver aqui, traga para o diagnóstico gratuito de 30 minutos.
-          </p>
+          <p className="text-lg text-white/75">{lead}</p>
         </div>
 
         <div className="max-w-3xl flex flex-col gap-3">
-          {FAQ.map((item) => (
+          {items.map((item) => (
             <details
               key={item.question}
               name="faq"

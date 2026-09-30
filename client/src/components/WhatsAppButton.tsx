@@ -1,5 +1,13 @@
 import { useEffect, useState } from 'react';
-import { whatsappUrl } from '@/lib/contact';
+import { useLocation } from 'wouter';
+import { WHATSAPP_MESSAGES, whatsappUrl } from '@/lib/contact';
+
+/** Mensagem pronta conforme a seção do site em que a pessoa está. */
+function messageFor(path: string) {
+  if (path.startsWith('/produtos/assistente-de-lancamentos')) return WHATSAPP_MESSAGES.lancamentosTeste;
+  if (/^\/(servicos|dag|diagnostico|cases)(\/|$)/.test(path)) return WHATSAPP_MESSAGES.diagnostico;
+  return WHATSAPP_MESSAGES.geral;
+}
 
 function WhatsAppIcon({ size = 26 }: { size?: number }) {
   return (
@@ -18,6 +26,7 @@ function WhatsAppIcon({ size = 26 }: { size?: number }) {
 
 export function WhatsAppButton() {
   const [visible, setVisible] = useState(false);
+  const [location] = useLocation();
 
   // Entra com leve delay para não competir com o carregamento do hero
   useEffect(() => {
@@ -27,7 +36,7 @@ export function WhatsAppButton() {
 
   return (
     <a
-      href={whatsappUrl()}
+      href={whatsappUrl(messageFor(location))}
       target="_blank"
       rel="noopener noreferrer"
       aria-label="Conversar no WhatsApp"

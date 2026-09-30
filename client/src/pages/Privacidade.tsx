@@ -42,7 +42,7 @@ export default function Privacidade() {
         <Block id="controlador" title="1. Quem é o controlador">
           <p>
             O controlador dos dados é a <strong className="text-white">Britech Soluções</strong>,
-            consultoria de arquitetura e desenvolvimento de software com sede em Blumenau, Santa
+            empresa de desenvolvimento de software com sede em Blumenau, Santa
             Catarina, Brasil. Para qualquer assunto sobre privacidade e proteção de dados, inclusive
             para falar com o encarregado, escreva para <Email />.
           </p>

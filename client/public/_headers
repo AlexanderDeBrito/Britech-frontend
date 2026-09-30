@@ -13,6 +13,9 @@
 /images/*
   Cache-Control: public, max-age=2592000
 
+/videos/*
+  Cache-Control: public, max-age=2592000
+
 # HTML é revalidado para que atualizações de conteúdo cheguem rápido ao índice
 /*.html
   Cache-Control: public, max-age=0, must-revalidate

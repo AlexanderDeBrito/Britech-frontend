@@ -1,13 +1,15 @@
 import { CASES } from './cases';
 import { CONTACT } from './contact';
-import { FAQ } from './faq';
+import { FAQ, HOME_FAQ, type FaqItem } from './faq';
+import { LANCAMENTOS, LANCAMENTOS_FAQ, PRODUCTS } from './products';
+import { DAG_VIDEO } from './dag';
 
 /** Identidade do site — fonte única para meta tags, JSON-LD e sitemap. */
 export const SITE = {
   url: 'https://britechsolucoes.com',
   name: 'Britech',
   legalName: 'Britech Soluções',
-  tagline: 'Não são os agentes, são os gates.',
+  tagline: 'Construímos software — para a sua empresa e para o mercado.',
   locale: 'pt_BR',
   lang: 'pt-BR',
   ogImage: '/og-image.png',
@@ -108,7 +110,7 @@ export function organizationNode(): Record<string, unknown> {
     legalName: SITE.legalName,
     url: SITE.url,
     description:
-      'Consultoria enxuta de arquitetura e desenvolvimento acelerado por IA para empresas que constroem SaaS e produtos B2B. Criadora do DAG (Desenvolvimento Autônomo Governado). Blumenau (SC).',
+      'Empresa de desenvolvimento de software de Blumenau (SC), com duas frentes: consultoria de arquitetura e desenvolvimento acelerado por IA para quem constrói SaaS e produtos B2B, com o DAG (Desenvolvimento Autônomo Governado) como método, e produtos próprios, como o Assistente de Lançamentos para escritórios de contabilidade.',
     slogan: SITE.tagline,
     foundingDate: SITE.foundingYear,
     founder: { '@id': FOUNDER_ID },
@@ -148,17 +150,23 @@ export function organizationNode(): Record<string, unknown> {
     ],
     hasOfferCatalog: {
       '@type': 'OfferCatalog',
-      name: 'Serviços da Britech',
-      itemListElement: SERVICES_CATALOG.map((s) => ({
-        '@type': 'Offer',
-        itemOffered: {
-          '@type': 'Service',
-          name: s.name,
-          description: s.description,
-          provider: { '@id': ORGANIZATION_ID },
-          areaServed: AREA_SERVED,
-        },
-      })),
+      name: 'Consultoria e produtos da Britech',
+      itemListElement: [
+        ...SERVICES_CATALOG.map((s) => ({
+          '@type': 'Offer',
+          itemOffered: {
+            '@type': 'Service',
+            name: s.name,
+            description: s.description,
+            provider: { '@id': ORGANIZATION_ID },
+            areaServed: AREA_SERVED,
+          },
+        })),
+        ...PRODUCTS.map((p) => ({
+          '@type': 'Offer',
+          itemOffered: { '@id': `${absoluteUrl(p.href)}#software` },
+        })),
+      ],
     },
   };
 }
@@ -169,7 +177,7 @@ export function websiteNode(): Record<string, unknown> {
     '@id': WEBSITE_ID,
     url: SITE.url,
     name: SITE.name,
-    description: `${SITE.name} — arquitetura e desenvolvimento acelerado por IA. ${SITE.tagline}`,
+    description: `${SITE.name} — empresa de desenvolvimento de software: consultoria para SaaS e B2B e produtos próprios.`,
     publisher: { '@id': ORGANIZATION_ID },
     inLanguage: SITE.lang,
   };
@@ -203,15 +211,37 @@ function webPageNode(page: PageSeo): Record<string, unknown> {
   };
 }
 
-function faqNode(): Record<string, unknown> {
+function faqNode(path: string, items: FaqItem[]): Record<string, unknown> {
   return {
     '@type': 'FAQPage',
-    '@id': `${SITE.url}/#faq`,
-    mainEntity: FAQ.map((item) => ({
+    '@id': `${absoluteUrl(path)}#faq`,
+    mainEntity: items.map((item) => ({
       '@type': 'Question',
       name: item.question,
       acceptedAnswer: { '@type': 'Answer', text: item.answer },
     })),
+  };
+}
+
+/** Produto próprio. Sem `offers`: o preço ainda não foi definido. */
+function softwareNode(): Record<string, unknown> {
+  return {
+    '@type': 'SoftwareApplication',
+    '@id': `${absoluteUrl(LANCAMENTOS.href)}#software`,
+    name: LANCAMENTOS.name,
+    alternateName: 'Assistente de lançamentos para escritórios contábeis',
+    url: absoluteUrl(LANCAMENTOS.href),
+    description: LANCAMENTOS.summary,
+    applicationCategory: 'BusinessApplication',
+    applicationSubCategory: 'Contabilidade',
+    operatingSystem: 'Web',
+    inLanguage: SITE.lang,
+    audience: {
+      '@type': 'BusinessAudience',
+      audienceType: 'Escritórios de contabilidade pequenos',
+    },
+    creator: { '@id': ORGANIZATION_ID },
+    publisher: { '@id': ORGANIZATION_ID },
   };
 }
 
@@ -229,20 +259,20 @@ const page = (
 export const PAGES: Record<string, PageSeo> = {
   '/': {
     path: '/',
-    title: 'Britech — Arquitetura e desenvolvimento acelerado por IA',
+    title: 'Britech — Desenvolvimento de software: consultoria e produtos',
     description:
-      'Implantamos o DAG: agentes de IA executam, pessoas decidem nos gates. Arquitetura para SaaS e B2B, integrações e nuvem. Diagnóstico gratuito de 30 min.',
+      'Empresa de software de Blumenau (SC): consultoria de arquitetura e desenvolvimento com IA para SaaS e B2B, e produtos próprios para escritórios contábeis.',
     keywords: [
-      'desenvolvimento com agentes de ia',
-      'desenvolvimento acelerado por ia',
+      'empresa de desenvolvimento de software',
+      'desenvolvimento de software blumenau',
       'consultoria de arquitetura de software',
+      'desenvolvimento acelerado por ia',
       'arquitetura saas',
-      'governança de ia no desenvolvimento',
-      'dag desenvolvimento autônomo governado',
+      'software para escritório de contabilidade',
     ],
     changefreq: 'weekly',
     priority: 1.0,
-    graph: () => [faqNode()],
+    graph: () => [faqNode('/', HOME_FAQ)],
   },
   '/dag': page('/dag', ['DAG'], {
     title: 'DAG — Desenvolvimento Autônomo Governado | Britech',
@@ -267,14 +297,33 @@ export const PAGES: Record<string, PageSeo> = {
         provider: { '@id': ORGANIZATION_ID },
         areaServed: AREA_SERVED,
       },
+      ...(DAG_VIDEO
+        ? [
+            {
+              '@type': 'VideoObject',
+              '@id': `${SITE.url}/dag/#video`,
+              name: DAG_VIDEO.title,
+              description: DAG_VIDEO.description,
+              thumbnailUrl: [absoluteUrl(DAG_VIDEO.thumbnail)],
+              uploadDate: DAG_VIDEO.uploadDate,
+              duration: DAG_VIDEO.duration,
+              contentUrl: absoluteUrl(DAG_VIDEO.src),
+              inLanguage: SITE.lang,
+              width: DAG_VIDEO.width,
+              height: DAG_VIDEO.height,
+              publisher: { '@id': ORGANIZATION_ID },
+            },
+          ]
+        : []),
     ],
   }),
   '/servicos': page('/servicos', ['Serviços'], {
-    title: 'Serviços: DAG, arquitetura SaaS, integrações | Britech',
+    title: 'Consultoria de arquitetura e desenvolvimento com IA | Britech',
     description:
-      'Implantação do DAG, arquitetura para SaaS e sistemas B2B, integrações e pagamentos, infraestrutura em nuvem e custos. Arquitetura como decisão de negócio.',
+      'Consultoria para SaaS e B2B: implantação do DAG, arquitetura, integrações, pagamentos e nuvem. Diagnóstico de 1 semana, implantação e piloto medido de 30 dias.',
     keywords: [
       'consultoria de arquitetura de software',
+      'consultoria desenvolvimento com ia',
       'arquitetura saas',
       'integração de pagamentos',
       'finops aws',
@@ -282,8 +331,8 @@ export const PAGES: Record<string, PageSeo> = {
     ],
     changefreq: 'monthly',
     priority: 0.9,
-    graph: () =>
-      SERVICES_CATALOG.map((s) => ({
+    graph: () => [
+      ...SERVICES_CATALOG.map((s) => ({
         '@type': 'Service',
         name: s.name,
         description: s.description,
@@ -291,7 +340,54 @@ export const PAGES: Record<string, PageSeo> = {
         provider: { '@id': ORGANIZATION_ID },
         areaServed: AREA_SERVED,
       })),
+      faqNode('/servicos', FAQ),
+    ],
   }),
+  '/produtos': page('/produtos', ['Produtos'], {
+    title: 'Produtos Britech: software próprio com IA',
+    description:
+      'Software que a Britech constrói e leva ao mercado. Primeiro produto: Assistente de Lançamentos, que classifica extratos no plano de contas de cada cliente.',
+    keywords: [
+      'produtos britech',
+      'software para escritório de contabilidade',
+      'classificação de extrato bancário',
+      'automação contábil com ia',
+    ],
+    changefreq: 'monthly',
+    priority: 0.9,
+    graph: () => [
+      {
+        '@type': 'ItemList',
+        '@id': `${SITE.url}/produtos/#list`,
+        name: 'Produtos da Britech',
+        itemListElement: PRODUCTS.map((p, i) => ({
+          '@type': 'ListItem',
+          position: i + 1,
+          url: absoluteUrl(p.href),
+          name: p.name,
+        })),
+      },
+    ],
+  }),
+  '/produtos/assistente-de-lancamentos': page(
+    '/produtos/assistente-de-lancamentos',
+    ['Produtos', 'Assistente de Lançamentos'],
+    {
+      title: 'Assistente de Lançamentos: pare de digitar extrato | Britech',
+      description:
+        'Para escritórios de contabilidade: suba o extrato (PDF, foto ou OFX) e receba os lançamentos no plano de contas do cliente, com a confiança de cada um. Em piloto.',
+      keywords: [
+        'classificação de extrato bancário',
+        'lançamento de extrato contábil',
+        'extrato para lançamento contábil',
+        'software para escritório de contabilidade',
+      ],
+      changefreq: 'monthly',
+      priority: 0.9,
+      graph: () => [softwareNode(), faqNode('/produtos/assistente-de-lancamentos', LANCAMENTOS_FAQ)],
+    },
+    ['/produtos', '/produtos/assistente-de-lancamentos'],
+  ),
   '/cases': page('/cases', ['Cases'], {
     title: 'Cases: DAG e produtos SaaS em produção | Britech',
     description:
@@ -348,8 +444,8 @@ export const PAGES: Record<string, PageSeo> = {
   '/sobre': page('/sobre', ['Sobre'], {
     title: 'Sobre a Britech e quem conduz: Alexander Brito',
     description:
-      'Consultoria enxuta de arquitetura fundada em 2023 em Blumenau (SC). Conduzida por Alexander Brito: 8+ anos em engenharia de software, pagamentos e SaaS.',
-    keywords: ['sobre a britech', 'alexander brito', 'consultoria de arquitetura blumenau'],
+      'Empresa de desenvolvimento de software fundada em 2023 em Blumenau (SC): consultoria e produtos próprios. Conduzida por Alexander Brito, 8+ anos em engenharia.',
+    keywords: ['sobre a britech', 'alexander brito', 'empresa de software blumenau', 'consultoria de arquitetura blumenau'],
     changefreq: 'monthly',
     priority: 0.7,
     graph: () => [{ '@type': 'AboutPage', '@id': `${SITE.url}/sobre/#about` }, founderNode()],
@@ -364,7 +460,7 @@ export const PAGES: Record<string, PageSeo> = {
   }),
   '/contato': page('/contato', ['Contato'], {
     title: 'Contato | Fale com a Britech',
-    description: `Fale com a Britech pelo WhatsApp ${CONTACT.phoneDisplay} ou pelo e-mail ${CONTACT.email}. Agende o diagnóstico gratuito de 30 minutos.`,
+    description: `Fale com a Britech pelo WhatsApp ${CONTACT.phoneDisplay} ou pelo e-mail ${CONTACT.email}: diagnóstico gratuito de 30 minutos ou teste dos nossos produtos.`,
     keywords: ['contato britech', 'agendar diagnóstico', 'consultoria de arquitetura contato'],
     changefreq: 'yearly',
     priority: 0.7,

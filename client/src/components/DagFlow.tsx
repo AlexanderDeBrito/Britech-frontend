@@ -28,7 +28,7 @@ export function DagFlow({ compact = false }: { compact?: boolean }) {
                   className={step.human ? 'text-[color:var(--brand-cyan)]' : 'text-white/70'}
                 />
               </div>
-              <h3 className="text-base font-semibold text-white leading-snug">{step.title}</h3>
+              <h3 lang="pt-BR" className="text-base font-semibold text-white leading-snug hyphens-auto">{step.title}</h3>
               {!compact && <p className="text-sm text-white/75 leading-relaxed">{step.description}</p>}
               <span
                 className={`mt-auto text-[11px] font-bold uppercase tracking-wider ${

@@ -1,3 +1,4 @@
+import type { ReactNode } from 'react';
 import { Link } from 'wouter';
 import { ArrowRight, Sparkles } from 'lucide-react';
 import { ROUTES } from '@/lib/contact';
@@ -13,6 +14,10 @@ interface HeroSectionProps {
   secondary?: { text: string; href: string };
   /** Linha de prova/confiança abaixo dos CTAs. */
   trust?: string[];
+  /** Substitui os botões de CTA (ex.: os dois caminhos da home). */
+  children?: ReactNode;
+  /** Largura do bloco de texto; a home usa uma mais larga para caber os dois caminhos. */
+  wide?: boolean;
 }
 
 export function HeroSection({
@@ -24,6 +29,8 @@ export function HeroSection({
   highlightWord,
   secondary,
   trust,
+  children,
+  wide = false,
 }: HeroSectionProps) {
   const renderTitle = () => {
     if (!highlightWord || !title.includes(highlightWord)) return title;
@@ -58,7 +65,7 @@ export function HeroSection({
       />
 
       <div className="container relative z-10">
-        <div className="max-w-4xl">
+        <div className={wide ? 'max-w-6xl' : 'max-w-4xl'}>
           <div className="inline-flex items-center gap-2 mb-8 px-4 py-2 rounded-full border border-white/10 bg-white/5 backdrop-blur-md">
             <Sparkles size={14} aria-hidden="true" className="text-[color:var(--brand-cyan)] flex-shrink-0" />
             <span className="text-xs font-semibold tracking-wide text-white/90 uppercase">
@@ -66,7 +73,7 @@ export function HeroSection({
             </span>
           </div>
 
-          <h1 className="mb-6 text-white leading-[1.05]">{renderTitle()}</h1>
+          <h1 className="mb-6 text-white leading-[1.05] max-w-4xl">{renderTitle()}</h1>
 
           {description && (
             <p className="text-lg md:text-xl text-white/75 mb-10 leading-relaxed max-w-2xl">
@@ -74,6 +81,7 @@ export function HeroSection({
             </p>
           )}
 
+          {children ?? (
           <div className="flex flex-col sm:flex-row gap-4">
             {ctaHref.startsWith('http') ? (
               <a
@@ -103,6 +111,7 @@ export function HeroSection({
               </Link>
             )}
           </div>
+          )}
 
           {trust && trust.length > 0 && (
             <div className="mt-12 flex flex-wrap items-center gap-x-8 gap-y-3 text-sm text-white/75">

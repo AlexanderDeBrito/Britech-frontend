@@ -2,7 +2,7 @@ import { Link } from 'wouter';
 import { ArrowRight, Linkedin, ShieldCheck, KeyRound, BarChart3, MapPin } from 'lucide-react';
 import { HeroSection } from '@/components/HeroSection';
 import { CtaSection, SectionHeader } from '@/components/Section';
-import { CONTACT, ROUTES } from '@/lib/contact';
+import { CONTACT, ROUTES, WHATSAPP_MESSAGES } from '@/lib/contact';
 
 export default function About() {
   const principles = [
@@ -30,17 +30,19 @@ export default function About() {
     ['8+ anos', 'em engenharia de software (desde 2018)'],
     ['8 empresas', 'na trajetória de quem conduz, incluindo pagamentos e SaaS de saúde'],
     ['2023', 'fundação da Britech, em Blumenau (SC)'],
-    ['DAG', 'harness próprio, em produção num SaaS B2B'],
+    ['2 frentes', 'consultoria para SaaS e B2B e produtos próprios'],
   ];
 
   return (
     <div className="flex flex-col">
       <HeroSection
-        title="Uma consultoria enxuta, conduzida por quem desenha a arquitetura"
+        title="Uma empresa de software, conduzida por quem desenha a arquitetura"
         highlightWord="quem desenha a arquitetura"
         subtitle="Sobre a Britech"
-        description="A Britech é uma consultoria de arquitetura e desenvolvimento acelerado por IA para empresas que constroem SaaS e produtos B2B. Fundada em 2023, em Blumenau (SC), atende empresas de todo o Brasil."
-        secondary={{ text: 'Conhecer o DAG', href: ROUTES.dag }}
+        description="A Britech é uma empresa de desenvolvimento de software fundada em 2023, em Blumenau (SC). Trabalhamos em duas frentes: consultoria de arquitetura e desenvolvimento acelerado por IA para quem constrói SaaS e produtos B2B, e produtos próprios, que desenvolvemos e levamos ao mercado."
+        ctaText="Ver a consultoria"
+        ctaHref={ROUTES.servicos}
+        secondary={{ text: 'Conhecer os produtos', href: ROUTES.produtos }}
       />
 
       {/* Quem conduz */}
@@ -133,8 +135,45 @@ export default function About() {
         </div>
       </section>
 
+      {/* Duas frentes */}
+      <section aria-labelledby="frentes-titulo" className="py-20 md:py-28">
+        <div className="container">
+          <SectionHeader
+            id="frentes-titulo"
+            eyebrow="O que fazemos"
+            title="Duas frentes, a mesma engenharia"
+          />
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {[
+              {
+                title: 'Consultoria',
+                text: 'Arquitetura e desenvolvimento acelerado por IA para empresas que constroem SaaS e produtos B2B, com o DAG como método: diagnóstico, implantação e piloto medido.',
+                link: { text: 'Ver a consultoria', href: ROUTES.servicos },
+              },
+              {
+                title: 'Produtos',
+                text: 'Software que a Britech desenvolve e leva ao mercado. O primeiro é o Assistente de Lançamentos, para escritórios de contabilidade, hoje em validação.',
+                link: { text: 'Conhecer os produtos', href: ROUTES.produtos },
+              },
+            ].map((f) => (
+              <div key={f.title} className="p-8 rounded-2xl glass-card flex flex-col">
+                <h3 className="mb-3 text-2xl font-semibold text-white">{f.title}</h3>
+                <p className="text-white/75 leading-relaxed mb-6">{f.text}</p>
+                <Link
+                  href={f.link.href}
+                  className="mt-auto inline-flex items-center gap-2 text-[color:var(--brand-cyan)] font-semibold hover:gap-3 transition-all no-underline"
+                >
+                  {f.link.text}
+                  <ArrowRight size={18} aria-hidden="true" />
+                </Link>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Princípios */}
-      <section aria-labelledby="principios-titulo" className="py-20 md:py-28">
+      <section aria-labelledby="principios-titulo" className="py-20 md:py-28 bg-[#070D18]/60 border-y border-white/5">
         <div className="container">
           <SectionHeader
             id="principios-titulo"
@@ -157,7 +196,7 @@ export default function About() {
       </section>
 
       {/* Onde estamos */}
-      <section aria-labelledby="onde-titulo" className="py-20 md:py-24 bg-[#070D18]/60 border-y border-white/5">
+      <section aria-labelledby="onde-titulo" className="py-20 md:py-24">
         <div className="container">
           <div className="max-w-3xl">
             <SectionHeader eyebrow="Onde estamos" id="onde-titulo" title="Base em Blumenau, atuação em todo o Brasil" />
@@ -170,7 +209,16 @@ export default function About() {
         </div>
       </section>
 
-      <CtaSection />
+      <CtaSection
+        title={
+          <>
+            Vamos <span className="text-gradient-brand">conversar?</span>
+          </>
+        }
+        text="Se a sua empresa constrói software, comece pelo diagnóstico gratuito de 30 minutos. Se você tem um escritório de contabilidade, conheça o Assistente de Lançamentos."
+        secondary={{ text: 'Conhecer os produtos', href: ROUTES.produtos }}
+        whatsappMessage={WHATSAPP_MESSAGES.geral}
+      />
     </div>
   );
 }
