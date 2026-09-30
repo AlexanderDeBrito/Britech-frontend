@@ -87,6 +87,7 @@ export function founderNode(): Record<string, unknown> {
     '@type': 'Person',
     '@id': FOUNDER_ID,
     name: 'Alexander Brito',
+    image: absoluteUrl('/images/alexander-brito.webp'),
     jobTitle: 'Fundador e arquiteto de software',
     worksFor: { '@id': ORGANIZATION_ID },
     knowsAbout: [

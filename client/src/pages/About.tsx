@@ -48,12 +48,21 @@ export default function About() {
         <div className="container">
           <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,360px)_minmax(0,1fr)] gap-12 lg:gap-16 items-start">
             <div className="p-8 rounded-3xl glass-card brand-glow flex flex-col items-center text-center gap-5">
-              <div
-                aria-hidden="true"
-                className="w-32 h-32 rounded-full bg-gradient-to-br from-[#0A84FF] to-[#00D4FF] flex items-center justify-center text-4xl font-extrabold text-[#0B1220]"
-              >
-                AB
-              </div>
+              <picture className="block w-32 h-32 rounded-full overflow-hidden border border-white/15 shadow-lg">
+                <source
+                  type="image/webp"
+                  srcSet="/images/alexander-brito.webp 1x, /images/alexander-brito@2x.webp 2x"
+                />
+                <img
+                  src="/images/alexander-brito.jpg"
+                  alt="Alexander Brito, fundador da Britech Soluções"
+                  width={256}
+                  height={256}
+                  loading="lazy"
+                  decoding="async"
+                  className="w-full h-full object-cover object-[center_25%]"
+                />
+              </picture>
               <div>
                 <p className="text-2xl font-bold text-white">Alexander Brito</p>
                 <p className="text-white/80">Fundador · Arquiteto de software</p>
