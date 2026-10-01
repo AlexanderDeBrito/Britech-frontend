@@ -4,6 +4,8 @@
 export interface FlowStep {
   title: string;
   description: string;
+  /** Texto do painel de detalhe do fluxo interativo (2–3 frases, mesmos fatos). */
+  detail: string;
   /** Ponto em que uma pessoa decide. */
   human?: boolean;
 }
@@ -11,35 +13,49 @@ export interface FlowStep {
 export const DAG_FLOW: FlowStep[] = [
   {
     title: 'Gate de entrada',
+    detail:
+      `Tudo começa com uma decisão humana. Alguém do time prioriza a tarefa no tracker e diz "pode ir". O agente não escolhe o que fazer: a fila vem das pessoas, não da IA.`,
     description: 'Alguém do time prioriza a tarefa e diz "pode ir". O agente não escolhe o que fazer.',
     human: true,
   },
   {
     title: 'Especificação',
+    detail:
+      `Antes de qualquer linha de código, o agente escreve a especificação da tarefa. Ela já traz o critério de aceite em forma executável, que depois serve de prova de que a entrega cobre o escopo item a item.`,
     description:
       'O agente escreve a spec com critério de aceite executável, antes de qualquer linha de código.',
   },
   {
     title: 'Código',
+    detail:
+      `O agente implementa a tarefa num ambiente isolado, criado só para ela. Lint, build e testes rodam a cada passo, e guardas em código bloqueiam comandos destrutivos e vazamento de credenciais.`,
     description:
       'Implementação num ambiente isolado por tarefa, com lint, build e testes rodando a cada passo.',
   },
   {
     title: '4 revisões independentes',
+    detail:
+      `Quem implementa não verifica. O código passa por quatro revisões separadas, uma delas feita por um modelo de outro fornecedor, para que os mesmos pontos cegos não se repitam na revisão.`,
     description:
       'Quem implementa não verifica. Quatro revisões separadas, uma delas feita por um modelo de outro fornecedor.',
   },
   {
     title: 'Deploy',
+    detail:
+      `O merge e a publicação no ambiente de desenvolvimento só acontecem com todos os gates automáticos verdes. Publicar em produção continua sendo uma decisão humana.`,
     description: 'Merge e publicação no ambiente de desenvolvimento só com todos os gates automáticos verdes.',
   },
   {
     title: 'Testes Playwright',
+    detail:
+      `Depois do deploy, testes ponta a ponta rodam no ambiente real. Se algo reprova, o próprio DAG faz o revert automaticamente, sem esperar alguém perceber o problema.`,
     description:
       'Testes ponta a ponta no ambiente real. Se algo reprova, o próprio DAG faz o revert automaticamente.',
   },
   {
     title: 'Gate de homologação',
+    detail:
+      `A pessoa recebe a entrega pronta, com a prova de cada item do critério de aceite, e decide se aceita. É o segundo ponto em que o time decide: entre os dois gates, quem executa são os agentes.`,
     description: 'A pessoa recebe a entrega pronta, com a prova de cada item, e decide se aceita.',
     human: true,
   },
