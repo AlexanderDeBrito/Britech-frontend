@@ -7,9 +7,9 @@ import { CONTACT, ROUTES, whatsappUrl } from '@/lib/contact';
 
 const PRESETS: Record<string, string> = {
   'pre-venda-lancamentos':
-    'Tenho um escritório de contabilidade e quero entrar na pré-venda do Assistente de Lançamentos. Posso enviar 1 extrato para teste, com os dados sensíveis cobertos. Sistema contábil que usamos: ',
+    'Tenho um escritório de contabilidade e quero entrar na pré-venda do Razão (assistente de lançamentos). Posso enviar 1 extrato para teste, com os dados sensíveis cobertos. Sistema contábil que usamos: ',
   'teste-lancamentos':
-    'Tenho um escritório de contabilidade e quero testar o Assistente de Lançamentos com 1 extrato (com os dados sensíveis cobertos). Sistema contábil que usamos: ',
+    'Tenho um escritório de contabilidade e quero testar o Razão (assistente de lançamentos) com 1 extrato (com os dados sensíveis cobertos). Sistema contábil que usamos: ',
   diagnostico: 'Quero agendar o diagnóstico gratuito de 30 minutos. Hoje o nosso time desenvolve assim: ',
 };
 

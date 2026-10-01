@@ -152,7 +152,7 @@ export default function About() {
               },
               {
                 title: 'Produtos',
-                text: 'Software que a Britech desenvolve e leva ao mercado. O primeiro é o Assistente de Lançamentos, para escritórios de contabilidade, hoje em validação.',
+                text: 'Software que a Britech desenvolve e leva ao mercado. O primeiro é o Razão (nome provisório), assistente de lançamentos de extrato para escritórios contábeis, hoje em validação.',
                 link: { text: 'Conhecer os produtos', href: ROUTES.produtos },
               },
             ].map((f) => (
@@ -215,7 +215,7 @@ export default function About() {
             Vamos <span className="text-gradient-brand">conversar?</span>
           </>
         }
-        text="Se a sua empresa constrói software, comece pelo diagnóstico gratuito de 30 minutos. Se você tem um escritório de contabilidade, conheça o Assistente de Lançamentos."
+        text="Se a sua empresa constrói software, comece pelo diagnóstico gratuito de 30 minutos. Se você tem um escritório de contabilidade, conheça o Razão, nosso assistente de lançamentos de extrato."
         secondary={{ text: 'Conhecer os produtos', href: ROUTES.produtos }}
         whatsappMessage={WHATSAPP_MESSAGES.geral}
       />

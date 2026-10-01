@@ -16,9 +16,9 @@ export const WHATSAPP_MESSAGES = {
   diagnostico: DEFAULT_MESSAGE,
   geral: 'Olá! Vim pelo site da Britech e gostaria de conversar.',
   lancamentosTeste:
-    'Olá! Tenho um escritório de contabilidade e quero testar o Assistente de Lançamentos com 1 extrato (com os dados sensíveis cobertos).',
+    'Olá! Tenho um escritório de contabilidade e quero testar o Razão (assistente de lançamentos) com 1 extrato (com os dados sensíveis cobertos).',
   lancamentosPreVenda:
-    'Olá! Tenho um escritório de contabilidade e quero entrar na pré-venda do Assistente de Lançamentos.',
+    'Olá! Tenho um escritório de contabilidade e quero entrar na pré-venda do Razão (assistente de lançamentos).',
 } as const;
 
 export function whatsappUrl(message: string = DEFAULT_MESSAGE) {

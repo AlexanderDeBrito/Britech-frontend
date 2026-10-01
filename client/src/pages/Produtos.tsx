@@ -3,7 +3,8 @@ import { ArrowRight, Search, FileUp, Sparkles } from 'lucide-react';
 import { HeroSection } from '@/components/HeroSection';
 import { CtaSection, SectionHeader } from '@/components/Section';
 import { ROUTES, WHATSAPP_MESSAGES } from '@/lib/contact';
-import { PRODUCTS } from '@/lib/products';
+import { LANCAMENTOS, PRODUCTS, RAZAO_SHOTS } from '@/lib/products';
+import { ProductShot } from '@/components/ProductShot';
 
 export default function Produtos() {
   const principles = [
@@ -31,7 +32,7 @@ export default function Produtos() {
         highlightWord="leva ao mercado"
         subtitle="Produtos Britech"
         description="Além da consultoria, a Britech desenvolve os próprios produtos: ferramentas focadas numa tarefa repetitiva, que a IA faz bem quando alguém de confiança revisa o resultado."
-        ctaText="Conhecer o Assistente de Lançamentos"
+        ctaText="Conhecer o Razão"
         ctaHref={ROUTES.produtoLancamentos}
         secondary={{ text: 'Ver a consultoria', href: ROUTES.servicos }}
       />
@@ -48,6 +49,9 @@ export default function Produtos() {
             {PRODUCTS.map((p) => (
               <li key={p.slug}>
                 <article className="h-full p-8 md:p-10 rounded-3xl glass-card brand-glow flex flex-col">
+                  {p.slug === LANCAMENTOS.slug && (
+                    <ProductShot shot={RAZAO_SHOTS.revisao} sizes="(min-width: 1024px) 560px, 100vw" className="mb-8" />
+                  )}
                   <span className="self-start inline-flex items-center gap-2 mb-6 px-3 py-1.5 rounded-full border border-[color:var(--brand-cyan)]/40 bg-[#00D4FF]/10 text-xs font-semibold text-[color:var(--brand-cyan)]">
                     <span className="w-2 h-2 rounded-full bg-[color:var(--brand-cyan)]" aria-hidden="true" />
                     {p.status}
@@ -58,7 +62,10 @@ export default function Produtos() {
                       {p.name}
                     </Link>
                   </h3>
-                  {p.provisionalName && <p className="text-xs text-white/70 mb-5">nome provisório</p>}
+                  <p className="text-sm text-white/75 mb-5">
+                    {p.descriptor}
+                    {p.provisionalName && <span className="text-white/70"> · nome provisório</span>}
+                  </p>
                   <p className="text-2xl font-semibold text-gradient-brand mb-4">{p.tagline}</p>
                   <p className="text-white/80 leading-relaxed mb-8">{p.summary}</p>
                   <Link
@@ -118,7 +125,7 @@ export default function Produtos() {
           </>
         }
         text="Mande um extrato de um cliente, com os dados sensíveis cobertos, e veja os lançamentos classificados no plano de contas dele."
-        primary={{ text: 'Conhecer o Assistente de Lançamentos', href: ROUTES.produtoLancamentos }}
+        primary={{ text: 'Conhecer o Razão', href: ROUTES.produtoLancamentos }}
         whatsappMessage={WHATSAPP_MESSAGES.lancamentosTeste}
         whatsappText="Quero testar com 1 extrato"
       />

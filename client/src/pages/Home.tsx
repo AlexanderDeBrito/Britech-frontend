@@ -24,7 +24,8 @@ import { DagVideoPlayer } from '@/components/DagVideo';
 import { CtaSection, Eyebrow, SectionHeader } from '@/components/Section';
 import { WhatsAppIcon } from '@/components/WhatsAppButton';
 import { ROUTES, WHATSAPP_MESSAGES, whatsappUrl } from '@/lib/contact';
-import { LANCAMENTOS } from '@/lib/products';
+import { LANCAMENTOS, RAZAO_SHOTS } from '@/lib/products';
+import { ProductShot } from '@/components/ProductShot';
 
 const linkArrow =
   'inline-flex items-center gap-2 text-[color:var(--brand-cyan)] font-semibold hover:gap-3 transition-all no-underline';
@@ -45,9 +46,9 @@ export default function Home() {
       eyebrow: 'Produtos',
       title: 'Software nosso, pronto para usar',
       description:
-        'Produtos que a Britech desenvolve e leva ao mercado. O primeiro é o Assistente de Lançamentos, para escritórios de contabilidade.',
+        'Produtos que a Britech desenvolve e leva ao mercado. O primeiro é o Razão, assistente de lançamentos de extrato para escritórios contábeis.',
       cta: { text: 'Conhecer os produtos', href: ROUTES.produtos },
-      more: { text: 'Ver o Assistente de Lançamentos', href: ROUTES.produtoLancamentos },
+      more: { text: 'Ver o Razão', href: ROUTES.produtoLancamentos },
     },
   ];
 
@@ -270,13 +271,16 @@ export default function Home() {
 
           <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,3fr)_minmax(0,2fr)] gap-6">
             <article className="p-8 md:p-10 rounded-3xl glass-card brand-glow flex flex-col">
+              <ProductShot shot={RAZAO_SHOTS.revisao} sizes="(min-width: 1024px) 640px, 100vw" className="mb-8" />
               <span className="self-start inline-flex items-center gap-2 mb-6 px-3 py-1.5 rounded-full border border-[color:var(--brand-cyan)]/40 bg-[#00D4FF]/10 text-xs font-semibold text-[color:var(--brand-cyan)]">
                 <span className="w-2 h-2 rounded-full bg-[color:var(--brand-cyan)]" aria-hidden="true" />
                 {LANCAMENTOS.status}
               </span>
               <p className="text-sm text-white/70 mb-1">{LANCAMENTOS.audience}</p>
               <h3 className="text-3xl font-bold text-white mb-1">{LANCAMENTOS.name}</h3>
-              <p className="text-xs text-white/70 mb-5">nome provisório</p>
+              <p className="text-sm text-white/75 mb-5">
+                {LANCAMENTOS.descriptor} · <span className="text-white/70">nome provisório</span>
+              </p>
               <p className="text-2xl font-semibold text-gradient-brand mb-4">{LANCAMENTOS.tagline}</p>
               <p className="text-white/80 leading-relaxed mb-6">{LANCAMENTOS.summary}</p>
               <ul className="space-y-2.5 mb-8">
@@ -390,7 +394,7 @@ export default function Home() {
             Por onde você quer <span className="text-gradient-brand">começar?</span>
           </>
         }
-        text="Se a sua empresa constrói software, comece pelo diagnóstico gratuito de 30 minutos. Se você tem um escritório de contabilidade, conheça o Assistente de Lançamentos."
+        text="Se a sua empresa constrói software, comece pelo diagnóstico gratuito de 30 minutos. Se você tem um escritório de contabilidade, conheça o Razão, nosso assistente de lançamentos de extrato."
         secondary={{ text: 'Conhecer os produtos', href: ROUTES.produtos }}
         whatsappMessage={WHATSAPP_MESSAGES.geral}
       />

@@ -1,9 +1,6 @@
 import { Link } from 'wouter';
 import {
   ArrowRight,
-  FileUp,
-  Sparkles,
-  ListChecks,
   Building2,
   CreditCard,
   CalendarX2,
@@ -18,7 +15,9 @@ import { FaqSection } from '@/components/FaqSection';
 import { SectionHeader } from '@/components/Section';
 import { WhatsAppIcon } from '@/components/WhatsAppButton';
 import { ROUTES, WHATSAPP_MESSAGES, whatsappUrl } from '@/lib/contact';
-import { LANCAMENTOS, LANCAMENTOS_FAQ } from '@/lib/products';
+import { LANCAMENTOS, LANCAMENTOS_FAQ, RAZAO_SHOTS, RAZAO_VIDEO } from '@/lib/products';
+import { ProductShot } from '@/components/ProductShot';
+import { VideoPlayer } from '@/components/DagVideo';
 
 /*
  * Regras desta página (PRD, seção 3): sem percentual de acerto, sem "100%
@@ -26,46 +25,27 @@ import { LANCAMENTOS, LANCAMENTOS_FAQ } from '@/lib/products';
  * os sistemas", sem data de lançamento, sem preço e sem nome de concorrente.
  */
 
-type Confidence = 'alta' | 'media' | 'baixa';
-
-const CONFIDENCE_LABEL: Record<Confidence, string> = {
-  alta: 'Confiança alta',
-  media: 'Confiança média',
-  baixa: 'Confiança baixa',
-};
-
-const CONFIDENCE_CLASS: Record<Confidence, string> = {
-  alta: 'border-[color:var(--brand-cyan)]/40 bg-[#00D4FF]/10 text-[color:var(--brand-cyan)]',
-  media: 'border-amber-300/40 bg-amber-300/10 text-amber-200',
-  baixa: 'border-rose-300/40 bg-rose-300/10 text-rose-200',
-};
-
-/** Exemplo ilustrativo, com dados fictícios. */
-const EXAMPLE: { date: string; description: string; amount: string; account: string; confidence: Confidence }[] = [
-  { date: '02/09', description: 'PIX RECEBIDO CLIENTE 0421', amount: '+ 3.200,00', account: 'Receita de serviços', confidence: 'alta' },
-  { date: '03/09', description: 'TARIFA PACOTE SERVICOS', amount: '− 59,90', account: 'Despesas bancárias', confidence: 'alta' },
-  { date: '05/09', description: 'PAG BOLETO 34191.7900', amount: '− 1.180,00', account: 'Fornecedores', confidence: 'media' },
-  { date: '08/09', description: 'TED 237 0001 J SILVA', amount: '− 850,00', account: 'A revisar', confidence: 'baixa' },
-];
-
 export default function ProdutoLancamentos() {
-  const steps = [
+  const flow = [
     {
-      icon: FileUp,
-      title: 'Sobe o extrato',
-      description: 'Em PDF, foto ou OFX, e escolhe de qual cliente do escritório ele é.',
+      shot: RAZAO_SHOTS.envio,
+      title: 'Enviar extratos',
+      text: 'Escolha o cliente e o mês e arraste os arquivos, vários de uma vez: PDF do banco, foto do extrato ou OFX. Cada um é lido e classificado no plano de contas daquele cliente, aprendendo com o histórico dele.',
     },
     {
-      icon: Sparkles,
-      title: 'A IA classifica',
-      description:
-        'Cada movimento é classificado no plano de contas daquele cliente, aprendendo com o histórico de lançamentos dele.',
+      shot: RAZAO_SHOTS.revisao,
+      title: 'Revisão com confiança',
+      text: 'Cada movimento chega com a conta sugerida e o nível de confiança. O de confiança alta você aceita em lote; o de média ou baixa você aceita, altera ou ignora, vendo por que aquela conta foi sugerida.',
     },
     {
-      icon: ListChecks,
-      title: 'Você revisa e exporta',
-      description:
-        'O analista revisa só o que ficou com confiança média ou baixa e baixa o arquivo no formato do sistema contábil.',
+      shot: RAZAO_SHOTS.regras,
+      title: 'Regras do analista',
+      text: 'Quando você já sabe para onde vai um lançamento, cria uma regra: "quando a descrição contém…, lançar em…". A regra vence a sugestão automática e vale para os próximos extratos.',
+    },
+    {
+      shot: RAZAO_SHOTS.exportacoes,
+      title: 'Exportar',
+      text: 'Com a revisão feita, gere o arquivo para importar no sistema contábil do escritório. Os formatos de cada sistema estão em validação: diga qual você usa para priorizarmos.',
     },
   ];
 
@@ -95,11 +75,11 @@ export default function ProdutoLancamentos() {
   return (
     <div className="flex flex-col">
       <HeroSection
+        wide
         title="Pare de digitar extrato."
         highlightWord="digitar extrato."
         subtitle={LANCAMENTOS.status}
-        description="O Assistente de Lançamentos (nome provisório) é para escritórios de contabilidade. Você sobe o extrato bancário do cliente e recebe os lançamentos classificados no plano de contas dele, com a confiança de cada um, prontos para revisar e importar."
-        trust={['PDF, foto ou OFX', 'Plano de contas de cada cliente', 'Confiança em cada lançamento']}
+        description="O Razão (nome provisório) é o assistente de lançamentos de extrato da Britech, para escritórios contábeis de pequeno e médio porte. Você sobe o extrato bancário do cliente e recebe os lançamentos classificados no plano de contas dele, com a confiança de cada um, prontos para revisar e importar."
       >
         <div className="flex flex-col sm:flex-row sm:flex-wrap gap-4">
           <a
@@ -116,6 +96,15 @@ export default function ProdutoLancamentos() {
             <ArrowRight size={18} aria-hidden="true" />
           </Link>
         </div>
+        <ul className="mt-10 flex flex-wrap items-center gap-x-8 gap-y-3 text-sm text-white/75">
+          {['PDF, foto ou OFX', 'Plano de contas de cada cliente', 'Confiança em cada lançamento'].map((t) => (
+            <li key={t} className="flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-[color:var(--brand-cyan)] shadow-[0_0_12px_#00D4FF] flex-shrink-0" />
+              {t}
+            </li>
+          ))}
+        </ul>
+        <ProductShot shot={RAZAO_SHOTS.revisao} eager className="mt-14" />
       </HeroSection>
 
       {/* O problema */}
@@ -134,58 +123,51 @@ export default function ProdutoLancamentos() {
         </div>
       </section>
 
-      {/* Como funciona */}
+      {/* Como funciona: o fluxo no protótipo */}
       <section aria-labelledby="como-titulo" className="py-24 md:py-32">
         <div className="container">
           <SectionHeader
             id="como-titulo"
             eyebrow="Como funciona"
-            title="Três passos, do extrato ao arquivo de importação"
+            title="Do extrato ao arquivo de importação, em quatro telas"
+            lead="Telas do protótipo de design do Razão, com dados fictícios. O produto está em validação com os primeiros escritórios."
           />
-          <ol className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {steps.map(({ icon: Icon, title, description }, i) => (
-              <li key={title} className="relative p-8 rounded-2xl glass-card">
-                <div className="absolute -top-3 -right-3 w-12 h-12 rounded-xl bg-[#0B1220] border border-[color:var(--brand-blue)]/40 flex items-center justify-center text-[color:var(--brand-cyan)] font-bold">
-                  {String(i + 1).padStart(2, '0')}
+          <ol className="flex flex-col gap-20 md:gap-28">
+            {flow.map(({ shot, title, text }, i) => (
+              <li
+                key={title}
+                className={`grid grid-cols-1 gap-8 lg:gap-12 items-center ${
+                  i % 2 === 1 ? 'lg:grid-cols-[minmax(0,7fr)_minmax(0,5fr)]' : 'lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)]'
+                }`}
+              >
+                <div className={i % 2 === 1 ? 'lg:order-2' : ''}>
+                  <span className="inline-flex items-center justify-center w-12 h-12 mb-5 rounded-xl bg-[#0B1220] border border-[color:var(--brand-blue)]/40 text-[color:var(--brand-cyan)] font-bold">
+                    {String(i + 1).padStart(2, '0')}
+                  </span>
+                  <h3 className="mb-4 text-2xl md:text-3xl font-semibold text-white">{title}</h3>
+                  <p className="text-lg text-white/80 leading-relaxed">{text}</p>
                 </div>
-                <div className="mb-5 inline-flex items-center justify-center w-12 h-12 rounded-xl bg-[color:var(--brand-blue)]/15">
-                  <Icon size={22} aria-hidden="true" className="text-[color:var(--brand-cyan)]" />
-                </div>
-                <h3 className="mb-3 text-xl font-semibold text-white">{title}</h3>
-                <p className="text-white/75 leading-relaxed">{description}</p>
+                <ProductShot
+                  shot={shot}
+                  sizes="(min-width: 1280px) 700px, (min-width: 1024px) 58vw, 100vw"
+                  className={i % 2 === 1 ? 'lg:order-1' : ''}
+                />
               </li>
             ))}
           </ol>
 
-          {/* Exemplo da fila de revisão */}
-          <figure className="mt-14 p-5 md:p-8 rounded-3xl border border-white/10 bg-[#070D18]/70">
-            <figcaption className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mb-5">
-              <span className="font-semibold text-white">Fila de revisão</span>
-              <span className="text-xs text-white/70">Exemplo ilustrativo, com dados fictícios</span>
-            </figcaption>
-            <ul className="flex flex-col gap-3">
-              {EXAMPLE.map((row) => (
-                <li
-                  key={row.description}
-                  className="grid grid-cols-[auto_minmax(0,1fr)] md:grid-cols-[4rem_minmax(0,1.6fr)_7rem_minmax(0,1.2fr)_10rem] gap-x-4 gap-y-1 items-center p-4 rounded-xl bg-white/[0.03] border border-white/5"
-                >
-                  <span className="text-sm text-white/70 tabular-nums">{row.date}</span>
-                  <span className="text-sm text-white font-medium truncate">{row.description}</span>
-                  <span className="col-start-2 md:col-start-auto text-sm text-white/80 tabular-nums md:text-right">{row.amount}</span>
-                  <span className="col-start-2 md:col-start-auto text-sm text-white/80">→ {row.account}</span>
-                  <span
-                    className={`col-start-2 md:col-start-auto justify-self-start md:justify-self-end inline-flex px-2.5 py-1 rounded-full border text-xs font-semibold ${CONFIDENCE_CLASS[row.confidence]}`}
-                  >
-                    {CONFIDENCE_LABEL[row.confidence]}
-                  </span>
-                </li>
-              ))}
-            </ul>
-            <p className="mt-5 text-sm text-white/75">
-              As linhas com confiança média ou baixa ficam separadas para o analista revisar antes de
-              exportar.
-            </p>
-          </figure>
+          {/*
+            Vídeo teaser do Razão: preencha RAZAO_VIDEO em lib/products.ts quando o
+            arquivo chegar (produto-lancamentos/videos/). Enquanto for null, nada aparece.
+          */}
+          {RAZAO_VIDEO && (
+            <div className="mt-24 max-w-4xl mx-auto">
+              <h3 className="mb-8 text-2xl md:text-3xl font-semibold text-white text-center">
+                Veja o Razão <span className="text-gradient-brand">em ação</span>
+              </h3>
+              <VideoPlayer video={RAZAO_VIDEO} />
+            </div>
+          )}
         </div>
       </section>
 

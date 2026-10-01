@@ -52,7 +52,7 @@ export function Footer() {
             <ul className="flex flex-col gap-2.5">
               {[
                 ['Todos os produtos', ROUTES.produtos],
-                ['Assistente de Lançamentos', ROUTES.produtoLancamentos],
+                ['Razão · lançamentos de extrato', ROUTES.produtoLancamentos],
               ].map(([label, href]) => (
                 <li key={label}>
                   <Link href={href} className={linkClass}>

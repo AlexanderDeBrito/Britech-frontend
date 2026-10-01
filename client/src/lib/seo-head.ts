@@ -13,7 +13,8 @@ export interface HeadTag {
  */
 export function headTags(page: PageSeo): HeadTag[] {
   const url = absoluteUrl(page.path);
-  const image = absoluteUrl(SITE.ogImage);
+  const image = absoluteUrl(page.ogImage ?? SITE.ogImage);
+  const imageAlt = page.ogImageAlt ?? `${SITE.name} — ${SITE.tagline}`;
   const robots = page.noindex
     ? 'noindex, nofollow'
     : 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1';
@@ -34,7 +35,7 @@ export function headTags(page: PageSeo): HeadTag[] {
     { tag: 'meta', attrs: { property: 'og:image', content: image } },
     { tag: 'meta', attrs: { property: 'og:image:width', content: '1200' } },
     { tag: 'meta', attrs: { property: 'og:image:height', content: '630' } },
-    { tag: 'meta', attrs: { property: 'og:image:alt', content: `${SITE.name} — ${SITE.tagline}` } },
+    { tag: 'meta', attrs: { property: 'og:image:alt', content: imageAlt } },
 
     // Twitter / X
     { tag: 'meta', attrs: { name: 'twitter:card', content: 'summary_large_image' } },

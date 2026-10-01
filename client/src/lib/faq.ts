@@ -26,7 +26,7 @@ export const HOME_FAQ: FaqItem[] = [
   {
     question: 'Quais produtos a Britech tem?',
     answer:
-      'O primeiro é o Assistente de Lançamentos (nome provisório), para escritórios contábeis de pequeno e médio porte, com até 30 pessoas: classifica o extrato bancário no plano de contas de cada cliente e mostra a confiança de cada lançamento. Ele está em validação, com piloto nos primeiros escritórios.',
+      'O primeiro é o Razão (nome provisório), assistente de lançamentos de extrato para escritórios contábeis de pequeno e médio porte, com até 30 pessoas: classifica o extrato bancário no plano de contas de cada cliente e mostra a confiança de cada lançamento. Ele está em validação, com piloto nos primeiros escritórios.',
   },
   {
     question: 'O código continua sendo meu?',

@@ -1,7 +1,7 @@
 import { CASES } from './cases';
 import { CONTACT } from './contact';
 import { FAQ, HOME_FAQ, type FaqItem } from './faq';
-import { LANCAMENTOS, LANCAMENTOS_FAQ, PRODUCTS } from './products';
+import { LANCAMENTOS, LANCAMENTOS_FAQ, PRODUCTS, RAZAO_SHOTS, RAZAO_SHOT_CAPTION, RAZAO_VIDEO } from './products';
 import { DAG_VIDEO } from './dag';
 
 /** Identidade do site — fonte única para meta tags, JSON-LD e sitemap. */
@@ -50,6 +50,9 @@ export interface PageSeo {
   graph?: () => Record<string, unknown>[];
   changefreq: 'daily' | 'weekly' | 'monthly' | 'yearly';
   priority: number;
+  /** Imagem de compartilhamento própria (1200×630); padrão: SITE.ogImage. */
+  ogImage?: string;
+  ogImageAlt?: string;
   /** Fora do sitemap e marcada como noindex (ex.: 404). */
   noindex?: boolean;
 }
@@ -110,7 +113,7 @@ export function organizationNode(): Record<string, unknown> {
     legalName: SITE.legalName,
     url: SITE.url,
     description:
-      'Empresa de desenvolvimento de software de Blumenau (SC), com duas frentes: consultoria de arquitetura e desenvolvimento acelerado por IA para quem constrói SaaS e produtos B2B, com o DAG (Desenvolvimento Autônomo Governado) como método, e produtos próprios, como o Assistente de Lançamentos para escritórios de contabilidade.',
+      'Empresa de desenvolvimento de software de Blumenau (SC), com duas frentes: consultoria de arquitetura e desenvolvimento acelerado por IA para quem constrói SaaS e produtos B2B, com o DAG (Desenvolvimento Autônomo Governado) como método, e produtos próprios, como o Razão, assistente de lançamentos de extrato para escritórios contábeis.',
     slogan: SITE.tagline,
     foundingDate: SITE.foundingYear,
     founder: { '@id': FOUNDER_ID },
@@ -229,7 +232,15 @@ function softwareNode(): Record<string, unknown> {
     '@type': 'SoftwareApplication',
     '@id': `${absoluteUrl(LANCAMENTOS.href)}#software`,
     name: LANCAMENTOS.name,
-    alternateName: 'Assistente de lançamentos para escritórios contábeis',
+    image: absoluteUrl('/images/produtos/razao-revisao-1600.webp'),
+    screenshot: Object.values(RAZAO_SHOTS).map((s) => ({
+      '@type': 'ImageObject',
+      url: absoluteUrl(`/images/produtos/${s.file}-1600.webp`),
+      caption: `${s.alt} (${RAZAO_SHOT_CAPTION})`,
+      width: s.width,
+      height: s.height,
+    })),
+    alternateName: ['Assistente de Lançamentos', LANCAMENTOS.descriptor],
     url: absoluteUrl(LANCAMENTOS.href),
     description: LANCAMENTOS.summary,
     applicationCategory: 'BusinessApplication',
@@ -346,7 +357,7 @@ export const PAGES: Record<string, PageSeo> = {
   '/produtos': page('/produtos', ['Produtos'], {
     title: 'Produtos Britech: software próprio com IA',
     description:
-      'Software que a Britech constrói e leva ao mercado. Primeiro produto: Assistente de Lançamentos, que classifica extratos no plano de contas de cada cliente.',
+      'Software que a Britech constrói e leva ao mercado. Primeiro: o Razão, que classifica extratos no plano de contas de cada cliente, em validação.',
     keywords: [
       'produtos britech',
       'software para escritório de contabilidade',
@@ -371,11 +382,13 @@ export const PAGES: Record<string, PageSeo> = {
   }),
   '/produtos/assistente-de-lancamentos': page(
     '/produtos/assistente-de-lancamentos',
-    ['Produtos', 'Assistente de Lançamentos'],
+    ['Produtos', 'Razão'],
     {
-      title: 'Assistente de Lançamentos: pare de digitar extrato | Britech',
+      title: 'Razão: lançamentos de extrato para contadores | Britech',
       description:
-        'Para escritórios de contabilidade: suba o extrato (PDF, foto ou OFX) e receba os lançamentos no plano de contas do cliente, com a confiança de cada um. Em piloto.',
+        'Razão (nome provisório): suba o extrato em PDF, foto ou OFX e receba os lançamentos no plano de contas do cliente, com a confiança de cada um. Em validação.',
+      ogImage: '/images/produtos/og-razao.png',
+      ogImageAlt: 'Razão, assistente de lançamentos de extrato da Britech: tela de revisão do protótipo, com dados fictícios',
       keywords: [
         'classificação de extrato bancário',
         'lançamento de extrato contábil',
@@ -384,7 +397,28 @@ export const PAGES: Record<string, PageSeo> = {
       ],
       changefreq: 'monthly',
       priority: 0.9,
-      graph: () => [softwareNode(), faqNode('/produtos/assistente-de-lancamentos', LANCAMENTOS_FAQ)],
+      graph: () => [
+        softwareNode(),
+        faqNode('/produtos/assistente-de-lancamentos', LANCAMENTOS_FAQ),
+        ...(RAZAO_VIDEO
+          ? [
+              {
+                '@type': 'VideoObject',
+                '@id': `${absoluteUrl(LANCAMENTOS.href)}#video`,
+                name: RAZAO_VIDEO.title,
+                description: RAZAO_VIDEO.description,
+                thumbnailUrl: [absoluteUrl(RAZAO_VIDEO.thumbnail)],
+                uploadDate: RAZAO_VIDEO.uploadDate,
+                duration: RAZAO_VIDEO.duration,
+                contentUrl: absoluteUrl(RAZAO_VIDEO.src),
+                inLanguage: SITE.lang,
+                width: RAZAO_VIDEO.width,
+                height: RAZAO_VIDEO.height,
+                publisher: { '@id': ORGANIZATION_ID },
+              },
+            ]
+          : []),
+      ],
     },
     ['/produtos', '/produtos/assistente-de-lancamentos'],
   ),

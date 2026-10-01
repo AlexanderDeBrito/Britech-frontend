@@ -1,12 +1,20 @@
 import { DAG_VIDEO } from '@/lib/dag';
 
+export interface SiteVideo {
+  src: string;
+  poster: string;
+  width: number;
+  height: number;
+  title: string;
+  caption: string;
+}
+
 /**
- * Player do vídeo explicativo do DAG. Sem autoplay e com preload="none": nada é
- * baixado até a pessoa dar play. Largura/altura e aspect-ratio fixos evitam CLS.
+ * Player de vídeo do site. Sem autoplay e com preload="none": nada é baixado
+ * até a pessoa dar play. Largura/altura e aspect-ratio fixos evitam CLS.
  */
-export function DagVideoPlayer({ className = '' }: { className?: string }) {
-  if (!DAG_VIDEO) return null;
-  const { src, poster, width, height, title, caption } = DAG_VIDEO;
+export function VideoPlayer({ video, className = '' }: { video: SiteVideo; className?: string }) {
+  const { src, poster, width, height, title, caption } = video;
   return (
     <figure className={className}>
       <div className="rounded-3xl p-1.5 md:p-2 glass-card brand-glow">
@@ -22,8 +30,7 @@ export function DagVideoPlayer({ className = '' }: { className?: string }) {
           aria-label={title}
         >
           <source src={src} type="video/mp4" />
-          Seu navegador não reproduz vídeo.{' '}
-          <a href={src}>Baixe o vídeo</a>.
+          Seu navegador não reproduz vídeo. <a href={src}>Baixe o vídeo</a>.
         </video>
       </div>
       <figcaption className="mt-4 text-sm text-white/70 text-center">
@@ -31,6 +38,12 @@ export function DagVideoPlayer({ className = '' }: { className?: string }) {
       </figcaption>
     </figure>
   );
+}
+
+/** Player do vídeo explicativo do DAG (some se DAG_VIDEO for null). */
+export function DagVideoPlayer({ className = '' }: { className?: string }) {
+  if (!DAG_VIDEO) return null;
+  return <VideoPlayer video={DAG_VIDEO} className={className} />;
 }
 
 /** Seção do vídeo em /dag. Não renderiza nada enquanto não houver vídeo. */
