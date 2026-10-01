@@ -3,8 +3,9 @@ import { ArrowRight, Search, FileUp, Sparkles } from 'lucide-react';
 import { HeroSection } from '@/components/HeroSection';
 import { CtaSection, SectionHeader } from '@/components/Section';
 import { ROUTES, WHATSAPP_MESSAGES } from '@/lib/contact';
-import { LANCAMENTOS, PRODUCTS, RAZAO_SHOTS } from '@/lib/products';
+import { LANCAMENTOS, PRODUCTS, RAZAO_SHOTS, RAZAO_TEASER } from '@/lib/products';
 import { ProductShot } from '@/components/ProductShot';
+import { VideoPlayer } from '@/components/DagVideo';
 
 export default function Produtos() {
   const principles = [
@@ -48,10 +49,13 @@ export default function Produtos() {
           <ul className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             {PRODUCTS.map((p) => (
               <li key={p.slug}>
-                <article className="h-full p-8 md:p-10 rounded-3xl glass-card brand-glow flex flex-col">
-                  {p.slug === LANCAMENTOS.slug && (
-                    <ProductShot shot={RAZAO_SHOTS.revisao} sizes="(min-width: 1024px) 560px, 100vw" className="mb-8" />
-                  )}
+                <article className="h-full p-6 sm:p-8 md:p-10 rounded-3xl glass-card brand-glow flex flex-col">
+                  {p.slug === LANCAMENTOS.slug &&
+                    (RAZAO_TEASER ? (
+                      <VideoPlayer video={RAZAO_TEASER} className="mb-8" />
+                    ) : (
+                      <ProductShot shot={RAZAO_SHOTS.revisao} sizes="(min-width: 1024px) 560px, 100vw" className="mb-8" />
+                    ))}
                   <span className="self-start inline-flex items-center gap-2 mb-6 px-3 py-1.5 rounded-full border border-[color:var(--brand-cyan)]/40 bg-[#00D4FF]/10 text-xs font-semibold text-[color:var(--brand-cyan)]">
                     <span className="w-2 h-2 rounded-full bg-[color:var(--brand-cyan)]" aria-hidden="true" />
                     {p.status}

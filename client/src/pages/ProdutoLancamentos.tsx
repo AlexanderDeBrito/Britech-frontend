@@ -104,7 +104,12 @@ export default function ProdutoLancamentos() {
             </li>
           ))}
         </ul>
-        <ProductShot shot={RAZAO_SHOTS.revisao} eager className="mt-14" />
+        {/* Vídeo principal (RAZAO_VIDEO em lib/products.ts); sem vídeo, mostra a tela de revisão. */}
+        {RAZAO_VIDEO ? (
+          <VideoPlayer video={RAZAO_VIDEO} className="mt-14" />
+        ) : (
+          <ProductShot shot={RAZAO_SHOTS.revisao} eager className="mt-14" />
+        )}
       </HeroSection>
 
       {/* O problema */}
@@ -156,18 +161,6 @@ export default function ProdutoLancamentos() {
             ))}
           </ol>
 
-          {/*
-            Vídeo teaser do Razão: preencha RAZAO_VIDEO em lib/products.ts quando o
-            arquivo chegar (produto-lancamentos/videos/). Enquanto for null, nada aparece.
-          */}
-          {RAZAO_VIDEO && (
-            <div className="mt-24 max-w-4xl mx-auto">
-              <h3 className="mb-8 text-2xl md:text-3xl font-semibold text-white text-center">
-                Veja o Razão <span className="text-gradient-brand">em ação</span>
-              </h3>
-              <VideoPlayer video={RAZAO_VIDEO} />
-            </div>
-          )}
         </div>
       </section>
 

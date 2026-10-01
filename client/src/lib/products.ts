@@ -71,13 +71,7 @@ export const RAZAO_SHOTS = {
 
 export const RAZAO_SHOT_CAPTION = 'Protótipo de design · dados fictícios';
 
-/**
- * Vídeo teaser do Razão. Enquanto for `null`, a seção de vídeo não aparece
- * (nem o VideoObject no JSON-LD). Quando o arquivo chegar em
- * produto-lancamentos/videos/, copie mp4 (H.264) e poster para
- * client/public/videos/ e preencha aqui, no mesmo formato de DAG_VIDEO.
- */
-export const RAZAO_VIDEO: {
+export interface RazaoVideo {
   src: string;
   poster: string;
   thumbnail: string;
@@ -88,7 +82,44 @@ export const RAZAO_VIDEO: {
   caption: string;
   duration: string;
   uploadDate: string;
-} | null = null;
+}
+
+/**
+ * Vídeo principal do Razão (arquivos em client/public/videos/). Alimenta o
+ * player de /produtos/assistente-de-lancamentos/ e o VideoObject do JSON-LD.
+ * Com `null`, a seção de vídeo some da página.
+ *
+ * Atenção: a versão publicada é editada a partir do original para esconder o
+ * aviso de preço que aparece na tela Início do protótipo (o site não mostra preço).
+ */
+export const RAZAO_VIDEO: RazaoVideo | null = {
+  src: '/videos/razao-como-funciona.mp4',
+  poster: '/videos/razao-como-funciona.webp',
+  thumbnail: '/videos/razao-como-funciona.jpg',
+  width: 1920,
+  height: 1080,
+  title: 'Como funciona o Razão',
+  description:
+    'O Razão em um minuto e meio: envie os extratos, revise os lançamentos sugeridos no plano de contas do cliente com o nível de confiança, crie regras do analista e exporte no formato do seu sistema. Protótipo com dados fictícios.',
+  caption: 'Vídeo com narração · 1min34s · protótipo com dados fictícios',
+  duration: 'PT1M34S',
+  uploadDate: '2026-10-01',
+};
+
+/** Teaser curto (30s) do Razão, usado no card de /produtos/. */
+export const RAZAO_TEASER: RazaoVideo | null = {
+  src: '/videos/razao-teaser.mp4',
+  poster: '/videos/razao-teaser.webp',
+  thumbnail: '/videos/razao-teaser.jpg',
+  width: 1920,
+  height: 1080,
+  title: 'Razão em 30 segundos',
+  description:
+    'Teaser do Razão: o extrato entra e os lançamentos saem prontos para revisar, no plano de contas do cliente. Protótipo com dados fictícios.',
+  caption: 'Teaser · 30s',
+  duration: 'PT30S',
+  uploadDate: '2026-10-01',
+};
 
 /** Dúvidas do Razão (assistente de lançamentos) — respostas honestas, de quem está em piloto. */
 export const LANCAMENTOS_FAQ: FaqItem[] = [

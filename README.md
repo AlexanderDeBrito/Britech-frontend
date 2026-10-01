@@ -41,7 +41,7 @@ dist/public/
 | Título, descrição, palavras-chave ou JSON-LD de uma página | `client/src/lib/seo.ts` (`PAGES`) |
 | Endereço, telefone, redes sociais, coordenadas | `client/src/lib/contact.ts` e `SITE` em `seo.ts` |
 | Perguntas do FAQ (home e consultoria; viram `FAQPage`) | `client/src/lib/faq.ts` |
-| Produtos (lista, textos, FAQ, capturas e vídeo teaser do Razão) | `client/src/lib/products.ts` (`RAZAO_SHOTS`, `RAZAO_VIDEO`); imagens em `client/public/images/produtos/` |
+| Produtos (lista, textos, FAQ, capturas e vídeos do Razão) | `client/src/lib/products.ts` (`RAZAO_SHOTS`, `RAZAO_VIDEO` = vídeo principal da página do produto, `RAZAO_TEASER` = teaser do card em /produtos/); imagens em `client/public/images/produtos/`, vídeos e posters em `client/public/videos/`. O `razao-como-funciona.mp4` publicado é uma versão editada do original, sem o aviso de preço da tela Início do protótipo |
 | Vídeo explicativo do DAG (seção só aparece quando preenchido) | `DAG_VIDEO` em `client/src/lib/dag.ts` |
 | Fluxo, gates e números do DAG / case CRM Renke | `client/src/lib/dag.ts` |
 | Cards de cases | `client/src/lib/cases.ts` |

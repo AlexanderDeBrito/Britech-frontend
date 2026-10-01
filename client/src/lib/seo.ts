@@ -1,7 +1,7 @@
 import { CASES } from './cases';
 import { CONTACT } from './contact';
 import { FAQ, HOME_FAQ, type FaqItem } from './faq';
-import { LANCAMENTOS, LANCAMENTOS_FAQ, PRODUCTS, RAZAO_SHOTS, RAZAO_SHOT_CAPTION, RAZAO_VIDEO } from './products';
+import { LANCAMENTOS, LANCAMENTOS_FAQ, PRODUCTS, RAZAO_SHOTS, RAZAO_SHOT_CAPTION, RAZAO_TEASER, RAZAO_VIDEO, type RazaoVideo } from './products';
 import { DAG_VIDEO } from './dag';
 
 /** Identidade do site — fonte única para meta tags, JSON-LD e sitemap. */
@@ -226,6 +226,24 @@ function faqNode(path: string, items: FaqItem[]): Record<string, unknown> {
   };
 }
 
+/** VideoObject de um vídeo do Razão. */
+function videoNode(video: RazaoVideo, id: string) {
+  return {
+    '@type': 'VideoObject',
+    '@id': id,
+    name: video.title,
+    description: video.description,
+    thumbnailUrl: [absoluteUrl(video.thumbnail)],
+    uploadDate: video.uploadDate,
+    duration: video.duration,
+    contentUrl: absoluteUrl(video.src),
+    inLanguage: SITE.lang,
+    width: video.width,
+    height: video.height,
+    publisher: { '@id': ORGANIZATION_ID },
+  };
+}
+
 /** Produto próprio. Sem `offers`: o preço ainda não foi definido. */
 function softwareNode(): Record<string, unknown> {
   return {
@@ -378,6 +396,7 @@ export const PAGES: Record<string, PageSeo> = {
           name: p.name,
         })),
       },
+      ...(RAZAO_TEASER ? [videoNode(RAZAO_TEASER, `${SITE.url}/produtos/#video-razao`)] : []),
     ],
   }),
   '/produtos/assistente-de-lancamentos': page(
@@ -400,24 +419,7 @@ export const PAGES: Record<string, PageSeo> = {
       graph: () => [
         softwareNode(),
         faqNode('/produtos/assistente-de-lancamentos', LANCAMENTOS_FAQ),
-        ...(RAZAO_VIDEO
-          ? [
-              {
-                '@type': 'VideoObject',
-                '@id': `${absoluteUrl(LANCAMENTOS.href)}#video`,
-                name: RAZAO_VIDEO.title,
-                description: RAZAO_VIDEO.description,
-                thumbnailUrl: [absoluteUrl(RAZAO_VIDEO.thumbnail)],
-                uploadDate: RAZAO_VIDEO.uploadDate,
-                duration: RAZAO_VIDEO.duration,
-                contentUrl: absoluteUrl(RAZAO_VIDEO.src),
-                inLanguage: SITE.lang,
-                width: RAZAO_VIDEO.width,
-                height: RAZAO_VIDEO.height,
-                publisher: { '@id': ORGANIZATION_ID },
-              },
-            ]
-          : []),
+        ...(RAZAO_VIDEO ? [videoNode(RAZAO_VIDEO, `${absoluteUrl(LANCAMENTOS.href)}#video`)] : []),
       ],
     },
     ['/produtos', '/produtos/assistente-de-lancamentos'],
